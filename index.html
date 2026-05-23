@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bill of Senga - Organic Modernism</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary": "#003B73",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#737973",
+                        "on-secondary-fixed": "#2a170c",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#002a54",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#bacda4",
+                        "tertiary-fixed": "#d6e9be",
+                        "surface-variant": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "secondary-container": "#fed8c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3c4c2c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#003B73",
+                        "on-tertiary-fixed": "#111f05",
+                        "tertiary-container": "#213013",
+                        "secondary": "#1B3022",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "secondary-fixed-dim": "#e3bfad",
+                        "on-tertiary-container": "#879973",
+                        "primary-fixed": "#d0e9d4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdbca",
+                        "on-surface-variant": "#434843",
+                        "outline-variant": "#c3c8c1",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#4d6b8c",
+                        "surface-bright": "#faf9f4",
+                        "inverse-primary": "#b4cdb8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#0d1b03",
+                        "on-primary-fixed": "#0b2013",
+                        "on-secondary-container": "#795d4e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a4134"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "display": ["Newsreader"],
+                        "h3": ["Newsreader"],
+                        "body-md": ["Work Sans"],
+                        "h2": ["Newsreader"],
+                        "h1": ["Newsreader"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["22px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .texture-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen relative font-body-md">
+<div class="texture-overlay z-50"></div>
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-variant/50 shadow-sm transition-all duration-300 ease-out">
+<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full transition-all duration-300 ease-out">
+<a href="/" class="flex items-center">
+    <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+</a>
+      <nav class="hidden lg:flex space-x-6 items-center z-50">
+        <a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/index.html">Home</a>
+
+        <!-- About Dropdown -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+            About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          </button>
+          <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+              <a href="/about/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+              <a href="/the_story_of_senga/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+              <a href="/mission/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+              <a href="/team/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Our Hubs Dropdown -->
+        <div class="relative group">
+          <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+            Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          </button>
+          <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+              <a href="/practical_classroom/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+              <a href="/tree_billionaire_generation/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+              <a href="/community_villages/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+            </div>
+          </div>
+        </div>
+
+        <a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/index.html#projects">Projects</a>
+        <a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/gallery/index.html">Gallery</a>
+        <a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/blog/index.html">Blog</a>
+        <a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/contact/index.html">Contact Us</a>
+      </nav>
+<a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-on-primary px-8 py-2.5 rounded-full font-label-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hidden md:block text-center flex items-center justify-center">
+                Join the Movement
+            </a>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main>
+<!-- Hero Slider Section -->
+<section id="hero-slider" class="relative h-[560px] md:h-[620px] overflow-hidden bg-[#0d1f0f]">
+
+  <!-- ===== SLIDE 1 ===== -->
+  <div class="hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ease-in-out" style="opacity: 1; pointer-events: auto; z-index: 10;">
+    <div class="absolute inset-0 z-0">
+      <img
+        alt="Lush agricultural field at golden hour"
+        class="w-full h-full object-cover"
+        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX0Eud1qUoapoREDsrDvcw6sfejSo8qcgozVB6XLiaJGgQ8KAE_obyNZ85AYruKIPocHsgBn6gpjhLSWxMpjtMEvHmnE7LpeTVvL9fugOVQq2AaDNOUFzrakjYYxibwFhY3XDzcBJMLQCgk7zAyXyw2qD81XBfzCq1c50cCJXQVgz2FZfW-JwiE6QsbO6idqRYzECRWQn7XVGLI7O-5j-cThQNVWEap3wtRHpCyTQNTcas7T4P18iRElsRRpCH-kv7EntQuEAM3JbX"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"></div>
+    </div>
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <p class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-3 drop-shadow">Champion Farmer | Science Journalist</p>
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight">
+        BOS – Bill of Senga
+      </h1>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
+          Join the Movement
+        </a>
+        <a href="/the_story_of_senga/index.html" class="bg-transparent border border-white/70 text-white px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all text-center">
+          Explore Our Roots
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2 ===== -->
+  <div class="hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ease-in-out" style="opacity: 0; pointer-events: none; z-index: 0;">
+    <div class="absolute inset-0 z-0">
+      <img
+        alt="Indigenous farmers working alongside agricultural scientists"
+        class="w-full h-full object-cover"
+        src="/hero_slide2.png"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/65"></div>
+    </div>
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <p class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-3 drop-shadow">Our Mission</p>
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight">
+        Where Indigenous Knowledge Meets Agricultural Science
+      </h1>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
+          Join the Movement
+        </a>
+        <a href="/the_story_of_senga/index.html" class="bg-transparent border border-white/70 text-white px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all text-center">
+          Explore Our Roots
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3 ===== -->
+  <div class="hero-slide absolute inset-0 flex items-center justify-center transition-opacity duration-1000 ease-in-out" style="opacity: 0; pointer-events: none; z-index: 0;">
+    <div class="absolute inset-0 z-0">
+      <img
+        alt="Rich dark fertile soil with green seedlings sprouting"
+        class="w-full h-full object-cover"
+        src="/hero_slide3.png"
+      />
+      <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
+    </div>
+    <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
+      <p class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-3 drop-shadow">Our Philosophy</p>
+      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight">
+        Healthy Soil. Healthy Food.<br class="hidden md:block"/> Healthy People. Healthy Planet.
+      </h1>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
+          Join the Movement
+        </a>
+        <a href="/the_story_of_senga/index.html" class="bg-transparent border border-white/70 text-white px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all text-center">
+          Explore Our Roots
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Dots -->
+  <div class="absolute bottom-6 left-0 right-0 flex justify-center gap-3 z-30">
+    <button class="slider-dot w-3 h-3 rounded-full bg-white transition-all duration-300 shadow-md" data-index="0" aria-label="Slide 1"></button>
+    <button class="slider-dot w-3 h-3 rounded-full bg-white/40 transition-all duration-300 shadow-md" data-index="1" aria-label="Slide 2"></button>
+    <button class="slider-dot w-3 h-3 rounded-full bg-white/40 transition-all duration-300 shadow-md" data-index="2" aria-label="Slide 3"></button>
+  </div>
+
+  <!-- Left / Right Arrows -->
+  <button id="slider-prev" class="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/30 hover:bg-black/60 border border-white/20 flex items-center justify-center text-white transition-all" aria-label="Previous slide">
+    <span class="material-symbols-outlined">chevron_left</span>
+  </button>
+  <button id="slider-next" class="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-10 h-10 md:w-12 md:h-12 rounded-full bg-black/30 hover:bg-black/60 border border-white/20 flex items-center justify-center text-white transition-all" aria-label="Next slide">
+    <span class="material-symbols-outlined">chevron_right</span>
+  </button>
+</section>
+
+<script>
+  (function () {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots   = document.querySelectorAll('.slider-dot');
+    let current  = 0;
+    let timer;
+
+    function goTo(index) {
+      // Hide current slide
+      slides[current].style.opacity = '0';
+      slides[current].style.zIndex  = '0';
+      slides[current].style.pointerEvents = 'none';
+      dots[current].classList.remove('bg-white');
+      dots[current].classList.add('bg-white/40', 'w-3');
+
+      // Show new slide
+      current = (index + slides.length) % slides.length;
+      slides[current].style.opacity = '1';
+      slides[current].style.zIndex  = '10';
+      slides[current].style.pointerEvents = 'auto';
+      dots[current].classList.add('bg-white');
+      dots[current].classList.remove('bg-white/40');
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(function () { goTo(current + 1); }, 6000);
+    }
+
+    // Dot clicks
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () {
+        goTo(parseInt(this.dataset.index));
+        startTimer();
+      });
+    });
+
+    // Arrow clicks
+    document.getElementById('slider-prev').addEventListener('click', function () {
+      goTo(current - 1); startTimer();
+    });
+    document.getElementById('slider-next').addEventListener('click', function () {
+      goTo(current + 1); startTimer();
+    });
+
+    // Start auto-play
+    startTimer();
+  })();
+</script>
+<!-- About Section (Bento Style) -->
+<section class="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+<div class="md:col-span-5 relative">
+<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-lg shadow-secondary/10 border border-outline-variant relative z-10">
+<img alt="William Odinga Balikuddembe" class="w-full h-full object-cover" data-alt="A professional, warm, and dignified portrait of a wise agricultural leader (William Odinga Balikuddembe) standing in an outdoor natural setting. He has a grounded, authoritative yet approachable presence, embodying deep indigenous knowledge. The lighting is natural and flattering, highlighting the rich textures of his skin and his thoughtful expression. The background is softly blurred, showing hints of vibrant green foliage. The overall style is high-end editorial photography, aligning with an earthy, organic modern aesthetic." src="/mr_william.png"/>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -bottom-6 -right-6 w-48 h-48 bg-tertiary-fixed rounded-full z-0 opacity-50 blur-3xl"></div>
+</div>
+<div class="md:col-span-7 md:pl-12">
+<span class="inline-block px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-caption rounded-full mb-4">The Visionary</span>
+<h2 class="font-display text-h1 text-on-background mb-6">Who is BOS?</h2>
+<div class="space-y-4 font-body-md text-body-md text-on-surface-variant">
+<p>
+                            William Odinga Balikuddembe is the foundational spirit behind the Bill of Senga. He represents a profound synthesis of ancestral wisdom and progressive agricultural science.
+                        </p>
+<p>
+                            We believe that true sustainability isn't just about preserving what we have; it's about actively regenerating the earth. By returning to indigenous practices validated by modern science, we cultivate environments where life thrives at every level.
+                        </p>
+</div>
+<div class="mt-8 pt-8 border-t border-surface-variant flex gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-surface-tint text-3xl">psychiatry</span>
+<span class="font-label-md text-label-md text-on-background">Ancestral Roots</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-surface-tint text-3xl">science</span>
+<span class="font-label-md text-label-md text-on-background">Modern Science</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Philosophy Grid -->
+<section class="py-24 bg-surface-container-low px-6 lg:px-12 relative overflow-hidden">
+<div class="max-w-7xl mx-auto relative z-10">
+<div class="text-center mb-16">
+<h2 class="font-display text-h2 text-on-background mb-4">Our Core Philosophy</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">The interconnected principles that guide our approach to earth stewardship.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-primary-fixed">compost</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Feed the Soil</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Nourishing the earth foundationally to ensure robust, nutrient-dense life cycles from the ground up.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-secondary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-fixed">recycling</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Waste Nothing</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Creating closed-loop systems where every byproduct becomes a resource for new growth.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-tertiary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-tertiary-fixed">eco</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Climate-Smart</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Adapting and building resilience through practices that actively draw down carbon and restore balance.</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant">groups</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Land Managers</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Empowering local communities as the primary stewards and beneficiaries of their native ecosystems.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="py-24 px-6 lg:px-12 bg-surface-container-lowest relative overflow-hidden">
+  <!-- Subtle organic background decoration -->
+  <div class="absolute -top-40 -left-40 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+  <div class="absolute -bottom-40 -right-40 w-96 h-96 bg-[#1B3022]/5 rounded-full blur-3xl"></div>
+
+  <div class="max-w-6xl mx-auto relative z-10">
+    
+    <!-- Section Header -->
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">Our Core Initiatives</p>
+      <h2 class="font-display text-4xl md:text-5xl font-bold text-[#1B3022] leading-tight mb-4">
+        Pioneering Ecological Projects
+      </h2>
+      <div class="w-16 h-1 bg-primary/30 mx-auto rounded mb-6"></div>
+      <p class="text-stone-500 text-base leading-relaxed">
+        Discover how we bridge ancestral agricultural wisdom with advanced scientific stewardship to heal soils, plant ecosystems, and empower self-sustaining communities.
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      
+      <!-- Project 1: Tree Billionaires -->
+      <a href="/tree_billionaire_generation/index.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="/hero_slide3.png"
+            alt="Tree Billionaire Generation"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#1b1c19]/70 to-transparent"></div>
+          <span class="absolute top-4 left-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Climate & Forestry</span>
+        </div>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">
+              Tree Billionaire Generation
+            </h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-6">
+              A massive reforestation and climate resilience campaign. We are empowering youth and communities to plant and monitor indigenous trees, turning forestry into a dynamic generational investment.
+            </p>
+          </div>
+          <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
+            <span>Learn More</span>
+            <span class="material-symbols-outlined text-sm transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 2: Practical Classroom -->
+      <a href="/practical_classroom/index.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="/hero_slide2.png"
+            alt="The Practical Classroom"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#1b1c19]/70 to-transparent"></div>
+          <span class="absolute top-4 left-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Agroecology</span>
+        </div>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">
+              The Practical Classroom
+            </h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-6">
+              Hands-on training and dynamic education hubs. We teach local farmers regenerative soil science, compost preparation, and high-yield sustainable agricultural methodologies that double harvests.
+            </p>
+          </div>
+          <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
+            <span>Learn More</span>
+            <span class="material-symbols-outlined text-sm transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Project 3: Community Villages -->
+      <a href="/community_villages/index.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
+        <div class="relative h-56 overflow-hidden">
+          <img
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX0Eud1qUoapoREDsrDvcw6sfejSo8qcgozVB6XLiaJGgQ8KAE_obyNZ85AYruKIPocHsgBn6gpjhLSWxMpjtMEvHmnE7LpeTVvL9fugOVQq2AaDNOUFzrakjYYxibwFhY3XDzcBJMLQCgk7zAyXyw2qD81XBfzCq1c50cCJXQVgz2FZfW-JwiE6QsbO6idqRYzECRWQn7XVGLI7O-5j-cThQNVWEap3wtRHpCyTQNTcas7T4P18iRElsRRpCH-kv7EntQuEAM3JbX"
+            alt="Community Villages"
+            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-[#1b1c19]/70 to-transparent"></div>
+          <span class="absolute top-4 left-4 bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Social Economy</span>
+        </div>
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">
+              Community Villages
+            </h3>
+            <p class="text-stone-500 text-sm leading-relaxed mb-6">
+              Self-sustaining regional micro-economies. Designing regional clusters that foster collective resource management, clean water access, solar power grids, and localized market trading networks.
+            </p>
+          </div>
+          <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
+            <span>Learn More</span>
+            <span class="material-symbols-outlined text-sm transition-transform group-hover/btn:translate-x-1">arrow_forward</span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials Section -->
+<section id="testimonials" class="relative py-16 bg-[#1B3022] overflow-hidden">
+  <!-- Subtle Background Overlay -->
+  <div class="absolute inset-0 z-0 opacity-10">
+    <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX0Eud1qUoapoREDsrDvcw6sfejSo8qcgozVB6XLiaJGgQ8KAE_obyNZ85AYruKIPocHsgBn6gpjhLSWxMpjtMEvHmnE7LpeTVvL9fugOVQq2AaDNOUFzrakjYYxibwFhY3XDzcBJMLQCgk7zAyXyw2qD81XBfzCq1c50cCJXQVgz2FZfW-JwiE6QsbO6idqRYzECRWQn7XVGLI7O-5j-cThQNVWEap3wtRHpCyTQNTcas7T4P18iRElsRRpCH-kv7EntQuEAM3JbX" alt="Background" class="w-full h-full object-cover" />
+  </div>
+
+  <div class="relative z-10 max-w-6xl mx-auto px-6 text-white">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
+      
+      <!-- Left Column: Title and Avatar Selectors (Vertical stack) -->
+      <div class="lg:col-span-5 text-center lg:text-left">
+        <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-3">Our Testimonials</p>
+        <h2 class="font-display text-3xl md:text-4xl font-bold leading-tight mb-8">What the Community is Saying</h2>
+        
+        <!-- Avatar Selectors in a compact flex row -->
+        <div class="flex justify-center lg:justify-start items-center gap-4">
+          <button class="testimonial-btn relative group" data-index="0" aria-label="Sarah Namukasa">
+            <div class="avatar-ring absolute -inset-1.5 rounded-full border-2 border-emerald-500 opacity-100 transition-opacity"></div>
+            <img src="/sarah_namukasa.png" alt="Sarah" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-transparent grayscale hover:grayscale-0 transition-all active-avatar" />
+          </button>
+          <button class="testimonial-btn relative group" data-index="1" aria-label="Dr. James Ochieng">
+            <div class="avatar-ring absolute -inset-1.5 rounded-full border-2 border-emerald-500 opacity-0 transition-opacity"></div>
+            <img src="/james_ochieng.png" alt="James" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-transparent grayscale hover:grayscale-0 transition-all" />
+          </button>
+          <button class="testimonial-btn relative group" data-index="2" aria-label="Amara Diallo">
+            <div class="avatar-ring absolute -inset-1.5 rounded-full border-2 border-emerald-500 opacity-0 transition-opacity"></div>
+            <img src="/amara_diallo.png" alt="Amara" class="w-12 h-12 md:w-14 md:h-14 rounded-full object-cover border-2 border-transparent grayscale hover:grayscale-0 transition-all" />
+          </button>
+        </div>
+      </div>
+
+      <!-- Right Column: Glassmorphic Testimonial Card -->
+      <div class="lg:col-span-7">
+        <div class="bg-white/[0.03] backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 relative shadow-2xl min-h-[200px] flex flex-col justify-between">
+          <!-- Large Decorative Quote Icon -->
+          <div class="absolute -top-3 left-4 text-emerald-500/10 text-7xl font-serif select-none">“</div>
+          
+          <div id="testimonial-container" class="transition-opacity duration-500 opacity-100 relative z-10">
+            <p id="testimonial-quote" class="text-lg md:text-xl italic leading-relaxed mb-6 text-stone-200">
+              "BOS changed the way I see my land. I've tripled my harvest using indigenous soil practices. My children now have hope."
+            </p>
+            <div class="border-t border-white/10 pt-4">
+              <h4 id="testimonial-name" class="text-base md:text-lg font-bold text-emerald-400">Sarah Namukasa</h4>
+              <p id="testimonial-role" class="text-xs text-stone-400 uppercase tracking-wider font-semibold">Community Farmer, Uganda</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+  .active-avatar { grayscale: 0 !important; }
+</style>
+
+<script>
+  (function () {
+    const testimonials = [
+      {
+        quote: '"BOS changed the way I see my land. I\'ve tripled my harvest using indigenous soil practices. My children now have hope."',
+        name: "Sarah Namukasa",
+        role: "Community Farmer, Uganda"
+      },
+      {
+        quote: '"The Bill of Senga bridges two worlds I\'ve spent my career trying to connect. This is the future of sustainable farming in Africa."',
+        name: "Dr. James Ochieng",
+        role: "Agricultural Scientist, Kenya"
+      },
+      {
+        quote: '"I started a rooftop garden after learning from BOS. Now I supply vegetables to 15 families in my building every week."',
+        name: "Amara Diallo",
+        role: "Urban Farmer, Ghana"
+      }
+    ];
+
+    const container = document.getElementById('testimonial-container');
+    const quoteEl = document.getElementById('testimonial-quote');
+    const nameEl = document.getElementById('testimonial-name');
+    const roleEl = document.getElementById('testimonial-role');
+    const buttons = document.querySelectorAll('.testimonial-btn');
+    const rings = document.querySelectorAll('.avatar-ring');
+    const images = document.querySelectorAll('.testimonial-btn img');
+
+    let current = 0;
+    let timer;
+
+    function switchTestimonial(index) {
+      if (index === current) return;
+
+      container.classList.add('opacity-0');
+
+      setTimeout(() => {
+        current = index;
+        const t = testimonials[current];
+        quoteEl.textContent = t.quote;
+        nameEl.textContent = t.name;
+        roleEl.textContent = t.role;
+
+        buttons.forEach((btn, i) => {
+          rings[i].style.opacity = i === current ? '1' : '0';
+          if (i === current) {
+            images[i].classList.remove('grayscale');
+          } else {
+            images[i].classList.add('grayscale');
+          }
+        });
+
+        container.classList.remove('opacity-0');
+      }, 500);
+    }
+
+    function startAuto() {
+      clearInterval(timer);
+      timer = setInterval(() => {
+        switchTestimonial((current + 1) % testimonials.length);
+      }, 7000);
+    }
+
+    buttons.forEach((btn, i) => {
+      btn.addEventListener('click', () => {
+        switchTestimonial(i);
+        startAuto();
+      });
+    });
+
+    startAuto();
+  })();
+</script>
+
+
+<!-- Blog Insights Section -->
+<section class="py-24 px-6 lg:px-12 bg-[#f7f5f2]">
+  <div class="max-w-7xl mx-auto">
+
+    <!-- Section Header -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-end mb-14">
+      <div>
+        <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">Blog Insights</p>
+        <h2 class="font-display text-4xl md:text-5xl font-bold text-[#1B3022] leading-tight">
+          Stay On Top of The<br/>Latest From BOS
+        </h2>
+      </div>
+      <div class="flex items-end">
+        <p class="text-stone-500 text-base leading-relaxed">
+          From ancient soil wisdom to cutting-edge urban farming, our blog covers the full spectrum of sustainable living. Learn, grow, and join a movement that is restoring the earth — one seed at a time.
+        </p>
+      </div>
+    </div>
+
+    <!-- Blog Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Card 1 -->
+      <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
+        <div class="relative overflow-hidden">
+          <img
+            src="/blog_soil.png"
+            alt="Hands holding fertile soil with seedlings"
+            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <!-- Date Badge -->
+          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+            <span class="text-base font-extrabold leading-none">15</span>
+            <span class="uppercase tracking-wider">May</span>
+          </div>
+        </div>
+        <div class="p-6 pt-10">
+          <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors">
+            The Secret Life of Healthy Soil — What Science Says
+          </h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-5">
+            Good soil is far more than dirt. Discover how billions of microorganisms beneath your feet are the true engine of food security and planetary health.
+          </p>
+          <a href="/blog/post-1-healthy-soil.html" class="inline-block bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
+            Read More
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 2 -->
+      <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
+        <div class="relative overflow-hidden">
+          <img
+            src="/blog_tree.png"
+            alt="Young man planting a tree sapling"
+            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+            <span class="text-base font-extrabold leading-none">02</span>
+            <span class="uppercase tracking-wider">Jun</span>
+          </div>
+        </div>
+        <div class="p-6 pt-10">
+          <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors">
+            How to Become a Tree Billionaire in 5 Years
+          </h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-5">
+            Planting trees is not just an act of love for the environment — it is a generational investment. Learn how BOS is turning ordinary farmers into Tree Billionaires.
+          </p>
+          <a href="/blog/post-2-tree-billionaire.html" class="inline-block bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
+            Read More
+          </a>
+        </div>
+      </article>
+
+      <!-- Card 3 -->
+      <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
+        <div class="relative overflow-hidden">
+          <img
+            src="/blog_rooftop.png"
+            alt="Lush urban rooftop garden"
+            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+            <span class="text-base font-extrabold leading-none">20</span>
+            <span class="uppercase tracking-wider">Jun</span>
+          </div>
+        </div>
+        <div class="p-6 pt-10">
+          <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors">
+            Urban Rooftop Farming: Feeding Cities from Above
+          </h3>
+          <p class="text-stone-500 text-sm leading-relaxed mb-5">
+            Cities need not be food deserts. Discover how BOS Smart Villages are transforming rooftops into productive organic gardens that feed families and build community.
+          </p>
+          <a href="/blog/post-3-urban-rooftop.html" class="inline-block bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
+            Read More
+          </a>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#111613] text-stone-300 font-body-md pt-16 mt-auto">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+    
+    <!-- About Us -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">About Us</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <p class="text-sm leading-relaxed mb-6">
+        Rooted in Tradition, Growing for the Future. The Bill of Senga is a sustainable living hub where indigenous knowledge meets modern agricultural science to build thriving ecosystems.
+      </p>
+      <div class="flex gap-3">
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="text-sm font-bold">f</span>
+        </a>
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="text-sm font-bold">X</span>
+        </a>
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+        </a>
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="text-sm font-bold">in</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">Quick Links</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Home</a></li>
+        <li><a href="/the_story_of_senga/index.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> The Story</a></li>
+        <li><a href="/#projects" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Projects</a></li>
+        <li><a href="/practical_classroom/index.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Classroom</a></li>
+        <li><a href="/tree_billionaire_generation/index.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Tree Billionaires</a></li>
+        <li><a href="/community_villages/index.html" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Community</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Impact Report</a></li>
+      </ul>
+    </div>
+
+    <!-- Our Hubs -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">Our Hubs</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Practical Classroom</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Urban Farming</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Smart Villages</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Carbon Capture</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Water Source</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">Contact Information</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <ul class="flex flex-col gap-4 text-sm mb-6">
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">call</span>
+          <span>+1 234 567 8900</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">mail</span>
+          <span>hello@billofsenga.org</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+          <span>123 Sustainable Way, Eco District</span>
+        </li>
+      </ul>
+      
+      <!-- Newsletter -->
+      <form class="relative w-full max-w-[280px]">
+        <input type="email" placeholder="Your email address" class="w-full bg-white text-stone-800 rounded-full py-3 px-4 pr-12 outline-none text-sm border-none focus:ring-2 focus:ring-[#003B73]">
+        <button type="button" class="absolute right-1 top-1 bottom-1 aspect-square bg-[#003B73] hover:bg-primary-container rounded-full flex items-center justify-center text-white transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bg-[#0b100c] py-5 border-t border-stone-800/50 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-stone-500">
+      <p>© Copyright 2024 Bill of Senga. All Rights Reserved</p>
+      <p class="mt-2 md:mt-0">Created by <span class="text-white">SoftCode Tech</span></p>
+    </div>
+    <!-- Back to top button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="absolute right-6 -top-5 w-10 h-10 bg-[#003B73] hover:bg-primary-container rounded-full flex items-center justify-center text-white transition-colors shadow-lg">
+      <span class="material-symbols-outlined">keyboard_arrow_up</span>
+    </button>
+  </div>
+</footer>
+</body></html>

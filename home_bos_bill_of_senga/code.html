@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bill of Senga - Organic Modernism</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary": "#061b0e",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#737973",
+                        "on-secondary-fixed": "#2a170c",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#1b3022",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#bacda4",
+                        "tertiary-fixed": "#d6e9be",
+                        "surface-variant": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "secondary-container": "#fed8c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3c4c2c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#4d6453",
+                        "on-tertiary-fixed": "#111f05",
+                        "tertiary-container": "#213013",
+                        "secondary": "#74584a",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "secondary-fixed-dim": "#e3bfad",
+                        "on-tertiary-container": "#879973",
+                        "primary-fixed": "#d0e9d4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdbca",
+                        "on-surface-variant": "#434843",
+                        "outline-variant": "#c3c8c1",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#819986",
+                        "surface-bright": "#faf9f4",
+                        "inverse-primary": "#b4cdb8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#0d1b03",
+                        "on-primary-fixed": "#0b2013",
+                        "on-secondary-container": "#795d4e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a4134"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "display": ["Newsreader"],
+                        "h3": ["Newsreader"],
+                        "body-md": ["Work Sans"],
+                        "h2": ["Newsreader"],
+                        "h1": ["Newsreader"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["22px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .texture-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen relative font-body-md">
+<div class="texture-overlay z-50"></div>
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface text-primary font-display w-full border-b border-surface-variant shadow-sm shadow-secondary/5">
+<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full transition-all duration-300 ease-out">
+<a href="../index.html" class="text-2xl font-bold text-primary">Bill of Senga</a>
+<nav class="hidden lg:flex space-x-6 items-center z-50">
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="../index.html">Home</a>
+
+<!-- About Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="#" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+      <a href="../the_story_of_senga/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+      <a href="#" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+      <a href="#" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- Our Hubs Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="../practical_classroom/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+      <a href="../tree_billionaire_generation/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+      <a href="../community_villages/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+    </div>
+  </div>
+</div>
+
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="../index.html#projects">Projects</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="#">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="#">Blog</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="#">Contact Us</a>
+</nav>
+<a href="/join_the_movement/index.html" class="bg-primary text-on-primary px-6 py-2 rounded-full font-label-md hover:bg-primary-container transition-colors hidden md:block text-center flex items-center justify-center">
+                Join the Movement
+            </a>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative min-h-[819px] flex items-center justify-center overflow-hidden bg-primary-container">
+<div class="absolute inset-0 z-0">
+<img alt="Lush agricultural field" class="w-full h-full object-cover opacity-60 mix-blend-multiply" data-alt="A sweeping, cinematic wide shot of a vibrant, lush organic farm deeply integrated into a natural forest landscape. The scene is bathed in golden hour sunlight, casting long, soft shadows across rows of healthy crops and rich, dark soil. The mood is abundant, grounded, and life-affirming, aligning with an 'Organic Modernism' aesthetic. Earthy greens and deep soil browns dominate the high-resolution, photorealistic image, evoking a profound connection between indigenous knowledge and thriving ecosystems." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX0Eud1qUoapoREDsrDvcw6sfejSo8qcgozVB6XLiaJGgQ8KAE_obyNZ85AYruKIPocHsgBn6gpjhLSWxMpjtMEvHmnE7LpeTVvL9fugOVQq2AaDNOUFzrakjYYxibwFhY3XDzcBJMLQCgk7zAyXyw2qD81XBfzCq1c50cCJXQVgz2FZfW-JwiE6QsbO6idqRYzECRWQn7XVGLI7O-5j-cThQNVWEap3wtRHpCyTQNTcas7T4P18iRElsRRpCH-kv7EntQuEAM3JbX"/>
+</div>
+<div class="relative z-10 text-center px-6 max-w-4xl mx-auto mt-16">
+<h1 class="font-display text-display text-on-primary mb-6 drop-shadow-lg">
+                    Where Indigenous Knowledge Meets Agricultural Science
+                </h1>
+<p class="font-body-lg text-body-lg text-primary-fixed mb-10 max-w-2xl mx-auto drop-shadow-md">
+                    Healthy Soil. Healthy Food. Healthy People. Healthy Planet.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center">
+<a href="/join_the_movement/index.html" class="bg-primary text-on-primary px-8 py-3 rounded-full font-label-md text-label-md shadow-lg shadow-tertiary-container/20 hover:bg-surface-tint transition-all text-center flex items-center justify-center">
+                        Join the Movement
+                    </a>
+<button class="bg-transparent border border-on-primary text-on-primary px-8 py-3 rounded-full font-label-md text-label-md hover:bg-on-primary/10 transition-all">
+                        Explore Our Roots
+                    </button>
+</div>
+</div>
+</section>
+<!-- About Section (Bento Style) -->
+<section class="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+<div class="md:col-span-5 relative">
+<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-lg shadow-secondary/10 border border-outline-variant relative z-10">
+<img alt="William Odinga Balikuddembe" class="w-full h-full object-cover" data-alt="A professional, warm, and dignified portrait of a wise agricultural leader (William Odinga Balikuddembe) standing in an outdoor natural setting. He has a grounded, authoritative yet approachable presence, embodying deep indigenous knowledge. The lighting is natural and flattering, highlighting the rich textures of his skin and his thoughtful expression. The background is softly blurred, showing hints of vibrant green foliage. The overall style is high-end editorial photography, aligning with an earthy, organic modern aesthetic." src="/mr_william.png"/>
+</div>
+<!-- Decorative Element -->
+<div class="absolute -bottom-6 -right-6 w-48 h-48 bg-tertiary-fixed rounded-full z-0 opacity-50 blur-3xl"></div>
+</div>
+<div class="md:col-span-7 md:pl-12">
+<span class="inline-block px-3 py-1 bg-tertiary-fixed text-on-tertiary-fixed font-label-md text-caption rounded-full mb-4">The Visionary</span>
+<h2 class="font-display text-h1 text-on-background mb-6">Who is BOS?</h2>
+<div class="space-y-4 font-body-md text-body-md text-on-surface-variant">
+<p>
+                            William Odinga Balikuddembe is the foundational spirit behind the Bill of Senga. He represents a profound synthesis of ancestral wisdom and progressive agricultural science.
+                        </p>
+<p>
+                            We believe that true sustainability isn't just about preserving what we have; it's about actively regenerating the earth. By returning to indigenous practices validated by modern science, we cultivate environments where life thrives at every level.
+                        </p>
+</div>
+<div class="mt-8 pt-8 border-t border-surface-variant flex gap-6">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-surface-tint text-3xl">psychiatry</span>
+<span class="font-label-md text-label-md text-on-background">Ancestral Roots</span>
+</div>
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-surface-tint text-3xl">science</span>
+<span class="font-label-md text-label-md text-on-background">Modern Science</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Philosophy Grid -->
+<section class="py-24 bg-surface-container-low px-6 lg:px-12 relative overflow-hidden">
+<div class="max-w-7xl mx-auto relative z-10">
+<div class="text-center mb-16">
+<h2 class="font-display text-h2 text-on-background mb-4">Our Core Philosophy</h2>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">The interconnected principles that guide our approach to earth stewardship.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<!-- Card 1 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-primary-fixed">compost</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Feed the Soil</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Nourishing the earth foundationally to ensure robust, nutrient-dense life cycles from the ground up.</p>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-secondary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-secondary-fixed">recycling</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Waste Nothing</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Creating closed-loop systems where every byproduct becomes a resource for new growth.</p>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-tertiary-fixed rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-tertiary-fixed">eco</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Climate-Smart</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Adapting and building resilience through practices that actively draw down carbon and restore balance.</p>
+</div>
+<!-- Card 4 -->
+<div class="bg-surface rounded-xl p-6 border border-outline-variant shadow-sm shadow-secondary/5 hover:shadow-md transition-shadow group">
+<div class="w-12 h-12 bg-surface-variant rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-on-surface-variant">groups</span>
+</div>
+<h3 class="font-h3 text-h3 text-on-background mb-3">Land Managers</h3>
+<p class="font-body-md text-caption text-on-surface-variant">Empowering local communities as the primary stewards and beneficiaries of their native ecosystems.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Call to Action -->
+<section class="py-24 px-6 lg:px-12 max-w-5xl mx-auto">
+<div class="bg-primary-container rounded-2xl overflow-hidden shadow-xl relative flex flex-col md:flex-row items-center">
+<div class="absolute inset-0 z-0 opacity-20">
+<img alt="Soil texture background" class="w-full h-full object-cover" data-alt="A highly detailed, macro photograph of rich, dark, fertile potting soil mixed with subtle organic matter. The texture is tactile and earthy, conveying deep nutritional value and natural grounding. The lighting is soft and directional, highlighting the granular details of the earth. The color palette is composed of deep browns and subtle mossy greens, serving as an abstract, organic modern background texture." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBCA_z7E1hdNKmEZ3jB2KBhzIV1DRawN22BadLy6nOt0pjryRRH1fsiKMHkGjxkLjFuAso5zSICzhT9KQ4KEewkEZ3Fmmwt1cKwVyeaBrQtx2nAQvhWYCjzxonNxitwLuMmMDon7k2xcE-TyoDGRsRD5j0dMjo5JsLiRcgkgOgDLPvD0QaUwvjVV8i-ZaKTzf0OtimcUIGnCtWVYblPliUwk8e6AHtI8wnDFPaLpjG2iUWiam_8uMT6yeRVJE7oxVZv6a_IqnL_u6b_"/>
+</div>
+<div class="p-12 md:p-16 relative z-10 md:w-2/3 text-center md:text-left">
+<h2 class="font-display text-h1 text-on-primary mb-4">Cultivate the Future with Us</h2>
+<p class="font-body-md text-body-lg text-primary-fixed mb-8">Join a global community dedicated to restoring the earth through indigenous wisdom and mindful agriculture.</p>
+<a href="/join_the_movement/index.html" class="bg-on-primary text-primary px-8 py-4 rounded-full font-label-md text-label-md hover:bg-surface-container-highest transition-colors shadow-lg inline-block text-center">
+                        Join the Movement
+                    </a>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface-container-high text-secondary w-full py-16 px-8 flex flex-col md:flex-row justify-between items-center gap-8 max-w-7xl mx-auto border-t border-surface-variant font-label-md uppercase tracking-widest text-caption">
+<a href="../index.html" class="text-xl font-bold text-primary normal-case tracking-normal font-display">Bill of Senga</a>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="../the_story_of_senga/code.html">The Story</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="../practical_classroom/code.html">Classroom</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="../tree_billionaire_generation/code.html">Tree Billionaires</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="../community_villages/code.html">Community</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors" href="#">Impact Report</a>
+</div>
+<div class="text-on-surface-variant text-center md:text-right normal-case tracking-normal font-caption">
+            © 2024 Bill of Senga. Rooted in Tradition, Growing for the Future.
+        </div>
+</footer>
+</body></html>

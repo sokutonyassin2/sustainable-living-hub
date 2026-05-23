@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BOS Blog CMS Dashboard — Bill of Senga</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary": "#003B73",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#737973",
+                        "on-secondary-fixed": "#2a170c",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#002a54",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#bacda4",
+                        "tertiary-fixed": "#d6e9be",
+                        "surface-variant": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "secondary-container": "#fed8c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3c4c2c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#003B73",
+                        "on-tertiary-fixed": "#111f05",
+                        "tertiary-container": "#213013",
+                        "secondary": "#1B3022",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "secondary-fixed-dim": "#e3bfad",
+                        "on-tertiary-container": "#879973",
+                        "primary-fixed": "#d0e9d4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdbca",
+                        "on-surface-variant": "#434843",
+                        "outline-variant": "#c3c8c1",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#4d6b8c",
+                        "surface-bright": "#faf9f4",
+                        "inverse-primary": "#b4cdb8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#0d1b03",
+                        "on-primary-fixed": "#0b2013",
+                        "on-secondary-container": "#795d4e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a4134"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "display": ["Newsreader"],
+                        "h3": ["Newsreader"],
+                        "body-md": ["Work Sans"],
+                        "h2": ["Newsreader"],
+                        "h1": ["Newsreader"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["22px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+  </script>
+</head>
+<body class="bg-background text-gray-800 font-body min-h-screen flex flex-col">
+
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-variant/50 shadow-sm transition-all duration-300 ease-out">
+<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full transition-all duration-300 ease-out">
+<a href="/index.html" class="flex items-center">
+    <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+</a>
+<nav class="hidden lg:flex space-x-6 items-center z-50">
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/index.html">Home</a>
+
+<!-- About Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="/about/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+      <a href="/the_story_of_senga/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+      <a href="/mission/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+      <a href="/team/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- Our Hubs Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="/practical_classroom/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+      <a href="/tree_billionaire_generation/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+      <a href="/community_villages/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+    </div>
+  </div>
+</div>
+
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/index.html#projects">Projects</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/gallery/index.html">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md text-primary bg-surface-dim" href="/blog/index.html">Blog</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/contact/index.html">Contact Us</a>
+</nav>
+<a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-on-primary px-8 py-2.5 rounded-full font-label-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hidden md:block text-center flex items-center justify-center">
+    Join the Movement
+</a>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+
+<main class="max-w-7xl mx-auto px-6 py-10 w-full flex-grow">
+  <!-- Heading Section -->
+  <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 border-b border-gray-200 pb-6">
+    <div>
+      <h1 class="font-display text-4xl font-bold text-secondary">BOS Blog Publishing Suite</h1>
+      <p class="text-gray-500 mt-1 text-sm font-body-md">Create, drag-and-drop build, schedule, and manage beautiful articles with premium local assets.</p>
+    </div>
+    <div class="flex items-center gap-3">
+      <a href="/blog/index.html" class="bg-white border border-gray-300 text-gray-700 px-5 py-2.5 rounded-full font-semibold hover:bg-stone-50 transition-colors text-sm flex items-center gap-1.5 shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">visibility</span> View Blog Index
+      </a>
+      <button id="btn-new-post" class="bg-primary hover:bg-[#002b54] text-white px-5 py-2.5 rounded-full font-semibold transition-all text-sm flex items-center gap-1.5 shadow-sm">
+        <span class="material-symbols-outlined text-[18px]">add</span> New Post
+      </button>
+    </div>
+  </div>
+
+  <!-- Notification Banner -->
+  <div id="notice-banner" class="hidden mb-6 p-4 rounded-2xl flex items-center justify-between gap-3 text-sm">
+    <div class="flex items-center gap-2">
+      <span class="material-symbols-outlined" id="notice-icon">check_circle</span>
+      <span id="notice-message"></span>
+    </div>
+    <button onclick="hideNotice()" class="text-current hover:opacity-75"><span class="material-symbols-outlined text-[18px]">close</span></button>
+  </div>
+
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+    
+    <!-- LEFT COMPOSER COL: The dynamic builder form -->
+    <div id="editor-container" class="lg:col-span-8 bg-white rounded-3xl p-6 md:p-8 shadow-md border border-gray-100/80 space-y-6 hidden">
+      <div class="flex items-center justify-between border-b border-stone-100 pb-4">
+        <h2 class="font-display text-2xl font-bold text-secondary flex items-center gap-2">
+          <span class="material-symbols-outlined text-primary">edit_document</span>
+          <span id="editor-title-text">Compose New Article</span>
+        </h2>
+        <button id="btn-close-editor" class="text-gray-400 hover:text-gray-600"><span class="material-symbols-outlined">close</span></button>
+      </div>
+
+      <form id="post-form" class="space-y-6">
+        <input type="hidden" id="post-id"/>
+
+        <!-- Post General Fields -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Title *</label>
+            <input type="text" id="post-title" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all" placeholder="The Secret Life of Cover Crops...">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Slug / URL identifier *</label>
+            <input type="text" id="post-slug" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all bg-stone-50" placeholder="the-secret-life-of-cover-crops">
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Category *</label>
+            <div class="flex gap-2">
+              <select id="post-category" required class="flex-grow px-3 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all">
+                <option value="Soil Science">Soil Science</option>
+                <option value="Forestry & Climate">Forestry & Climate</option>
+                <option value="Urban Farming">Urban Farming</option>
+              </select>
+              <button type="button" id="btn-add-cat" class="px-3 bg-stone-100 hover:bg-stone-200 border border-gray-300 text-secondary rounded-xl font-bold flex items-center justify-center transition-colors text-xs" title="Create Custom Category">
+                <span class="material-symbols-outlined text-[18px]">add</span>
+              </button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Author Name</label>
+            <input type="text" id="post-author" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all" placeholder="William Odinga Balikuddembe">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Read Time Estimate (minutes)</label>
+            <input type="number" id="post-read-time" min="1" max="60" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all" placeholder="5">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Brief Description / Excerpt *</label>
+          <textarea id="post-desc" required rows="2" class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all" placeholder="A short, catchy summary shown on the blog feed grid..."></textarea>
+        </div>
+
+        <!-- Featured Image -->
+        <div class="p-5 bg-stone-50 border border-stone-200 rounded-2xl space-y-3">
+          <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Featured Image</label>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="space-y-2">
+              <label class="block text-xs text-gray-500">Option A: Upload Local Image File</label>
+              <input type="file" id="feat-file" accept="image/*" class="w-full text-xs text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer"/>
+            </div>
+            <div class="space-y-2">
+              <label class="block text-xs text-gray-500">Option B: Featured Image URL</label>
+              <input type="url" id="feat-url" class="w-full px-3 py-1.5 rounded-lg border border-gray-300 focus:outline-none focus:border-primary text-xs transition-all" placeholder="https://example.com/image.jpg">
+            </div>
+          </div>
+          <!-- Preview container -->
+          <div id="feat-preview-box" class="hidden border border-gray-200 rounded-xl overflow-hidden max-h-[140px] relative mt-2 bg-white">
+            <img id="feat-preview-img" src="" class="w-full h-full object-cover max-h-[140px]" alt="Featured preview"/>
+            <button type="button" id="btn-remove-feat" class="absolute top-2 right-2 bg-black/60 text-white rounded-full w-7 h-7 flex items-center justify-center hover:bg-black/80 transition-colors"><span class="material-symbols-outlined text-[18px]">close</span></button>
+          </div>
+        </div>
+
+        <!-- Dynamic Content Section Builder -->
+        <div class="border-t border-stone-100 pt-6 space-y-4">
+          <div class="flex items-center justify-between">
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider">Dynamic Layout Builder</label>
+            <span class="text-xs text-gray-400">Assemble article sections in custom order</span>
+          </div>
+
+          <!-- The Active Builder Container -->
+          <div id="sections-container" class="space-y-4">
+            <!-- Populated dynamically via script -->
+          </div>
+
+          <!-- Add section tools -->
+          <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 pt-2">
+            <button type="button" onclick="addSection('paragraph')" class="flex flex-col items-center justify-center p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl transition-all group">
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">article</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-1">Paragraph</span>
+            </button>
+            <button type="button" onclick="addSection('heading')" class="flex flex-col items-center justify-center p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl transition-all group">
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">title</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-1">Heading</span>
+            </button>
+            <button type="button" onclick="addSection('blockquote')" class="flex flex-col items-center justify-center p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl transition-all group">
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">format_quote</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-1">Blockquote</span>
+            </button>
+            <button type="button" onclick="addSection('image')" class="flex flex-col items-center justify-center p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl transition-all group">
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">image</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-1">Image Block</span>
+            </button>
+            <button type="button" onclick="addSection('list')" class="flex flex-col items-center justify-center p-3 bg-stone-50 hover:bg-stone-100 border border-stone-200 rounded-xl transition-all group col-span-2 sm:col-span-1">
+              <span class="material-symbols-outlined text-primary group-hover:scale-110 transition-transform">format_list_numbered</span>
+              <span class="text-[10px] font-semibold text-gray-600 mt-1">Numbered List</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Publishing Status and Date -->
+        <div class="border-t border-stone-100 pt-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Status</label>
+            <select id="post-status" class="w-full px-3 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all">
+              <option value="draft">Draft (Private draft in manager)</option>
+              <option value="published">Published / Scheduled (Viewable online)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-1">Publish / Schedule Date & Time</label>
+            <input type="datetime-local" id="post-publish-date" class="w-full px-3 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all">
+            <span class="text-[10px] text-gray-400 mt-1 block">Leave blank to publish immediately, or pick a future date to schedule.</span>
+          </div>
+        </div>
+
+        <!-- Form Actions -->
+        <div class="flex items-center justify-end gap-3 border-t border-stone-100 pt-6">
+          <button type="button" id="btn-cancel-compose" class="bg-stone-100 hover:bg-stone-200 text-gray-700 px-6 py-2.5 rounded-full font-semibold transition-colors text-sm shadow-sm">
+            Cancel
+          </button>
+          <button type="submit" class="bg-primary hover:bg-[#002b54] text-white px-8 py-2.5 rounded-full font-semibold transition-all text-sm shadow-sm">
+            Save Article
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!-- RIGHT POSTS MANAGER LISTING -->
+    <div id="posts-manager-container" class="lg:col-span-12 bg-white rounded-3xl p-6 md:p-8 shadow-md border border-gray-100/80 space-y-6">
+      <h2 class="font-display text-2xl font-bold text-secondary flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary">feed</span>
+        Published & Draft Articles Manager
+      </h2>
+
+      <!-- Search & Filters -->
+      <div class="flex flex-col sm:flex-row gap-3">
+        <div class="relative flex-grow">
+          <input type="text" id="mgr-search" placeholder="Search by title, author, or category..." class="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-primary text-sm transition-all"/>
+          <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 material-symbols-outlined text-[18px]">search</span>
+        </div>
+        <select id="mgr-status-filter" class="px-4 py-2.5 bg-stone-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-primary text-sm transition-all">
+          <option value="all">All Statuses</option>
+          <option value="published">Published</option>
+          <option value="scheduled">Scheduled</option>
+          <option value="draft">Drafts</option>
+        </select>
+      </div>
+
+      <!-- Articles Grid/Table -->
+      <div class="overflow-x-auto rounded-2xl border border-gray-100">
+        <table class="w-full text-left text-sm text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase bg-stone-50 border-b border-gray-100 font-bold">
+            <tr>
+              <th scope="col" class="px-6 py-4">Title</th>
+              <th scope="col" class="px-6 py-4">Category</th>
+              <th scope="col" class="px-6 py-4">Status</th>
+              <th scope="col" class="px-6 py-4">Views</th>
+              <th scope="col" class="px-6 py-4">Comments</th>
+              <th scope="col" class="px-6 py-4">Publish Date</th>
+              <th scope="col" class="px-6 py-4 text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="mgr-posts-list" class="divide-y divide-gray-100">
+            <!-- Loaded dynamically via script -->
+          </tbody>
+        </table>
+        <div id="no-posts-alert" class="hidden text-center py-12 text-gray-400 italic">
+          No articles written yet. Click "New Post" to compose your very first masterpiece!
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="bg-[#111613] text-stone-400 py-8 text-center text-sm mt-12 border-t border-gray-100">
+  <p>© 2026 Bill of Senga. Created by <span class="text-white font-semibold">SoftCode Tech</span></p>
+</footer>
+
+<!-- Modals -->
+<!-- New Custom Category Modal -->
+<div id="cat-modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 hidden px-4">
+  <div class="bg-white rounded-3xl p-6 w-full max-w-md shadow-2xl border border-gray-100 relative">
+    <h3 class="font-display text-xl font-bold text-secondary mb-4 flex items-center gap-1.5">
+      <span class="material-symbols-outlined text-primary">category</span>
+      Create Custom Category
+    </h3>
+    <input type="text" id="custom-cat-input" required class="w-full px-4 py-2.5 rounded-xl border border-gray-300 focus:outline-none focus:border-primary text-sm transition-all mb-4" placeholder="Eco Forestry, Climate Finance..."/>
+    <div class="flex items-center justify-end gap-3">
+      <button type="button" id="btn-cancel-cat" class="bg-stone-100 hover:bg-stone-200 text-gray-700 px-5 py-2 rounded-full font-semibold transition-colors text-xs shadow-sm">Cancel</button>
+      <button type="button" id="btn-save-cat" class="bg-primary hover:bg-[#002b54] text-white px-5 py-2 rounded-full font-semibold transition-colors text-xs shadow-sm">Save Category</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  let sectionIndex = 0;
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Check if custom category list exists in localStorage, otherwise initialize
+    let customCats = JSON.parse(localStorage.getItem('bos_custom_categories') || '[]');
+    const selectCat = document.getElementById('post-category');
+    
+    function populateCategories() {
+      // Clear all options beyond standard
+      selectCat.innerHTML = `
+        <option value="Soil Science">Soil Science</option>
+        <option value="Forestry & Climate">Forestry & Climate</option>
+        <option value="Urban Farming">Urban Farming</option>
+      `;
+      customCats.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.innerText = cat;
+        selectCat.appendChild(opt);
+      });
+    }
+    populateCategories();
+
+    // Custom category actions
+    const catModal = document.getElementById('cat-modal');
+    document.getElementById('btn-add-cat').addEventListener('click', () => {
+      document.getElementById('custom-cat-input').value = '';
+      catModal.classList.remove('hidden');
+    });
+    document.getElementById('btn-cancel-cat').addEventListener('click', () => {
+      catModal.classList.add('hidden');
+    });
+    document.getElementById('btn-save-cat').addEventListener('click', () => {
+      const newCatVal = document.getElementById('custom-cat-input').value.trim();
+      if (newCatVal && !customCats.includes(newCatVal)) {
+        customCats.push(newCatVal);
+        localStorage.setItem('bos_custom_categories', JSON.stringify(customCats));
+        populateCategories();
+        selectCat.value = newCatVal;
+      }
+      catModal.classList.add('hidden');
+    });
+
+    // Auto slug generator from title
+    const titleInput = document.getElementById('post-title');
+    const slugInput = document.getElementById('post-slug');
+    titleInput.addEventListener('input', () => {
+      if (document.getElementById('post-id').value === '') { // Only generate automatically if new
+        slugInput.value = generateSlug(titleInput.value);
+      }
+    });
+
+    // Featured image handlers
+    const featFileInput = document.getElementById('feat-file');
+    const featUrlInput = document.getElementById('feat-url');
+    const featPreviewBox = document.getElementById('feat-preview-box');
+    const featPreviewImg = document.getElementById('feat-preview-img');
+    let featuredImageBase64 = '';
+
+    featFileInput.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        compressImage(file, 800, 0.7, (base64) => {
+          featuredImageBase64 = base64;
+          featPreviewImg.src = base64;
+          featPreviewBox.classList.remove('hidden');
+          featUrlInput.value = ''; // clear url input
+        });
+      }
+    });
+
+    featUrlInput.addEventListener('input', () => {
+      const val = featUrlInput.value.trim();
+      if (val) {
+        featuredImageBase64 = val;
+        featPreviewImg.src = val;
+        featPreviewBox.classList.remove('hidden');
+        featFileInput.value = ''; // clear file input
+      }
+    });
+
+    document.getElementById('btn-remove-feat').addEventListener('click', () => {
+      featuredImageBase64 = '';
+      featFileInput.value = '';
+      featUrlInput.value = '';
+      featPreviewBox.classList.add('hidden');
+    });
+
+    // Compose / cancel visibility toggles
+    const editor = document.getElementById('editor-container');
+    const listContainer = document.getElementById('posts-manager-container');
+
+    document.getElementById('btn-new-post').addEventListener('click', () => {
+      resetEditorForm();
+      document.getElementById('editor-title-text').innerText = 'Compose New Article';
+      
+      // Make layout responsive toggles
+      listContainer.classList.remove('lg:col-span-12');
+      listContainer.classList.add('lg:col-span-4');
+      editor.classList.remove('hidden');
+    });
+
+    const closeEditor = () => {
+      editor.classList.add('hidden');
+      listContainer.classList.remove('lg:col-span-4');
+      listContainer.classList.add('lg:col-span-12');
+      resetEditorForm();
+    };
+
+    document.getElementById('btn-close-editor').addEventListener('click', closeEditor);
+    document.getElementById('btn-cancel-compose').addEventListener('click', closeEditor);
+
+    // Form submit saver
+    document.getElementById('post-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const id = document.getElementById('post-id').value || 'post-' + Date.now();
+      const title = titleInput.value.trim();
+      const slug = slugInput.value.trim();
+      const category = selectCat.value;
+      const author = document.getElementById('post-author').value.trim() || 'BOS Editorial Team';
+      const readTime = parseInt(document.getElementById('post-read-time').value) || 5;
+      const desc = document.getElementById('post-desc').value.trim();
+      const statusInput = document.getElementById('post-status').value;
+      const publishDateInput = document.getElementById('post-publish-date').value;
+
+      // Extract sections in layout order
+      const sections = [];
+      const sectionElements = document.querySelectorAll('.content-section-item');
+      sectionElements.forEach(secEl => {
+        const secId = secEl.getAttribute('data-id');
+        const type = secEl.getAttribute('data-type');
+        let value = '';
+        let caption = '';
+
+        if (type === 'heading') {
+          value = document.getElementById(`sec-val-${secId}`).value.trim();
+        } else if (type === 'paragraph' || type === 'blockquote') {
+          value = document.getElementById(`sec-val-${secId}`).value.trim();
+        } else if (type === 'list') {
+          value = document.getElementById(`sec-val-${secId}`).value.trim();
+        } else if (type === 'image') {
+          value = secEl.getAttribute('data-img-src') || '';
+          caption = document.getElementById(`sec-cap-${secId}`).value.trim();
+        }
+
+        if (value) {
+          sections.push({ type, value, caption });
+        }
+      });
+
+      const customPosts = JSON.parse(localStorage.getItem('bos_custom_posts') || '[]');
+      const postIdx = customPosts.findIndex(p => p.id === id);
+
+      const resolvedStatus = statusInput === 'published' && publishDateInput && new Date(publishDateInput) > new Date() ? 'scheduled' : statusInput;
+
+      const postData = {
+        id,
+        title,
+        slug,
+        category,
+        author,
+        readTime,
+        description: desc,
+        featuredImage: featuredImageBase64,
+        sections,
+        status: resolvedStatus,
+        publishDate: publishDateInput || new Date().toISOString(),
+        createdAt: postIdx !== -1 ? customPosts[postIdx].createdAt : new Date().toISOString(),
+        initialViews: postIdx !== -1 ? customPosts[postIdx].initialViews : Math.floor(Math.random() * 20) + 15
+      };
+
+      if (postIdx !== -1) {
+        customPosts[postIdx] = postData;
+      } else {
+        customPosts.unshift(postData);
+      }
+
+      localStorage.setItem('bos_custom_posts', JSON.stringify(customPosts));
+      
+      showNotice('success', 'Article saved and published successfully!');
+      closeEditor();
+      renderManagerList();
+    });
+
+    // Filtering managers
+    document.getElementById('mgr-search').addEventListener('input', renderManagerList);
+    document.getElementById('mgr-status-filter').addEventListener('change', renderManagerList);
+
+    // Initial render
+    renderManagerList();
+  });
+
+  // Core image compression block using HTML Canvas to fit Base64 inside local storage comfortably!
+  function compressImage(file, maxWidth, quality, callback) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      const img = new Image();
+      img.onload = () => {
+        const canvas = document.createElement('canvas');
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+
+        const dataURL = canvas.toDataURL('image/jpeg', quality);
+        callback(dataURL);
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  function generateSlug(str) {
+    return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+  }
+
+  function resetEditorForm() {
+    document.getElementById('post-id').value = '';
+    document.getElementById('post-title').value = '';
+    document.getElementById('post-slug').value = '';
+    document.getElementById('post-category').value = 'Soil Science';
+    document.getElementById('post-author').value = '';
+    document.getElementById('post-read-time').value = '';
+    document.getElementById('post-desc').value = '';
+    document.getElementById('feat-file').value = '';
+    document.getElementById('feat-url').value = '';
+    document.getElementById('feat-preview-box').classList.add('hidden');
+    document.getElementById('feat-preview-img').src = '';
+    document.getElementById('sections-container').innerHTML = '';
+    document.getElementById('post-status').value = 'published';
+    document.getElementById('post-publish-date').value = '';
+    sectionIndex = 0;
+  }
+
+  function addSection(type, presetValue = '', presetCaption = '') {
+    sectionIndex++;
+    const container = document.getElementById('sections-container');
+    const secId = sectionIndex;
+    
+    const wrapper = document.createElement('div');
+    wrapper.id = `sec-wrap-${secId}`;
+    wrapper.className = 'content-section-item p-4 bg-stone-50 border border-stone-200 rounded-2xl relative space-y-3';
+    wrapper.setAttribute('data-id', secId);
+    wrapper.setAttribute('data-type', type);
+
+    // Section Type Headers
+    let headerLabel = '';
+    let formElement = '';
+
+    if (type === 'heading') {
+      headerLabel = 'Sub-heading';
+      formElement = `<input type="text" id="sec-val-${secId}" required class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-primary text-sm" placeholder="Enter sub-heading title..." value="${presetValue}">`;
+    } else if (type === 'paragraph') {
+      headerLabel = 'Paragraph text';
+      formElement = `<textarea id="sec-val-${secId}" required rows="4" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-primary text-sm" placeholder="Write paragraph body details here...">${presetValue}</textarea>`;
+    } else if (type === 'blockquote') {
+      headerLabel = 'Blockquote text';
+      formElement = `<textarea id="sec-val-${secId}" required rows="3" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-primary text-sm italic" placeholder="Enter key citation or quote highlight...">${presetValue}</textarea>`;
+    } else if (type === 'list') {
+      headerLabel = 'Numbered / Bullet Items';
+      formElement = `<textarea id="sec-val-${secId}" required rows="3" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-primary text-sm" placeholder="Type items, each on a new line...">${presetValue}</textarea>`;
+    } else if (type === 'image') {
+      headerLabel = 'Content Image';
+      wrapper.setAttribute('data-img-src', presetValue);
+      formElement = `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] text-gray-500 mb-1">Local Image File</label>
+            <input type="file" id="sec-file-${secId}" accept="image/*" class="w-full text-xs text-stone-500 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-[11px] file:font-semibold file:bg-primary/10 file:text-primary cursor-pointer"/>
+          </div>
+          <div>
+            <label class="block text-[11px] text-gray-500 mb-1">Image URL</label>
+            <input type="url" id="sec-url-val-${secId}" class="w-full px-3 py-1.5 rounded-lg border border-gray-300 text-xs focus:outline-none" placeholder="https://example.com/photo.jpg" value="${presetValue.startsWith('data:') ? '' : presetValue}"/>
+          </div>
+        </div>
+        <div>
+          <label class="block text-[11px] text-gray-500 mb-1">Optional Image Caption</label>
+          <input type="text" id="sec-cap-${secId}" class="w-full px-3 py-2 rounded-xl border border-gray-300 focus:outline-none focus:border-primary text-xs" placeholder="Photograph showing community biochar kiln..." value="${presetCaption}"/>
+        </div>
+        <div id="sec-preview-box-${secId}" class="${presetValue ? '' : 'hidden'} border border-stone-200 rounded-xl overflow-hidden max-h-[120px] bg-white mt-1 relative">
+          <img id="sec-preview-img-${secId}" src="${presetValue}" class="w-full h-full object-cover max-h-[120px]" alt="Section image"/>
+        </div>
+      `;
+    }
+
+    wrapper.innerHTML = `
+      <div class="flex items-center justify-between border-b border-stone-100 pb-2">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-primary"></span>
+          <span class="text-xs font-bold text-secondary uppercase tracking-wider">${headerLabel}</span>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="moveSection(${secId}, 'up')" class="text-gray-400 hover:text-primary" title="Move Up"><span class="material-symbols-outlined text-[20px]">arrow_upward</span></button>
+          <button type="button" onclick="moveSection(${secId}, 'down')" class="text-gray-400 hover:text-primary" title="Move Down"><span class="material-symbols-outlined text-[20px]">arrow_downward</span></button>
+          <button type="button" onclick="removeSection(${secId})" class="text-gray-400 hover:text-red-500" title="Delete section"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+        </div>
+      </div>
+      <div class="space-y-3">
+        ${formElement}
+      </div>
+    `;
+
+    container.appendChild(wrapper);
+
+    // Dynamic bindings for image uploads within sections
+    if (type === 'image') {
+      const fileIn = document.getElementById(`sec-file-${secId}`);
+      const urlIn = document.getElementById(`sec-url-val-${secId}`);
+      const previewBox = document.getElementById(`sec-preview-box-${secId}`);
+      const previewImg = document.getElementById(`sec-preview-img-${secId}`);
+
+      fileIn.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+          compressImage(file, 800, 0.7, (base64) => {
+            wrapper.setAttribute('data-img-src', base64);
+            previewImg.src = base64;
+            previewBox.classList.remove('hidden');
+            urlIn.value = '';
+          });
+        }
+      });
+
+      urlIn.addEventListener('input', () => {
+        const val = urlIn.value.trim();
+        if (val) {
+          wrapper.setAttribute('data-img-src', val);
+          previewImg.src = val;
+          previewBox.classList.remove('hidden');
+          fileIn.value = '';
+        }
+      });
+    }
+  }
+
+  function removeSection(secId) {
+    const wrap = document.getElementById(`sec-wrap-${secId}`);
+    if (wrap) wrap.remove();
+  }
+
+  function moveSection(secId, direction) {
+    const wrap = document.getElementById(`sec-wrap-${secId}`);
+    if (!wrap) return;
+
+    if (direction === 'up') {
+      const prev = wrap.previousElementSibling;
+      if (prev && prev.classList.contains('content-section-item')) {
+        wrap.parentNode.insertBefore(wrap, prev);
+      }
+    } else if (direction === 'down') {
+      const next = wrap.nextElementSibling;
+      if (next && next.classList.contains('content-section-item')) {
+        wrap.parentNode.insertBefore(next, wrap);
+      }
+    }
+  }
+
+  function renderManagerList() {
+    const customPosts = JSON.parse(localStorage.getItem('bos_custom_posts') || '[]');
+    const searchQuery = document.getElementById('mgr-search').value.toLowerCase().trim();
+    const statusFilter = document.getElementById('mgr-status-filter').value;
+    
+    const tbody = document.getElementById('mgr-posts-list');
+    const noPosts = document.getElementById('no-posts-alert');
+    tbody.innerHTML = '';
+
+    const filtered = customPosts.filter(p => {
+      // Status filtration
+      const isScheduled = p.status === 'scheduled' || (p.status === 'published' && new Date(p.publishDate) > new Date());
+      const resolvedStatus = isScheduled ? 'scheduled' : p.status;
+
+      if (statusFilter !== 'all' && resolvedStatus !== statusFilter) {
+        return false;
+      }
+
+      // Search filtration
+      if (searchQuery) {
+        const titleMatch = p.title.toLowerCase().includes(searchQuery);
+        const authorMatch = p.author.toLowerCase().includes(searchQuery);
+        const categoryMatch = p.category.toLowerCase().includes(searchQuery);
+        return titleMatch || authorMatch || categoryMatch;
+      }
+
+      return true;
+    });
+
+    if (filtered.length === 0) {
+      noPosts.classList.remove('hidden');
+      return;
+    }
+    noPosts.classList.add('hidden');
+
+    filtered.forEach(p => {
+      const tr = document.createElement('tr');
+      tr.className = 'hover:bg-stone-50 transition-colors border-b border-gray-100';
+
+      const isScheduled = p.status === 'scheduled' || (p.status === 'published' && new Date(p.publishDate) > new Date());
+      
+      let badge = '';
+      if (p.status === 'draft') {
+        badge = '<span class="inline-flex px-2 py-0.5 text-xs font-semibold rounded-full bg-stone-100 text-stone-600">Draft</span>';
+      } else if (isScheduled) {
+        badge = '<span class="inline-flex px-2 py-0.5 text-xs font-semibold rounded-full bg-amber-50 text-amber-700 border border-amber-200">Scheduled</span>';
+      } else {
+        badge = '<span class="inline-flex px-2 py-0.5 text-xs font-semibold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">Published</span>';
+      }
+
+      const viewsKey = `bos_views_${p.id}`;
+      const views = parseInt(localStorage.getItem(viewsKey)) || p.initialViews || 42;
+      const comments = JSON.parse(localStorage.getItem(`bos_comments_${p.id}`) || '[]').length;
+
+      tr.innerHTML = `
+        <td class="px-6 py-4 font-semibold text-secondary">${p.title}</td>
+        <td class="px-6 py-4">${p.category}</td>
+        <td class="px-6 py-4">${badge}</td>
+        <td class="px-6 py-4">${views.toLocaleString()}</td>
+        <td class="px-6 py-4">${comments}</td>
+        <td class="px-6 py-4 text-xs">${formatDate(p.publishDate || p.createdAt)}</td>
+        <td class="px-6 py-4 text-right">
+          <div class="flex items-center justify-end gap-2.5">
+            <a href="/blog/view.html?id=${p.id}&preview=true" class="text-stone-400 hover:text-primary transition-colors" title="Preview Article"><span class="material-symbols-outlined text-[20px]">visibility</span></a>
+            <button onclick="editPost('${p.id}')" class="text-stone-400 hover:text-primary transition-colors" title="Edit Article"><span class="material-symbols-outlined text-[20px]">edit</span></button>
+            <button onclick="deletePost('${p.id}')" class="text-stone-400 hover:text-red-500 transition-colors" title="Delete Article"><span class="material-symbols-outlined text-[20px]">delete</span></button>
+          </div>
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function editPost(id) {
+    const customPosts = JSON.parse(localStorage.getItem('bos_custom_posts') || '[]');
+    const post = customPosts.find(p => p.id === id);
+    if (!post) return;
+
+    resetEditorForm();
+
+    document.getElementById('post-id').value = post.id;
+    document.getElementById('post-title').value = post.title;
+    document.getElementById('post-slug').value = post.slug;
+    document.getElementById('post-category').value = post.category;
+    document.getElementById('post-author').value = post.author || '';
+    document.getElementById('post-read-time').value = post.readTime || '';
+    document.getElementById('post-desc').value = post.description || '';
+    
+    // Featured Image Re-load
+    if (post.featuredImage) {
+      document.getElementById('feat-preview-img').src = post.featuredImage;
+      document.getElementById('feat-preview-box').classList.remove('hidden');
+      if (post.featuredImage.startsWith('data:')) {
+        featuredImageBase64 = post.featuredImage;
+      } else {
+        document.getElementById('feat-url').value = post.featuredImage;
+        featuredImageBase64 = post.featuredImage;
+      }
+    }
+
+    // Sections Re-load
+    if (post.sections && post.sections.length > 0) {
+      post.sections.forEach(sec => {
+        addSection(sec.type, sec.value, sec.caption);
+      });
+    }
+
+    document.getElementById('post-status').value = post.status === 'scheduled' ? 'published' : post.status;
+    if (post.publishDate) {
+      // Local ISO converter to match datetime-local format: YYYY-MM-DDThh:mm
+      try {
+        const d = new Date(post.publishDate);
+        const pad = (n) => String(n).padStart(2, '0');
+        const formattedDate = `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+        document.getElementById('post-publish-date').value = formattedDate;
+      } catch (e) {}
+    }
+
+    document.getElementById('editor-title-text').innerText = 'Edit Article';
+    
+    // Show editor card alongside manager list
+    const editor = document.getElementById('editor-container');
+    const listContainer = document.getElementById('posts-manager-container');
+    listContainer.classList.remove('lg:col-span-12');
+    listContainer.classList.add('lg:col-span-4');
+    editor.classList.remove('hidden');
+  }
+
+  function deletePost(id) {
+    if (!confirm('Are you absolutely sure you want to delete this article? All active comments, views, and details will be permanently removed.')) {
+      return;
+    }
+
+    let customPosts = JSON.parse(localStorage.getItem('bos_custom_posts') || '[]');
+    customPosts = customPosts.filter(p => p.id !== id);
+    localStorage.setItem('bos_custom_posts', JSON.stringify(customPosts));
+
+    // Cleanup storage keys for comments and views
+    localStorage.removeItem(`bos_views_${id}`);
+    localStorage.removeItem(`bos_comments_${id}`);
+
+    showNotice('success', 'Article deleted successfully.');
+    renderManagerList();
+  }
+
+  function showNotice(type, msg) {
+    const banner = document.getElementById('notice-banner');
+    const bannerMsg = document.getElementById('notice-message');
+    const bannerIcon = document.getElementById('notice-icon');
+    
+    bannerMsg.innerText = msg;
+    banner.classList.remove('hidden');
+    
+    if (type === 'success') {
+      banner.className = 'mb-6 p-4 rounded-2xl flex items-center justify-between gap-3 text-sm bg-emerald-50 text-emerald-800 border border-emerald-200';
+      bannerIcon.innerText = 'check_circle';
+    } else {
+      banner.className = 'mb-6 p-4 rounded-2xl flex items-center justify-between gap-3 text-sm bg-red-50 text-red-800 border border-red-200';
+      bannerIcon.innerText = 'warning';
+    }
+  }
+
+  function hideNotice() {
+    document.getElementById('notice-banner').classList.add('hidden');
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return '';
+    try {
+      const d = new Date(dateStr);
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      return `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
+    } catch (e) {
+      return dateStr;
+    }
+  }
+</script>
+</body>
+</html>

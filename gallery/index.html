@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Gallery — Bill of Senga</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#003B73",
+            "secondary": "#1B3022",
+            "background": "#faf9f4",
+            "surface": "#faf9f4",
+            "surface-container": "#efeee9",
+            "surface-container-low": "#f5f4ef",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1b1c19",
+            "on-surface-variant": "#434843",
+            "outline-variant": "#c3c8c1",
+            "on-primary": "#ffffff"
+          },
+          "fontFamily": {
+            "display": ["Newsreader"],
+            "body": ["Work Sans"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .texture-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 50;
+      background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen relative font-body overflow-x-hidden flex flex-col">
+  <div class="texture-overlay"></div>
+
+  <!-- Header -->
+  <header class="bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-container/50 shadow-sm transition-all duration-300 ease-out z-40 sticky top-0">
+    <div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+      <a href="/index.html" class="flex items-center">
+        <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+      </a>
+      <nav class="hidden lg:flex space-x-6 items-center z-50 h-full">
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/index.html">Home</a>
+
+        <!-- About Dropdown -->
+        <div class="relative group h-full flex items-center">
+          <button class="flex items-center gap-1 text-stone-500 hover:text-primary hover:bg-stone-50 h-full px-3 transition-all duration-300 ease-out font-semibold text-sm focus:outline-none">
+            About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          </button>
+          <div class="absolute top-full left-0 pt-0 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="bg-surface rounded-xl shadow-xl border border-outline-variant/30 p-2 flex flex-col gap-1">
+              <a href="/about/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+              <a href="/the_story_of_senga/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+              <a href="/mission/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+              <a href="/team/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Our Hubs Dropdown -->
+        <div class="relative group h-full flex items-center">
+          <button class="flex items-center gap-1 text-stone-500 hover:text-primary hover:bg-stone-50 h-full px-3 transition-all duration-300 ease-out font-semibold text-sm focus:outline-none">
+            Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          </button>
+          <div class="absolute top-full left-0 pt-0 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="bg-surface rounded-xl shadow-xl border border-outline-variant/30 p-2 flex flex-col gap-1">
+              <a href="/practical_classroom/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+              <a href="/tree_billionaire_generation/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+              <a href="/community_villages/index.html" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+            </div>
+          </div>
+        </div>
+
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/index.html#projects">Projects</a>
+        <a class="h-full flex items-center text-primary border-b-2 border-primary h-full px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/gallery/index.html">Gallery</a>
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/blog/index.html">Blog</a>
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/contact/index.html">Contact Us</a>
+      </nav>
+      <a href="/join_the_movement/index.html" class="hidden md:inline-flex items-center justify-center px-8 py-2.5 bg-gradient-to-r from-primary to-[#0052a3] text-white rounded-full font-semibold hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 shadow-sm text-center">
+        Join the Movement
+      </a>
+      <button class="lg:hidden text-primary">
+        <span class="material-symbols-outlined text-[28px]">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+    <!-- Hero Header -->
+    <section class="relative bg-gradient-to-br from-secondary to-primary text-white py-24 px-6 text-center">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest block">Multimedia Archive</span>
+        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">Visualizing Our Progress</h1>
+        <p class="text-stone-300 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed">
+          Explore scenes of restorative agroecology, practical school classrooms, and global youth action on Senga hillside.
+        </p>
+      </div>
+    </section>
+
+    <!-- Interactive Filter & Grid -->
+    <section class="py-16 px-6 max-w-7xl mx-auto space-y-12">
+      <!-- Filter Category Buttons -->
+      <div class="flex flex-wrap justify-center gap-3">
+        <button onclick="filterGallery('all')" class="gallery-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm bg-primary text-white hover:shadow-md transition-all">All Photos</button>
+        <button onclick="filterGallery('soil')" class="gallery-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm bg-white text-stone-600 border border-stone-200 hover:bg-stone-50 transition-all">Soil Science</button>
+        <button onclick="filterGallery('trees')" class="gallery-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm bg-white text-stone-600 border border-stone-200 hover:bg-stone-50 transition-all">Tree Planting</button>
+        <button onclick="filterGallery('classroom')" class="gallery-filter-btn px-6 py-2.5 rounded-full font-semibold text-sm bg-white text-stone-600 border border-stone-200 hover:bg-stone-50 transition-all">Practical Classrooms</button>
+      </div>
+
+      <!-- Gallery Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6" id="gallery-grid">
+        
+        <!-- Photo 1 -->
+        <div class="gallery-card bg-white rounded-3xl overflow-hidden border border-stone-200/50 shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer" data-category="soil" onclick="openLightbox('/blog_soil.png', 'Vibrant Organic Cover Crops', 'Healthy cover crops grown to regenerate dry, compacted soil on the Senga hillside.')">
+          <div class="h-64 bg-stone-100 overflow-hidden relative">
+            <img src="/blog_soil.png" alt="Organic Cover Crops" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-4 left-4 bg-primary text-white text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full">Soil Science</span>
+          </div>
+          <div class="p-5">
+            <h4 class="font-display text-lg font-bold text-secondary">Vibrant Organic Cover Crops</h4>
+            <p class="text-xs text-stone-500 mt-1">Kyampisi, Uganda</p>
+          </div>
+        </div>
+
+        <!-- Photo 2 -->
+        <div class="gallery-card bg-white rounded-3xl overflow-hidden border border-stone-200/50 shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer" data-category="trees" onclick="openLightbox('/blog_tree.png', 'Indigenous Tree Nursery', 'Over 10,000 native saplings raised by local school kids under the Tree Billionaires initiative.')">
+          <div class="h-64 bg-stone-100 overflow-hidden relative">
+            <img src="/blog_tree.png" alt="Tree Nursery" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-4 left-4 bg-emerald-600 text-white text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full">Tree Planting</span>
+          </div>
+          <div class="p-5">
+            <h4 class="font-display text-lg font-bold text-secondary">Indigenous Tree Nursery</h4>
+            <p class="text-xs text-stone-500 mt-1">Forestry Hub</p>
+          </div>
+        </div>
+
+        <!-- Photo 3 -->
+        <div class="gallery-card bg-white rounded-3xl overflow-hidden border border-stone-200/50 shadow-md group hover:shadow-xl transition-all duration-300 cursor-pointer" data-category="classroom" onclick="openLightbox('/blog_rooftop.png', 'Demonstration Hub Visit', 'School groups visiting the community garden to learn about vertical bag gardening and irrigation.')">
+          <div class="h-64 bg-stone-100 overflow-hidden relative">
+            <img src="/blog_rooftop.png" alt="Garden Classroom" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+            <span class="absolute top-4 left-4 bg-amber-600 text-white text-[10px] uppercase font-bold tracking-widest px-2.5 py-1 rounded-full">Classrooms</span>
+          </div>
+          <div class="p-5">
+            <h4 class="font-display text-lg font-bold text-secondary">Demonstration Hub Visit</h4>
+            <p class="text-xs text-stone-500 mt-1">Practical Classroom</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Interactive Lightbox Modal -->
+  <div id="lightbox" class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-6 hidden transition-opacity duration-300 opacity-0" onclick="closeLightbox()">
+    <button class="absolute top-6 right-6 text-white hover:text-stone-300" onclick="closeLightbox()">
+      <span class="material-symbols-outlined text-[40px]">close</span>
+    </button>
+    <div class="max-w-4xl w-full flex flex-col gap-4 text-white text-center" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="" class="max-h-[70vh] object-contain rounded-2xl mx-auto shadow-2xl">
+      <div class="space-y-1">
+        <h3 id="lightbox-title" class="font-display text-2xl font-bold"></h3>
+        <p id="lightbox-desc" class="text-stone-400 text-sm max-w-xl mx-auto"></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-[#0f1f0f] text-white py-12 px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <img src="/logo.png" alt="" class="h-10 w-auto object-contain brightness-0 invert">
+        <span class="font-display text-xl font-bold tracking-wider">Bill of Senga</span>
+      </div>
+      <p class="text-stone-400 text-sm">© 2026 Bill of Senga. Empowering Sustainable Regenerative Communities.</p>
+    </div>
+  </footer>
+
+  <!-- Lightbox & Filter Scripts -->
+  <script>
+    function filterGallery(category) {
+      // 1. Style Filter Buttons
+      const buttons = document.querySelectorAll('.gallery-filter-btn');
+      buttons.forEach(btn => {
+        btn.classList.remove('bg-primary', 'text-white', 'hover:shadow-md');
+        btn.classList.add('bg-white', 'text-stone-600', 'border', 'border-stone-200', 'hover:bg-stone-50');
+      });
+
+      const activeBtn = event.currentTarget;
+      activeBtn.classList.remove('bg-white', 'text-stone-600', 'border', 'border-stone-200', 'hover:bg-stone-50');
+      activeBtn.classList.add('bg-primary', 'text-white', 'hover:shadow-md');
+
+      // 2. Filter Cards
+      const cards = document.querySelectorAll('.gallery-card');
+      cards.forEach(card => {
+        if (category === 'all' || card.getAttribute('data-category') === category) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    function openLightbox(src, title, desc) {
+      const lightbox = document.getElementById('lightbox');
+      const img = document.getElementById('lightbox-img');
+      const titleEl = document.getElementById('lightbox-title');
+      const descEl = document.getElementById('lightbox-desc');
+
+      img.src = src;
+      titleEl.innerText = title;
+      descEl.innerText = desc;
+
+      lightbox.classList.remove('hidden');
+      setTimeout(() => {
+        lightbox.classList.remove('opacity-0');
+        lightbox.classList.add('opacity-100');
+      }, 50);
+    }
+
+    function closeLightbox() {
+      const lightbox = document.getElementById('lightbox');
+      lightbox.classList.remove('opacity-100');
+      lightbox.classList.add('opacity-0');
+      setTimeout(() => {
+        lightbox.classList.add('hidden');
+      }, 300);
+    }
+  </script>
+</body>
+</html>

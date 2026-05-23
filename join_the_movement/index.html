@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>Join the Movement - Bill of Senga</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary": "#003B73",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#737973",
+                        "on-secondary-fixed": "#2a170c",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#002a54",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#bacda4",
+                        "tertiary-fixed": "#d6e9be",
+                        "surface-variant": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "secondary-container": "#fed8c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3c4c2c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#003B73",
+                        "on-tertiary-fixed": "#111f05",
+                        "tertiary-container": "#213013",
+                        "secondary": "#1B3022",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "secondary-fixed-dim": "#e3bfad",
+                        "on-tertiary-container": "#879973",
+                        "primary-fixed": "#d0e9d4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdbca",
+                        "on-surface-variant": "#434843",
+                        "outline-variant": "#c3c8c1",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#4d6b8c",
+                        "surface-bright": "#faf9f4",
+                        "inverse-primary": "#b4cdb8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#0d1b03",
+                        "on-primary-fixed": "#0b2013",
+                        "on-secondary-container": "#795d4e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a4134"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "display": ["Newsreader"],
+                        "h3": ["Newsreader"],
+                        "body-md": ["Work Sans"],
+                        "h2": ["Newsreader"],
+                        "h1": ["Newsreader"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["22px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .texture-overlay {
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col font-body-md relative overflow-x-hidden">
+<div class="texture-overlay z-50"></div>
+
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-variant/50 shadow-sm transition-all duration-300 ease-out">
+<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full transition-all duration-300 ease-out">
+<a href="/index.html" class="flex items-center">
+    <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+</a>
+<nav class="hidden lg:flex space-x-6 items-center z-50">
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/index.html">Home</a>
+
+<!-- About Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="/about/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+      <a href="/the_story_of_senga/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+      <a href="/mission/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+      <a href="/team/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- Our Hubs Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="/practical_classroom/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+      <a href="/tree_billionaire_generation/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+      <a href="/community_villages/index.html" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+    </div>
+  </div>
+</div>
+
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/index.html#projects">Projects</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/gallery/index.html">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/blog/index.html">Blog</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/contact/index.html">Contact Us</a>
+</nav>
+<a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-on-primary px-8 py-2.5 rounded-full font-label-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hidden md:block text-center flex items-center justify-center border-b-2 border-emerald-400">
+                Join the Movement
+            </a>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+
+<main class="flex-grow max-w-7xl w-full mx-auto px-6 lg:px-12 py-12">
+    <!-- Forum Header -->
+    <div class="mb-10 text-center md:text-left flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-surface-variant/40 pb-8">
+        <div>
+            <h1 class="font-display text-4xl md:text-5xl font-bold text-[#1B3022] mb-3">Join the Movement Forum</h1>
+            <p class="text-on-surface-variant text-lg max-w-2xl font-body-lg">
+                Discuss sustainability, indigenous farming practices, tree planting, and collaborate on building resilient community villages.
+            </p>
+        </div>
+        <button onclick="openCreateModal()" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-6 py-3 rounded-full font-label-md shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all flex items-center gap-2 self-center md:self-end">
+            <span class="material-symbols-outlined text-[20px]">add_comment</span>
+            Start a Topic
+        </button>
+    </div>
+
+    <!-- Forum Grid Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <!-- Sidebar filters -->
+        <aside class="lg:col-span-3 space-y-6">
+            <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/35 shadow-sm">
+                <h3 class="font-display text-xl font-bold text-[#1B3022] mb-4">Categories</h3>
+                <nav class="flex flex-col gap-2" id="category-filters">
+                    <button onclick="filterCategory('all')" class="category-btn text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-primary bg-primary-fixed hover:bg-primary-fixed transition-colors flex justify-between items-center" data-category="all">
+                        <span>All Topics</span>
+                        <span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs" id="count-all">0</span>
+                    </button>
+                    <button onclick="filterCategory('classroom')" class="category-btn text-left px-4 py-2.5 rounded-xl text-sm text-on-surface-variant hover:bg-surface-dim hover:text-primary transition-colors flex justify-between items-center" data-category="classroom">
+                        <span>Practical Classroom</span>
+                        <span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs" id="count-classroom">0</span>
+                    </button>
+                    <button onclick="filterCategory('trees')" class="category-btn text-left px-4 py-2.5 rounded-xl text-sm text-on-surface-variant hover:bg-surface-dim hover:text-primary transition-colors flex justify-between items-center" data-category="trees">
+                        <span>Tree Billionaires</span>
+                        <span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs" id="count-trees">0</span>
+                    </button>
+                    <button onclick="filterCategory('community')" class="category-btn text-left px-4 py-2.5 rounded-xl text-sm text-on-surface-variant hover:bg-surface-dim hover:text-primary transition-colors flex justify-between items-center" data-category="community">
+                        <span>Community Villages</span>
+                        <span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs" id="count-community">0</span>
+                    </button>
+                    <button onclick="filterCategory('general')" class="category-btn text-left px-4 py-2.5 rounded-xl text-sm text-on-surface-variant hover:bg-surface-dim hover:text-primary transition-colors flex justify-between items-center" data-category="general">
+                        <span>General Discussion</span>
+                        <span class="bg-surface-container-highest px-2 py-0.5 rounded text-xs" id="count-general">0</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Guidelines / Stats box -->
+            <div class="bg-surface-container-low rounded-2xl p-6 border border-outline-variant/35 shadow-sm">
+                <h3 class="font-display text-xl font-bold text-[#1B3022] mb-3">Forum Statistics</h3>
+                <div class="space-y-3 text-sm text-on-surface-variant">
+                    <div class="flex justify-between border-b border-surface-variant/40 pb-2">
+                        <span>Total Topics</span>
+                        <span class="font-bold text-[#1B3022]" id="stats-total-topics">0</span>
+                    </div>
+                    <div class="flex justify-between border-b border-surface-variant/40 pb-2">
+                        <span>Total Reactions</span>
+                        <span class="font-bold text-[#1B3022]" id="stats-total-reactions">0</span>
+                    </div>
+                    <div class="flex justify-between pb-1">
+                        <span>Total Comments</span>
+                        <span class="font-bold text-[#1B3022]" id="stats-total-comments">0</span>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main forum content -->
+        <section class="lg:col-span-9 space-y-6">
+            <!-- Search & Sort Bar -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-between items-center bg-surface-container-low rounded-2xl p-4 border border-outline-variant/35 shadow-sm">
+                <div class="relative w-full sm:w-80">
+                    <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline">search</span>
+                    <input type="text" id="search-input" onkeyup="handleSearch()" placeholder="Search discussions..." class="w-full pl-10 pr-4 py-2 rounded-xl border border-outline-variant bg-surface focus:outline-none focus:border-primary transition-colors text-sm"/>
+                </div>
+                <div class="flex items-center gap-2 self-stretch sm:self-auto justify-end">
+                    <span class="text-xs text-on-surface-variant font-semibold uppercase tracking-wider">Sort:</span>
+                    <select id="sort-select" onchange="handleSort()" class="py-1.5 pl-3 pr-8 rounded-xl border border-outline-variant bg-surface text-sm focus:outline-none focus:border-primary transition-colors cursor-pointer">
+                        <option value="latest">Latest</option>
+                        <option value="popular">Most Reacted</option>
+                        <option value="comments">Most Active</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Topics List Container -->
+            <div id="topics-list" class="space-y-4">
+                <!-- Topics will be dynamically loaded here -->
+            </div>
+
+            <!-- Empty state -->
+            <div id="empty-state" class="hidden text-center py-16 bg-surface-container-low rounded-2xl border border-dashed border-outline-variant/50">
+                <span class="material-symbols-outlined text-outline text-5xl mb-3">forum</span>
+                <h4 class="font-display text-xl font-bold text-secondary mb-1">No topics found</h4>
+                <p class="text-on-surface-variant text-sm mb-4">Be the first one to start a topic on this category!</p>
+                <button onclick="openCreateModal()" class="bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold hover:bg-primary-container transition-colors">
+                    Start a Topic
+                </button>
+            </div>
+        </section>
+    </div>
+</main>
+
+<!-- CREATE TOPIC MODAL -->
+<div id="create-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
+    <div class="bg-surface rounded-2xl max-w-lg w-full p-6 shadow-2xl border border-outline-variant/30 transform scale-95 transition-transform duration-300 relative">
+        <button onclick="closeCreateModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 class="font-display text-2xl font-bold text-[#1B3022] mb-6">Create New Topic</h2>
+        
+        <form id="create-topic-form" onsubmit="submitTopic(event)" class="space-y-4">
+            <div>
+                <label for="topic-title" class="block text-sm font-semibold text-on-surface-variant mb-1">Title</label>
+                <input type="text" id="topic-title" required placeholder="What do you want to discuss?" class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface focus:outline-none focus:border-primary transition-colors text-sm"/>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="topic-category" class="block text-sm font-semibold text-on-surface-variant mb-1">Category</label>
+                    <select id="topic-category" required class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface focus:outline-none focus:border-primary transition-colors text-sm cursor-pointer">
+                        <option value="classroom">Practical Classroom</option>
+                        <option value="trees">Tree Billionaires</option>
+                        <option value="community">Community Villages</option>
+                        <option value="general">General Discussion</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="topic-author" class="block text-sm font-semibold text-on-surface-variant mb-1">Your Name</label>
+                    <input type="text" id="topic-author" required placeholder="Anonymous or Name" class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface focus:outline-none focus:border-primary transition-colors text-sm"/>
+                </div>
+            </div>
+            <div>
+                <label for="topic-content" class="block text-sm font-semibold text-on-surface-variant mb-1">Content</label>
+                <textarea id="topic-content" required rows="5" placeholder="Share details, ask questions, or tell your experience..." class="w-full px-4 py-2.5 rounded-xl border border-outline-variant bg-surface focus:outline-none focus:border-primary transition-colors text-sm resize-none"></textarea>
+            </div>
+            <div class="flex justify-end gap-3 pt-2">
+                <button type="button" onclick="closeCreateModal()" class="px-5 py-2.5 rounded-full border border-outline-variant text-on-surface-variant hover:bg-surface-dim transition-colors text-sm font-semibold">
+                    Cancel
+                </button>
+                <button type="submit" class="bg-[#1B3022] hover:bg-primary text-white px-6 py-2.5 rounded-full transition-colors text-sm font-semibold shadow-md">
+                    Publish Topic
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- DETAILS / COMMENTS MODAL -->
+<div id="details-modal" class="fixed inset-0 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 z-50 hidden transition-opacity duration-300 opacity-0">
+    <div class="bg-surface rounded-2xl max-w-2xl w-full p-6 shadow-2xl border border-outline-variant/30 transform scale-95 transition-transform duration-300 relative flex flex-col max-h-[85vh]">
+        <button onclick="closeDetailsModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        
+        <!-- Header Info -->
+        <div class="border-b border-surface-variant/40 pb-4 pr-8">
+            <span id="detail-category" class="inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2">Category</span>
+            <h2 id="detail-title" class="font-display text-2xl font-bold text-[#1B3022] leading-tight">Topic Title</h2>
+            <div class="flex items-center gap-2 mt-2 text-xs text-on-surface-variant">
+                <span>By <strong id="detail-author" class="text-secondary">Author</strong></span>
+                <span>•</span>
+                <span id="detail-date">Date</span>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div class="flex-grow overflow-y-auto py-6 space-y-6 pr-1">
+            <p id="detail-content" class="text-on-surface-variant text-sm whitespace-pre-line leading-relaxed">
+                Topic body goes here...
+            </p>
+
+            <!-- Reactions in Details Modal -->
+            <div class="flex flex-wrap items-center gap-3 border-t border-b border-surface-variant/20 py-3">
+                <span class="text-xs uppercase tracking-wider text-outline font-semibold">Reactions:</span>
+                <div id="detail-reactions-container" class="flex gap-2">
+                    <!-- Loaded dynamically -->
+                </div>
+            </div>
+
+            <!-- Comments/Replies Section -->
+            <div class="space-y-4">
+                <h3 class="font-display text-lg font-bold text-[#1B3022] flex items-center gap-1.5">
+                    <span class="material-symbols-outlined text-[20px]">forum</span>
+                    Community Replies (<span id="detail-comments-count">0</span>)
+                </h3>
+                <div id="detail-comments-list" class="space-y-3">
+                    <!-- Comments loaded dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Comment form -->
+        <div class="border-t border-surface-variant/40 pt-4 mt-2">
+            <form id="add-comment-form" onsubmit="submitComment(event)" class="flex gap-3 items-end">
+                <div class="flex-grow space-y-2">
+                    <div class="flex gap-3">
+                        <input type="text" id="comment-author" required placeholder="Your Name" class="px-3 py-1.5 rounded-lg border border-outline-variant bg-surface focus:outline-none focus:border-primary text-xs w-40"/>
+                    </div>
+                    <textarea id="comment-content" required rows="2" placeholder="Write a supportive reply..." class="w-full px-4 py-2 rounded-xl border border-outline-variant bg-surface focus:outline-none focus:border-primary text-sm resize-none"></textarea>
+                </div>
+                <button type="submit" class="bg-gradient-to-r from-primary to-[#0052a3] hover:shadow-lg text-white px-5 py-2.5 rounded-full transition-all text-sm font-semibold flex items-center gap-1 self-end mb-0.5">
+                    Reply
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="bg-secondary text-stone-300 font-label-md text-label-md py-16 border-t border-stone-800">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-4 gap-12">
+    <div>
+      <h3 class="text-white font-bold text-lg font-display mb-2">About Us</h3>
+      <p class="text-stone-400 text-sm leading-relaxed">Bill of Senga is a sustainable living hub integrating indigenous farming methodologies with modern agricultural science to create resilient ecosystems.</p>
+    </div>
+    <div>
+      <h3 class="text-white font-bold text-lg font-display mb-2">Quick Links</h3>
+      <ul class="space-y-2 text-sm text-stone-400">
+        <li><a href="/index.html" class="hover:text-white transition-colors">Home</a></li>
+        <li><a href="/the_story_of_senga/index.html" class="hover:text-white transition-colors">Our Story</a></li>
+        <li><a href="/#projects" class="hover:text-white transition-colors">Projects</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-white font-bold text-lg font-display mb-2">Our Hubs</h3>
+      <ul class="space-y-2 text-sm text-stone-400">
+        <li><a href="/practical_classroom/index.html" class="hover:text-white transition-colors">Practical Classroom</a></li>
+        <li><a href="/tree_billionaire_generation/index.html" class="hover:text-white transition-colors">Tree Billionaires</a></li>
+        <li><a href="/community_villages/index.html" class="hover:text-white transition-colors">Community Villages</a></li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="text-white font-bold text-lg font-display mb-2">Contact Information</h3>
+      <p class="text-stone-400 text-sm leading-relaxed mb-4">Have questions? Reach out to our community coordinators.</p>
+      <div class="flex space-x-4">
+        <a href="#" class="text-stone-400 hover:text-white transition-colors"><span class="material-symbols-outlined">mail</span></a>
+        <a href="#" class="text-stone-400 hover:text-white transition-colors"><span class="material-symbols-outlined">call</span></a>
+      </div>
+    </div>
+  </div>
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 mt-12 pt-8 border-t border-stone-800 flex flex-col md:flex-row justify-between items-center gap-4 text-stone-500 text-xs">
+    <p>© 2026 Bill of Senga. All rights reserved.</p>
+    <p>Created by <span class="text-white">SoftCode Tech</span></p>
+  </div>
+</footer>
+
+<script>
+    // Mock Seeding Data
+    const defaultTopics = [
+        {
+            id: "topic_1",
+            title: "Welcome to the Bill of Senga Community Forum!",
+            category: "general",
+            author: "Bill of Senga Team",
+            content: "We are thrilled to launch this space for our community to connect. Here you can ask questions, share your successes, collaborate on projects, and discuss indigenous sustainable agriculture. Introduce yourself in the comments below!",
+            date: "May 15, 2026",
+            reactions: { "👍": 15, "🌱": 12, "💡": 9, "🌍": 14 },
+            comments: [
+                { author: "Erick S.", content: "So happy to see this forum live! Looking forward to learning from everyone here.", date: "May 15, 2026" },
+                { author: "Martha M.", content: "Wonderful initiative. A great step for sharing organic practices.", date: "May 16, 2026" }
+            ]
+        },
+        {
+            id: "topic_2",
+            title: "Composting tips for small kitchen gardens",
+            category: "classroom",
+            author: "AgriScience Pro",
+            content: "For a productive organic garden, healthy soil is everything. I highly recommend using a 3-bin composting system to recycle your green kitchen scraps (nitrogen) and dry autumn leaves (carbon). Keep it moist but not soggy, turn it once a week, and in 6-8 weeks you'll have black gold for your veggies!",
+            date: "May 17, 2026",
+            reactions: { "👍": 8, "🌱": 19, "💡": 14, "🌍": 5 },
+            comments: [
+                { author: "Julius K.", content: "Tried this and it cut down my domestic food waste to almost zero! And my tomatoes are loving it.", date: "May 18, 2026" }
+            ]
+        },
+        {
+            id: "topic_3",
+            title: "Join our weekend indigenous tree planting campaign",
+            category: "trees",
+            author: "Tree Guardian",
+            content: "We are organizing a massive tree planting drive this Saturday at the Senga Community buffer zone. We aim to plant 300 native saplings including Acacia and Mahogany to restore soil hydrology. All volunteers get organic lunch and hands-on learning. Who's in?",
+            date: "May 18, 2026",
+            reactions: { "👍": 11, "🌱": 24, "💡": 7, "🌍": 20 },
+            comments: []
+        },
+        {
+            id: "topic_4",
+            title: "Implementing greywater recycling in village households",
+            category: "community",
+            author: "EcoBuilder",
+            content: "Water conservation is a huge priority for community village resilience. We are testing a simple gravity-fed sand and gravel filtration design to safely redirect kitchen greywater to fruit tree orchards. It's inexpensive to build and saves thousands of liters of clean water. Looking for feedback on filtering kitchen grease efficiently.",
+            date: "May 19, 2026",
+            reactions: { "👍": 6, "🌱": 10, "💡": 18, "🌍": 11 },
+            comments: [
+                { author: "Clara O.", content: "A grease trap with local pumice/charcoal layer works wonders. I can share a schematic if you'd like!", date: "May 19, 2026" }
+            ]
+        }
+    ];
+
+    // State Management
+    let topics = [];
+    let currentCategory = "all";
+    let searchQuery = "";
+    let sortMethod = "latest";
+    let activeTopicId = null;
+
+    // Load initial data
+    function loadData() {
+        const stored = localStorage.getItem("bos_forum_topics");
+        if (stored) {
+            topics = JSON.parse(stored);
+        } else {
+            topics = defaultTopics;
+            saveData();
+        }
+        renderCounts();
+        renderTopics();
+    }
+
+    function saveData() {
+        localStorage.setItem("bos_forum_topics", JSON.stringify(topics));
+        renderCounts();
+    }
+
+    // Category mapping labels and styling classes
+    const categoriesMap = {
+        classroom: { label: "Practical Classroom", class: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-300" },
+        trees: { label: "Tree Billionaires", class: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-300" },
+        community: { label: "Community Villages", class: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-300" },
+        general: { label: "General Discussion", class: "bg-stone-100 text-stone-800 dark:bg-stone-900/30 dark:text-stone-300" }
+    };
+
+    // Render category list counts and overall stats
+    function renderCounts() {
+        const counts = { all: topics.length, classroom: 0, trees: 0, community: 0, general: 0 };
+        let totalReactions = 0;
+        let totalComments = 0;
+
+        topics.forEach(t => {
+            if (counts[t.category] !== undefined) {
+                counts[t.category]++;
+            }
+            // Count reactions
+            if (t.reactions) {
+                Object.values(t.reactions).forEach(val => totalReactions += val);
+            }
+            // Count comments
+            if (t.comments) {
+                totalComments += t.comments.length;
+            }
+        });
+
+        document.getElementById("count-all").innerText = counts.all;
+        document.getElementById("count-classroom").innerText = counts.classroom;
+        document.getElementById("count-trees").innerText = counts.trees;
+        document.getElementById("count-community").innerText = counts.community;
+        document.getElementById("count-general").innerText = counts.general;
+
+        document.getElementById("stats-total-topics").innerText = topics.length;
+        document.getElementById("stats-total-reactions").innerText = totalReactions;
+        document.getElementById("stats-total-comments").innerText = totalComments;
+    }
+
+    // Filter by Category
+    function filterCategory(cat) {
+        currentCategory = cat;
+        // Update active class on side filters
+        document.querySelectorAll(".category-btn").forEach(btn => {
+            const attr = btn.getAttribute("data-category");
+            if (attr === cat) {
+                btn.className = "category-btn text-left px-4 py-2.5 rounded-xl text-sm font-semibold text-primary bg-primary-fixed hover:bg-primary-fixed transition-colors flex justify-between items-center w-full";
+            } else {
+                btn.className = "category-btn text-left px-4 py-2.5 rounded-xl text-sm text-on-surface-variant hover:bg-surface-dim hover:text-primary transition-colors flex justify-between items-center w-full";
+            }
+        });
+        renderTopics();
+    }
+
+    // Handle Search input
+    function handleSearch() {
+        searchQuery = document.getElementById("search-input").value.toLowerCase();
+        renderTopics();
+    }
+
+    // Handle Sort dropdown change
+    function handleSort() {
+        sortMethod = document.getElementById("sort-select").value;
+        renderTopics();
+    }
+
+    // Render topics list to the UI
+    function renderTopics() {
+        const listContainer = document.getElementById("topics-list");
+        const emptyState = document.getElementById("empty-state");
+        listContainer.innerHTML = "";
+
+        // Filter
+        let filtered = topics.filter(t => {
+            const matchesCat = currentCategory === "all" || t.category === currentCategory;
+            const matchesSearch = t.title.toLowerCase().includes(searchQuery) || t.content.toLowerCase().includes(searchQuery);
+            return matchesCat && matchesSearch;
+        });
+
+        // Sort
+        filtered.sort((a, b) => {
+            if (sortMethod === "latest") {
+                return new Date(b.date) - new Date(a.date);
+            } else if (sortMethod === "popular") {
+                const reactionsA = Object.values(a.reactions || {}).reduce((sum, val) => sum + val, 0);
+                const reactionsB = Object.values(b.reactions || {}).reduce((sum, val) => sum + val, 0);
+                return reactionsB - reactionsA;
+            } else if (sortMethod === "comments") {
+                return (b.comments || []).length - (a.comments || []).length;
+            }
+            return 0;
+        });
+
+        if (filtered.length === 0) {
+            listContainer.classList.add("hidden");
+            emptyState.classList.remove("hidden");
+            return;
+        }
+
+        listContainer.classList.remove("hidden");
+        emptyState.classList.add("hidden");
+
+        filtered.forEach(topic => {
+            const catInfo = categoriesMap[topic.category] || { label: "General", class: "bg-stone-100 text-stone-800" };
+            const commentsCount = (topic.comments || []).length;
+            
+            // Total reactions
+            const totalReactions = Object.values(topic.reactions || {}).reduce((sum, v) => sum + v, 0);
+
+            const card = document.createElement("div");
+            card.className = "bg-surface-container-low rounded-2xl p-6 border border-outline-variant/35 shadow-xs hover:shadow-md hover:border-outline transition-all duration-300 cursor-pointer flex flex-col justify-between";
+            card.setAttribute("onclick", `openDetailsModal('${topic.id}', event)`);
+
+            card.innerHTML = `
+                <div>
+                    <div class="flex items-center justify-between mb-3">
+                        <span class="${catInfo.class} px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider">${catInfo.label}</span>
+                        <span class="text-xs text-on-surface-variant">${topic.date}</span>
+                    </div>
+                    <h3 class="font-display text-xl font-bold text-[#1B3022] mb-2 hover:text-primary transition-colors leading-snug">${topic.title}</h3>
+                    <p class="text-on-surface-variant text-sm line-clamp-3 mb-4 leading-relaxed">${topic.content}</p>
+                </div>
+                <div class="flex items-center justify-between pt-4 border-t border-surface-variant/20">
+                    <span class="text-xs text-on-surface-variant">Started by <strong class="text-secondary">${topic.author}</strong></span>
+                    
+                    <!-- Reactions & comments indicators -->
+                    <div class="flex items-center gap-4 text-xs font-semibold text-[#1B3022]" onclick="event.stopPropagation()">
+                        <!-- Reactions summaries -->
+                        <div class="flex items-center gap-1 bg-surface-container-highest px-3 py-1.5 rounded-full hover:bg-surface-dim transition-colors cursor-pointer" onclick="openDetailsModal('${topic.id}', event)">
+                            <span class="material-symbols-outlined text-[16px] text-primary">eco</span>
+                            <span>${totalReactions}</span>
+                        </div>
+                        
+                        <!-- Comments indicator -->
+                        <div class="flex items-center gap-1 bg-surface-container-highest px-3 py-1.5 rounded-full hover:bg-surface-dim transition-colors cursor-pointer" onclick="openDetailsModal('${topic.id}', event)">
+                            <span class="material-symbols-outlined text-[16px] text-[#1B3022]">chat_bubble</span>
+                            <span>${commentsCount}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            listContainer.appendChild(card);
+        });
+    }
+
+    // Modal Control: Create Topic
+    function openCreateModal() {
+        const modal = document.getElementById("create-modal");
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+            modal.classList.remove("opacity-0");
+            modal.querySelector("div").classList.remove("scale-95");
+        }, 10);
+    }
+
+    function closeCreateModal() {
+        const modal = document.getElementById("create-modal");
+        modal.classList.add("opacity-0");
+        modal.querySelector("div").classList.add("scale-95");
+        setTimeout(() => {
+            modal.classList.add("hidden");
+            document.getElementById("create-topic-form").reset();
+        }, 300);
+    }
+
+    // Submit new topic
+    function submitTopic(event) {
+        event.preventDefault();
+        const title = document.getElementById("topic-title").value;
+        const category = document.getElementById("topic-category").value;
+        const author = document.getElementById("topic-author").value;
+        const content = document.getElementById("topic-content").value;
+        
+        const now = new Date();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedDate = `${monthNames[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+        const newTopic = {
+            id: "topic_" + Date.now(),
+            title: title,
+            category: category,
+            author: author,
+            content: content,
+            date: formattedDate,
+            reactions: { "👍": 0, "🌱": 0, "💡": 0, "🌍": 0 },
+            comments: []
+        };
+
+        topics.unshift(newTopic);
+        saveData();
+        renderTopics();
+        closeCreateModal();
+    }
+
+    // Modal Control: Details & Comments
+    function openDetailsModal(id, event) {
+        if (event) {
+            event.stopPropagation();
+        }
+        activeTopicId = id;
+        const topic = topics.find(t => t.id === id);
+        if (!topic) return;
+
+        const catInfo = categoriesMap[topic.category] || { label: "General", class: "bg-stone-100 text-stone-800" };
+        
+        // Fill fields
+        document.getElementById("detail-category").innerText = catInfo.label;
+        document.getElementById("detail-category").className = `${catInfo.class} inline-block px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-2`;
+        document.getElementById("detail-title").innerText = topic.title;
+        document.getElementById("detail-author").innerText = topic.author;
+        document.getElementById("detail-date").innerText = topic.date;
+        document.getElementById("detail-content").innerText = topic.content;
+        document.getElementById("detail-comments-count").innerText = (topic.comments || []).length;
+
+        // Render comments
+        renderComments(topic);
+        
+        // Render reactions buttons
+        renderReactionsDetail(topic);
+
+        // Open modal
+        const modal = document.getElementById("details-modal");
+        modal.classList.remove("hidden");
+        setTimeout(() => {
+            modal.classList.remove("opacity-0");
+            modal.querySelector("div").classList.remove("scale-95");
+        }, 10);
+    }
+
+    function closeDetailsModal() {
+        const modal = document.getElementById("details-modal");
+        modal.classList.add("opacity-0");
+        modal.querySelector("div").classList.add("scale-95");
+        setTimeout(() => {
+            modal.classList.add("hidden");
+            activeTopicId = null;
+            document.getElementById("add-comment-form").reset();
+        }, 300);
+    }
+
+    // Render reactions buttons inside detailed modal
+    function renderReactionsDetail(topic) {
+        const container = document.getElementById("detail-reactions-container");
+        container.innerHTML = "";
+        
+        const emos = ["👍", "🌱", "💡", "🌍"];
+        emos.forEach(emo => {
+            const count = topic.reactions[emo] || 0;
+            const btn = document.createElement("button");
+            btn.className = "flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-outline-variant bg-surface hover:bg-primary-fixed hover:border-primary/50 text-sm font-semibold transition-all cursor-pointer transform hover:scale-105 active:scale-95";
+            btn.onclick = () => addReaction(topic.id, emo);
+            btn.innerHTML = `<span>${emo}</span> <span>${count}</span>`;
+            container.appendChild(btn);
+        });
+    }
+
+    // Add Reaction
+    function addReaction(topicId, emo) {
+        const topic = topics.find(t => t.id === topicId);
+        if (!topic) return;
+        
+        if (!topic.reactions) {
+            topic.reactions = { "👍": 0, "🌱": 0, "💡": 0, "🌍": 0 };
+        }
+        
+        topic.reactions[emo] = (topic.reactions[emo] || 0) + 1;
+        saveData();
+        
+        // Refresh modal list view if open
+        if (activeTopicId === topicId) {
+            renderReactionsDetail(topic);
+        }
+        renderTopics();
+    }
+
+    // Render comments list
+    function renderComments(topic) {
+        const commentsList = document.getElementById("detail-comments-list");
+        commentsList.innerHTML = "";
+
+        if (!topic.comments || topic.comments.length === 0) {
+            commentsList.innerHTML = `
+                <p class="text-xs text-on-surface-variant italic py-2">No replies yet. Join the conversation and reply!</p>
+            `;
+            return;
+        }
+
+        topic.comments.forEach(comment => {
+            const card = document.createElement("div");
+            card.className = "bg-surface-container-highest/40 border border-outline-variant/20 rounded-xl p-4 space-y-1.5";
+            card.innerHTML = `
+                <div class="flex items-center justify-between text-xs">
+                    <strong class="text-secondary font-semibold">${comment.author}</strong>
+                    <span class="text-on-surface-variant">${comment.date}</span>
+                </div>
+                <p class="text-on-surface-variant text-sm leading-relaxed">${comment.content}</p>
+            `;
+            commentsList.appendChild(card);
+        });
+    }
+
+    // Submit a comment reply
+    function submitComment(event) {
+        event.preventDefault();
+        if (!activeTopicId) return;
+
+        const author = document.getElementById("comment-author").value;
+        const content = document.getElementById("comment-content").value;
+        const topic = topics.find(t => t.id === activeTopicId);
+        if (!topic) return;
+
+        const now = new Date();
+        const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+        const formattedDate = `${monthNames[now.getMonth()]} ${now.getDate()}, ${now.getFullYear()}`;
+
+        const newComment = {
+            author: author,
+            content: content,
+            date: formattedDate
+        };
+
+        if (!topic.comments) {
+            topic.comments = [];
+        }
+
+        topic.comments.push(newComment);
+        saveData();
+
+        // Refresh views
+        document.getElementById("detail-comments-count").innerText = topic.comments.length;
+        renderComments(topic);
+        document.getElementById("comment-content").value = "";
+        renderTopics();
+    }
+
+    // Initialize Page
+    document.addEventListener("DOMContentLoaded", () => {
+        loadData();
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Bill of Senga</title>
+  <meta name="description" content="From ancient soil wisdom to cutting-edge urban farming, the BOS blog covers the full spectrum of sustainable living."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      theme: { extend: {
+        colors: { primary: "#003B73", secondary: "#1B3022", background: "#faf9f4", surface: "#faf9f4", "surface-container-low": "#f5f4ef", "outline-variant": "#c3c8c1", "on-surface-variant": "#434843" },
+        fontFamily: { display: ["Newsreader"], body: ["Work Sans"] }
+      }}
+    }
+  </script>
+</head>
+<body class="bg-background text-gray-800 font-body min-h-screen flex flex-col">
+
+<!-- Header -->
+<header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-gray-200 shadow-sm font-display">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 flex justify-between items-center h-20">
+    <a href="/index.html"><img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain"/></a>
+    <nav class="hidden md:flex items-center gap-6 text-sm font-semibold text-gray-500">
+      <a href="/index.html" class="hover:text-primary transition-colors">Home</a>
+      <a href="/the_story_of_senga/index.html" class="hover:text-primary transition-colors">Our Story</a>
+      <a href="/#projects" class="hover:text-primary transition-colors">Projects</a>
+      <a href="/blog/index.html" class="text-primary">Blog</a>
+      <a href="/join_the_movement/index.html" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-6 py-2.5 rounded-full hover:shadow-lg transition-all">Join the Movement</a>
+    </nav>
+    <a href="/index.html" class="md:hidden flex items-center gap-1 text-primary text-sm font-semibold">
+      <span class="material-symbols-outlined text-[18px]">home</span>
+    </a>
+  </div>
+</header>
+
+<main class="flex-grow">
+  <!-- Hero Banner -->
+  <section class="relative py-24 bg-gradient-to-br from-secondary via-[#1a3525] to-[#003B73] overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <img src="/hero_slide2.png" alt="" class="w-full h-full object-cover"/>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center text-white">
+      <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-4">BOS Blog Insights</p>
+      <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 leading-tight">Stay On Top of The<br/>Latest From BOS</h1>
+      <p class="text-stone-300 text-lg max-w-2xl mx-auto leading-relaxed">From ancient soil wisdom to cutting-edge urban farming, our blog covers the full spectrum of sustainable living. Learn, grow, and join a movement restoring the earth — one seed at a time.</p>
+    </div>
+  </section>
+
+  <!-- Blog Posts Grid -->
+  <section class="py-20 px-6 lg:px-12 max-w-7xl mx-auto">
+
+    <!-- Featured Post (Post 1) -->
+    <div class="mb-16">
+      <p class="text-primary font-semibold text-xs uppercase tracking-widest mb-6">Featured Article</p>
+      <a href="/blog/post-1-healthy-soil.html" class="group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+        <div class="relative h-72 lg:h-auto overflow-hidden">
+          <img src="/blog_soil.png" alt="Healthy Soil" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+          <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/10"></div>
+          <span class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Soil Science</span>
+          <div class="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-primary text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg leading-tight">
+            <span class="text-base font-extrabold leading-none">15</span>
+            <span class="uppercase tracking-wider">May</span>
+          </div>
+        </div>
+        <div class="p-10 flex flex-col justify-center">
+          <h2 class="font-display text-3xl font-bold text-secondary mb-4 leading-snug group-hover:text-primary transition-colors">The Secret Life of Healthy Soil — What Science Says</h2>
+          <p class="text-gray-500 leading-relaxed mb-6">Good soil is far more than dirt. Discover how billions of microorganisms beneath your feet are the true engine of food security and planetary health.</p>
+          <div class="flex items-center gap-4 text-xs text-gray-400 mb-8">
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">person</span> BOS Editorial Team</span>
+            <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 6 min read</span>
+          </div>
+          <span class="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+            Read Article <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </span>
+        </div>
+      </a>
+    </div>
+
+    <!-- Other Posts Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <!-- Post 2 -->
+      <a href="/blog/post-2-tree-billionaire.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col">
+        <div class="relative h-56 overflow-hidden">
+          <img src="/blog_tree.png" alt="Tree Billionaire" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <span class="absolute top-4 left-4 bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Forestry & Climate</span>
+          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-emerald-600 text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+            <span class="text-base font-extrabold leading-none">02</span>
+            <span class="uppercase tracking-wider">Jun</span>
+          </div>
+        </div>
+        <div class="p-6 pt-10 flex flex-col flex-grow">
+          <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">How to Become a Tree Billionaire in 5 Years</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5 flex-grow">Planting trees is not just an act of love for the environment — it is a generational investment. Learn how BOS is turning ordinary farmers into Tree Billionaires.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 text-xs text-gray-400">
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 7 min read</span>
+            </div>
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
+              Read <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Post 3 -->
+      <a href="/blog/post-3-urban-rooftop.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col">
+        <div class="relative h-56 overflow-hidden">
+          <img src="/blog_rooftop.png" alt="Urban Rooftop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <span class="absolute top-4 left-4 bg-amber-500 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Urban Farming</span>
+          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-amber-500 text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+            <span class="text-base font-extrabold leading-none">20</span>
+            <span class="uppercase tracking-wider">Jun</span>
+          </div>
+        </div>
+        <div class="p-6 pt-10 flex flex-col flex-grow">
+          <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">Urban Rooftop Farming: Feeding Cities from Above</h3>
+          <p class="text-gray-500 text-sm leading-relaxed mb-5 flex-grow">Cities need not be food deserts. Discover how BOS Smart Villages are transforming rooftops into productive organic gardens that feed families and build community.</p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3 text-xs text-gray-400">
+              <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> 5 min read</span>
+            </div>
+            <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
+              Read <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+            </span>
+          </div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="py-20 px-6 bg-secondary">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-3">Never Miss An Update</p>
+      <h2 class="font-display text-4xl font-bold text-white mb-4">Join Our Newsletter</h2>
+      <p class="text-stone-300 mb-8">Get the latest articles, practical guides, and movement updates delivered to your inbox every two weeks.</p>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input type="email" placeholder="Your email address" class="flex-grow px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder-stone-400 focus:outline-none focus:border-emerald-400 text-sm"/>
+        <button class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-semibold text-sm hover:shadow-lg transition-all flex-shrink-0">Subscribe</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-[#111613] text-stone-400 py-8 text-center text-sm">
+  <p>© 2026 Bill of Senga. Created by <span class="text-white font-semibold">SoftCode Tech</span></p>
+</footer>
+</body>
+</html>
