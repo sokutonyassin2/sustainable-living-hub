@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Blog — Bill of Senga</title>
+  <meta name="description" content="From ancient soil wisdom to cutting-edge urban farming, the BOS blog covers the full spectrum of sustainable living."/>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary": "#003B73",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#737973",
+                        "on-secondary-fixed": "#2a170c",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#002a54",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#bacda4",
+                        "tertiary-fixed": "#d6e9be",
+                        "surface-variant": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "secondary-container": "#fed8c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3c4c2c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#003B73",
+                        "on-tertiary-fixed": "#111f05",
+                        "tertiary-container": "#213013",
+                        "secondary": "#1B3022",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "secondary-fixed-dim": "#e3bfad",
+                        "on-tertiary-container": "#879973",
+                        "primary-fixed": "#d0e9d4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdbca",
+                        "on-surface-variant": "#434843",
+                        "outline-variant": "#c3c8c1",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#4d6b8c",
+                        "surface-bright": "#faf9f4",
+                        "inverse-primary": "#b4cdb8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#0d1b03",
+                        "on-primary-fixed": "#0b2013",
+                        "on-secondary-container": "#795d4e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a4134"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "display": ["Newsreader"],
+                        "h3": ["Newsreader"],
+                        "body-md": ["Work Sans"],
+                        "h2": ["Newsreader"],
+                        "h1": ["Newsreader"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["22px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+  </script>
+</head>
+<body class="bg-background text-gray-800 font-body min-h-screen flex flex-col">
+
+<!-- TopAppBar -->
+<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-variant/50 shadow-sm transition-all duration-300 ease-out">
+<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full transition-all duration-300 ease-out">
+<a href="/" class="flex items-center">
+    <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+</a>
+<nav class="hidden lg:flex space-x-6 items-center z-50">
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/">Home</a>
+
+<!-- About Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="/about/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+      <a href="/the_story_of_senga/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+      <a href="/mission/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+      <a href="/team/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- Our Hubs Dropdown -->
+<div class="relative group">
+  <button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md focus:outline-none">
+    Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md">
+      <a href="/practical_classroom/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+      <a href="/tree_billionaire_generation/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+      <a href="/community_villages/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+    </div>
+  </div>
+</div>
+
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/#projects">Projects</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/gallery/">Gallery</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md text-primary bg-surface-dim" href="/blog/">Blog</a>
+<a class="text-on-surface-variant hover:text-primary hover:bg-surface-dim px-2 py-1 rounded transition-all font-label-md" href="/contact/">Contact Us</a>
+</nav>
+<a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-on-primary px-8 py-2.5 rounded-full font-label-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hidden md:block text-center flex items-center justify-center">
+                Join the Movement
+            </a>
+<button class="md:hidden text-primary">
+<span class="material-symbols-outlined">menu</span>
+</button>
+</div>
+</header>
+
+<main class="flex-grow">
+  <!-- Hero Banner -->
+  <section class="relative py-24 bg-gradient-to-br from-secondary via-[#1a3525] to-[#003B73] overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <img src="/hero_slide2.png" alt="" class="w-full h-full object-cover"/>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center text-white">
+      <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-4">BOS Blog Insights</p>
+      <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 leading-tight">Stay On Top of The<br/>Latest From BOS</h1>
+      <p class="text-stone-300 text-lg max-w-2xl mx-auto leading-relaxed">From ancient soil wisdom to cutting-edge urban farming, our blog covers the full spectrum of sustainable living. Learn, grow, and join a movement restoring the earth — one seed at a time.</p>
+    </div>
+  </section>
+
+  <!-- Blog Content Section with Premium Sidebar -->
+  <section class="py-20 px-6 lg:px-12 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+      
+      <!-- Left Column: Blog Posts Grid -->
+      <div class="lg:col-span-8 space-y-12" id="blog-posts-feed-container">
+        <!-- Dynmically loaded posts list -->
+      </div>
+
+      <!-- Right Column: Sidebar -->
+      <aside class="lg:col-span-4 space-y-8">
+        
+        <!-- Search Box -->
+        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100/80">
+          <h3 class="font-display text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">search</span>
+            Search Blog
+          </h3>
+          <div class="relative">
+            <input type="text" id="blog-search-input" placeholder="Type keywords..." class="w-full pl-4 pr-10 py-3 bg-stone-50 border border-gray-200 rounded-2xl focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary text-sm transition-all"/>
+            <span class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 material-symbols-outlined text-[18px]">search</span>
+          </div>
+        </div>
+
+        <!-- Categories Widget -->
+        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100/80">
+          <h3 class="font-display text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">category</span>
+            Categories
+          </h3>
+          <div class="flex flex-col gap-2 font-label-md">
+            <a href="#" class="flex justify-between items-center px-4 py-2.5 rounded-xl hover:bg-stone-50 text-stone-600 hover:text-primary transition-all">
+              <span>Soil Science</span>
+              <span class="bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded-full font-bold">1</span>
+            </a>
+            <a href="#" class="flex justify-between items-center px-4 py-2.5 rounded-xl hover:bg-stone-50 text-stone-600 hover:text-primary transition-all">
+              <span>Forestry & Climate</span>
+              <span class="bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded-full font-bold">1</span>
+            </a>
+            <a href="#" class="flex justify-between items-center px-4 py-2.5 rounded-xl hover:bg-stone-50 text-stone-600 hover:text-primary transition-all">
+              <span>Urban Farming</span>
+              <span class="bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded-full font-bold">1</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Popular Posts Widget -->
+        <div class="bg-white rounded-3xl p-6 shadow-md border border-gray-100/80">
+          <h3 class="font-display text-xl font-bold text-secondary mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-primary text-[20px]">trending_up</span>
+            Popular Articles
+          </h3>
+          <div class="flex flex-col gap-4">
+            
+            <a href="/blog/post-1-healthy-soil.html" class="flex gap-3 group">
+              <img src="/blog_soil.png" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
+              <div>
+                <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">From "Hell" to a Living Laboratory</h4>
+                <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
+                  <span>May 15, 2026</span>
+                  <span>•</span>
+                  <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-post-1-healthy-soil">Loading...</span></span>
+                </div>
+              </div>
+            </a>
+
+            <a href="/blog/post-2-tree-billionaire.html" class="flex gap-3 group">
+              <img src="/blog_tree.png" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
+              <div>
+                <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">Become a Tree Billionaire in 5 Years</h4>
+                <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
+                  <span>Jun 02, 2026</span>
+                  <span>•</span>
+                  <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-post-2-tree-billionaire">Loading...</span></span>
+                </div>
+              </div>
+            </a>
+
+            <a href="/blog/post-3-urban-rooftop.html" class="flex gap-3 group">
+              <img src="/blog_rooftop.png" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
+              <div>
+                <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">Urban Rooftop Farming: Feeding Cities</h4>
+                <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
+                  <span>Jun 20, 2026</span>
+                  <span>•</span>
+                  <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-post-3-urban-rooftop">Loading...</span></span>
+                </div>
+              </div>
+            </a>
+
+          </div>
+        </div>
+
+        <!-- Join the Movement CTA -->
+        <div class="bg-gradient-to-br from-secondary via-[#1a3525] to-[#003B73] rounded-3xl p-6 shadow-md text-white border border-gray-100/10 relative overflow-hidden">
+          <div class="absolute -right-8 -bottom-8 w-24 h-24 rounded-full bg-emerald-500/10"></div>
+          <p class="text-emerald-400 text-xs font-bold uppercase tracking-wider mb-2">Sustainable Living</p>
+          <h3 class="font-display text-base font-bold mb-3 leading-snug">Ready to start your green journey?</h3>
+          <p class="text-stone-300 text-xs leading-relaxed mb-5">Access micro-gardening guides, local seed swaps, and expert-led webinars in our premium community forum.</p>
+          <a href="/join_the_movement/" class="inline-flex w-full items-center justify-center bg-gradient-to-r from-primary to-[#0052a3] text-white py-3 rounded-full font-semibold text-xs hover:shadow-lg hover:shadow-primary/20 transition-all gap-1.5 border-b-2 border-emerald-400">
+            <span class="material-symbols-outlined text-[16px]">forum</span>
+            Join the Movement
+          </a>
+        </div>
+
+      </aside>
+
+    </div>
+  </section>
+
+  <!-- Newsletter CTA -->
+  <section class="py-20 px-6 bg-secondary">
+    <div class="max-w-2xl mx-auto text-center">
+      <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-3">Never Miss An Update</p>
+      <h2 class="font-display text-4xl font-bold text-white mb-4">Join Our Newsletter</h2>
+      <p class="text-stone-300 mb-8">Get the latest articles, practical guides, and movement updates delivered to your inbox every two weeks.</p>
+      <div class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+        <input type="email" placeholder="Your email address" class="flex-grow px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder-stone-400 focus:outline-none focus:border-emerald-400 text-sm"/>
+        <button class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-semibold text-sm hover:shadow-lg transition-all flex-shrink-0">Subscribe</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-[#111613] text-stone-400 py-8 text-center text-sm">
+  <p>© 2026 Bill of Senga. Created by <span class="text-white font-semibold">SoftCode Tech</span></p>
+</footer>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    // --- NATIVE POSTS SEED DATA ---
+    const nativePosts = [
+      {
+        id: 'post-1-healthy-soil',
+        title: 'From "Hell" to a Living Laboratory: The Story of My Land in Senga',
+        category: 'The Story of Senga',
+        publishDate: '2026-05-15T09:00:00.000Z',
+        description: 'A personal journey of doubt, loss, persistence, and restoring life to an exhausted piece of land.',
+        author: 'William Odinga Balikuddembe',
+        readTime: 6,
+        featuredImage: '/blog_soil.png',
+        isCustom: false,
+        link: '/blog/post-1-healthy-soil.html',
+        initialViews: 142
+      },
+      {
+        id: 'post-2-tree-billionaire',
+        title: 'How to Become a Tree Billionaire in 5 Years',
+        category: 'Forestry & Climate',
+        publishDate: '2026-06-02T10:00:00.000Z',
+        description: 'Planting trees is not just an act of love for the environment — it is a generational investment. Learn how BOS is turning ordinary farmers into Tree Billionaires.',
+        author: 'BOS Editorial Team',
+        readTime: 7,
+        featuredImage: '/blog_tree.png',
+        isCustom: false,
+        link: '/blog/post-2-tree-billionaire.html',
+        initialViews: 89
+      },
+      {
+        id: 'post-3-urban-rooftop',
+        title: 'Urban Rooftop Farming: Feeding Cities from Above',
+        category: 'Urban Farming',
+        publishDate: '2026-06-20T11:00:00.000Z',
+        description: 'Cities need not be food deserts. Discover how BOS Smart Villages are transforming rooftops into productive organic gardens that feed families and build community.',
+        author: 'BOS Editorial Team',
+        readTime: 5,
+        featuredImage: '/blog_rooftop.png',
+        isCustom: false,
+        link: '/blog/post-3-urban-rooftop.html',
+        initialViews: 64
+      }
+    ];
+
+    // Ensure all native views are initialized
+    nativePosts.forEach(p => {
+      const vKey = `bos_views_${p.id}`;
+      if (!localStorage.getItem(vKey)) {
+        localStorage.setItem(vKey, p.initialViews);
+      }
+    });
+
+    // Parse URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    let activeCategory = urlParams.get('category') || '';
+    let activeSearch = urlParams.get('search') || '';
+
+    // Bind inputs
+    const mainSearchInput = document.getElementById('blog-search-input');
+    const sidebarSearchInput = document.getElementById('blog-sidebar-search');
+
+    if (mainSearchInput) {
+      mainSearchInput.value = activeSearch;
+      mainSearchInput.addEventListener('input', (e) => {
+        activeSearch = e.target.value;
+        renderFeed();
+      });
+    }
+
+    if (sidebarSearchInput) {
+      sidebarSearchInput.value = activeSearch;
+      sidebarSearchInput.addEventListener('input', (e) => {
+        activeSearch = e.target.value;
+        if (mainSearchInput) mainSearchInput.value = activeSearch;
+        renderFeed();
+      });
+    }
+
+    function loadCustomPosts() {
+      return JSON.parse(localStorage.getItem('bos_custom_posts') || '[]');
+    }
+
+    function renderFeed() {
+      const customPosts = loadCustomPosts();
+      
+      // Filter out draft or future scheduled custom posts
+      const activeCustom = customPosts.filter(p => {
+        const isDraft = p.status === 'draft';
+        const isScheduled = p.status === 'scheduled' || (p.status === 'published' && new Date(p.publishDate) > new Date());
+        return !isDraft && !isScheduled;
+      }).map(p => ({
+        ...p,
+        isCustom: true,
+        link: `/blog/view.html?id=${p.id}`
+      }));
+
+      // Combine
+      let allPosts = [...nativePosts, ...activeCustom];
+
+      // Sort by publish date (newest first)
+      allPosts.sort((a, b) => new Date(b.publishDate || b.createdAt) - new Date(a.publishDate || a.createdAt));
+
+      // Compute Category counts for all matching
+      const categoryCounts = {};
+      allPosts.forEach(p => {
+        categoryCounts[p.category] = (categoryCounts[p.category] || 0) + 1;
+      });
+      renderCategoriesWidget(categoryCounts);
+
+      // Apply Search Filter
+      if (activeSearch) {
+        const query = activeSearch.toLowerCase().trim();
+        allPosts = allPosts.filter(p => 
+          p.title.toLowerCase().includes(query) || 
+          p.description.toLowerCase().includes(query) ||
+          p.category.toLowerCase().includes(query) ||
+          (p.author && p.author.toLowerCase().includes(query))
+        );
+      }
+
+      // Apply Category Filter
+      if (activeCategory) {
+        allPosts = allPosts.filter(p => p.category.toLowerCase() === activeCategory.toLowerCase());
+      }
+
+      // Populate sidebar popular articles widget
+      renderPopularWidget(customPosts);
+
+      const feedContainer = document.getElementById('blog-posts-feed-container');
+      if (!feedContainer) return;
+
+      if (allPosts.length === 0) {
+        feedContainer.innerHTML = `
+          <div class="bg-white border border-gray-100 rounded-3xl p-12 text-center shadow-sm">
+            <span class="material-symbols-outlined text-gray-300 text-5xl mb-4">search_off</span>
+            <h3 class="font-display text-2xl font-bold text-secondary mb-2">No Articles Found</h3>
+            <p class="text-gray-500 mb-6 text-sm">We couldn't find any posts matching your search keywords or active filters.</p>
+            <button id="btn-clear-filters" class="bg-primary hover:bg-[#002b54] text-white px-6 py-2.5 rounded-full font-semibold transition-colors text-xs">
+              Clear All Filters
+            </button>
+          </div>
+        `;
+        document.getElementById('btn-clear-filters').addEventListener('click', () => {
+          activeSearch = '';
+          activeCategory = '';
+          if (mainSearchInput) mainSearchInput.value = '';
+          if (sidebarSearchInput) sidebarSearchInput.value = '';
+          window.history.replaceState({}, document.title, '/blog/');
+          renderFeed();
+        });
+        return;
+      }
+
+      // Render First Post as Featured
+      const featured = allPosts[0];
+      const otherPosts = allPosts.slice(1);
+
+      const fDate = new Date(featured.publishDate || featured.createdAt);
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const fDay = String(fDate.getDate()).padStart(2, '0');
+      const fMonth = months[fDate.getMonth()];
+
+      const fViewsKey = `bos_views_${featured.id}`;
+      const fViews = parseInt(localStorage.getItem(fViewsKey)) || featured.initialViews || 42;
+
+      let featuredHTML = `
+        <div class="mb-12">
+          <p class="text-primary font-semibold text-xs uppercase tracking-widest mb-6">Featured Article</p>
+          <a href="${featured.link}" class="group grid grid-cols-1 lg:grid-cols-2 gap-0 bg-white rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100">
+            <div class="relative h-72 lg:h-auto overflow-hidden">
+              <img src="${featured.featuredImage || '/blog_soil.png'}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"/>
+              <div class="absolute inset-0 bg-gradient-to-r from-transparent to-black/10"></div>
+              <span class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${featured.category}</span>
+              <div class="absolute bottom-4 right-4 w-14 h-14 rounded-full bg-primary text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg leading-tight">
+                <span class="text-base font-extrabold leading-none">${fDay}</span>
+                <span class="uppercase tracking-wider text-[9px]">${fMonth}</span>
+              </div>
+            </div>
+            <div class="p-8 flex flex-col justify-center">
+              <h2 class="font-display text-2xl font-bold text-secondary mb-4 leading-snug group-hover:text-primary transition-colors">${featured.title}</h2>
+              <p class="text-gray-500 text-sm leading-relaxed mb-6">${featured.description}</p>
+              <div class="flex items-center gap-4 text-xs text-gray-400 mb-6">
+                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">person</span> ${featured.author || 'BOS Contributor'}</span>
+                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> ${featured.readTime || 5} min read</span>
+                <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-primary">visibility</span> <span>${fViews.toLocaleString()} views</span></span>
+              </div>
+              <span class="inline-flex items-center gap-2 text-primary font-semibold text-sm group-hover:gap-3 transition-all">
+                Read Article <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+              </span>
+            </div>
+          </a>
+        </div>
+      `;
+
+      let gridHTML = '';
+      if (otherPosts.length > 0) {
+        gridHTML = `
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            ${otherPosts.map(p => {
+              const pDate = new Date(p.publishDate || p.createdAt);
+              const pDay = String(pDate.getDate()).padStart(2, '0');
+              const pMonth = months[pDate.getMonth()];
+              const pViewsKey = `bos_views_${p.id}`;
+              const pViews = parseInt(localStorage.getItem(pViewsKey)) || p.initialViews || 42;
+
+              let catBg = 'bg-primary';
+              if (p.category === 'Forestry & Climate') catBg = 'bg-emerald-600';
+              if (p.category === 'Urban Farming') catBg = 'bg-amber-500';
+
+              return `
+                <a href="${p.link}" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col">
+                  <div class="relative h-52 overflow-hidden">
+                    <img src="${p.featuredImage || '/blog_soil.png'}" alt="" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"/>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                    <span class="absolute top-4 left-4 ${catBg} text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">${p.category}</span>
+                    <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full ${catBg} text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+                      <span class="text-base font-extrabold leading-none">${pDay}</span>
+                      <span class="uppercase tracking-wider text-[9px]">${pMonth}</span>
+                    </div>
+                  </div>
+                  <div class="p-6 pt-10 flex flex-col flex-grow">
+                    <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">${p.title}</h3>
+                    <p class="text-gray-500 text-sm leading-relaxed mb-5 flex-grow line-clamp-3">${p.description}</p>
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-3 text-xs text-gray-400">
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">schedule</span> ${p.readTime || 5} min read</span>
+                        <span class="flex items-center gap-1"><span class="material-symbols-outlined text-[14px] text-primary">visibility</span> <span>${pViews.toLocaleString()} views</span></span>
+                      </div>
+                      <span class="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
+                        Read <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              `;
+            }).join('')}
+          </div>
+        `;
+      }
+
+      feedContainer.innerHTML = featuredHTML + gridHTML;
+    }
+
+    function renderCategoriesWidget(counts) {
+      const widget = document.querySelector('.lg\\:col-span-4 .flex.flex-col.gap-2');
+      if (!widget) return;
+
+      widget.innerHTML = Object.entries(counts).map(([cat, count]) => {
+        const isAct = activeCategory.toLowerCase() === cat.toLowerCase();
+        return `
+          <button onclick="filterCategory('${cat}')" class="flex justify-between items-center px-4 py-2.5 rounded-xl hover:bg-stone-50 text-stone-600 hover:text-primary transition-all text-left ${isAct ? 'bg-stone-100 text-primary font-semibold' : ''}">
+            <span>${cat}</span>
+            <span class="bg-stone-100 text-stone-500 text-xs px-2 py-0.5 rounded-full font-bold">${count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    window.filterCategory = (cat) => {
+      activeCategory = activeCategory.toLowerCase() === cat.toLowerCase() ? '' : cat;
+      const url = new URL(window.location);
+      if (activeCategory) {
+        url.searchParams.set('category', activeCategory);
+      } else {
+        url.searchParams.delete('category');
+      }
+      window.history.replaceState({}, document.title, url);
+      renderFeed();
+    };
+
+    function renderPopularWidget(customPosts) {
+      const popularWidget = document.querySelector('.lg\\:col-span-4 .flex.flex-col.gap-4');
+      if (!popularWidget) return;
+
+      // Merge native
+      const mergedPopular = nativePosts.map(np => {
+        const vKey = `bos_views_${np.id}`;
+        let views = parseInt(localStorage.getItem(vKey)) || np.initialViews;
+        return { ...np, views, link: np.link };
+      });
+
+      // Filter active custom
+      customPosts.forEach(cp => {
+        const isDraft = cp.status === 'draft';
+        const isScheduled = cp.status === 'scheduled' || (cp.status === 'published' && new Date(cp.publishDate) > new Date());
+        if (!isDraft && !isScheduled) {
+          const vKey = `bos_views_${cp.id}`;
+          let views = parseInt(localStorage.getItem(vKey)) || cp.initialViews || 42;
+          mergedPopular.push({
+            id: cp.id,
+            title: cp.title,
+            category: cp.category,
+            featuredImage: cp.featuredImage || '/blog_soil.png',
+            publishDate: cp.publishDate || cp.createdAt,
+            views,
+            link: `/blog/view.html?id=${cp.id}`
+          });
+        }
+      });
+
+      // Sort by views
+      mergedPopular.sort((a, b) => b.views - a.views);
+
+      // Top 3
+      const top3 = mergedPopular.slice(0, 3);
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+      popularWidget.innerHTML = top3.map(postItem => {
+        const d = new Date(postItem.publishDate || postItem.createdAt);
+        const formattedD = `${months[d.getMonth()]} ${String(d.getDate()).padStart(2, '0')}, ${d.getFullYear()}`;
+
+        return `
+          <a href="${postItem.link}" class="flex gap-3 group">
+            <img src="${postItem.featuredImage || '/blog_soil.png'}" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
+            <div>
+              <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">${postItem.title}</h4>
+              <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
+                <span>${formattedD}</span>
+                <span>•</span>
+                <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-${postItem.id}">${postItem.views.toLocaleString()} views</span></span>
+              </div>
+            </div>
+          </a>
+        `;
+      }).join('');
+    }
+
+    // Initial render
+    renderFeed();
+
+    // Trigger views syncing loop
+    setInterval(() => {
+      // Add 5 views to each post
+      const customPosts = loadCustomPosts();
+      
+      // Native posts views increase
+      nativePosts.forEach(np => {
+        const vKey = `bos_views_${np.id}`;
+        let viewsVal = parseInt(localStorage.getItem(vKey)) || np.initialViews;
+        viewsVal += 5;
+        localStorage.setItem(vKey, viewsVal);
+      });
+
+      // Custom posts views increase
+      customPosts.forEach(cp => {
+        const vKey = `bos_views_${cp.id}`;
+        let viewsVal = parseInt(localStorage.getItem(vKey)) || cp.initialViews || 42;
+        viewsVal += 5;
+        localStorage.setItem(vKey, viewsVal);
+      });
+
+      renderFeed();
+    }, 180000);
+  });
+</script>
+</body>
+</html>

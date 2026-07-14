@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>About BOS &mdash; Bill of Senga</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&amp;family=Work+Sans:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "primary": "#003B73",
+            "secondary": "#1B3022",
+            "background": "#faf9f4",
+            "surface": "#faf9f4",
+            "surface-container": "#efeee9",
+            "surface-container-low": "#f5f4ef",
+            "surface-container-lowest": "#ffffff",
+            "on-surface": "#1b1c19",
+            "on-surface-variant": "#434843",
+            "outline-variant": "#c3c8c1",
+            "on-primary": "#ffffff"
+          },
+          "fontFamily": {
+            "display": ["Newsreader"],
+            "body": ["Work Sans"]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .texture-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 50;
+      background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+    }
+  </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen relative font-body overflow-x-hidden flex flex-col">
+  <div class="texture-overlay"></div>
+
+  <!-- Header -->
+  <header class="bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-container/50 shadow-sm transition-all duration-300 ease-out z-40 sticky top-0">
+    <div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+      <a href="/" class="flex items-center">
+        <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+      </a>
+      <nav class="hidden lg:flex space-x-6 items-center z-50 h-full">
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/">Home</a>
+
+        <!-- About Dropdown -->
+        <div class="relative group h-full flex items-center">
+          <button class="flex items-center gap-1 text-primary border-b-2 border-primary h-full px-3 transition-all duration-300 ease-out font-semibold text-sm focus:outline-none">
+            About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          </button>
+          <div class="absolute top-full left-0 pt-0 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="bg-surface rounded-xl shadow-xl border border-outline-variant/30 p-2 flex flex-col gap-1">
+              <a href="/about/" class="px-4 py-2 bg-stone-50 rounded-lg text-sm text-primary font-semibold transition-colors">About BOS</a>
+              <a href="/the_story_of_senga/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+              <a href="/mission/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+              <a href="/team/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Our Hubs Dropdown -->
+        <div class="relative group h-full flex items-center">
+          <button class="flex items-center gap-1 text-stone-500 hover:text-primary hover:bg-stone-50 h-full px-3 transition-all duration-300 ease-out font-semibold text-sm focus:outline-none">
+            Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+          </button>
+          <div class="absolute top-full left-0 pt-0 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+            <div class="bg-surface rounded-xl shadow-xl border border-outline-variant/30 p-2 flex flex-col gap-1">
+              <a href="/practical_classroom/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+              <a href="/tree_billionaire_generation/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+              <a href="/community_villages/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+            </div>
+          </div>
+        </div>
+
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/#projects">Projects</a>
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/gallery/">Gallery</a>
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/blog/">Blog</a>
+        <a class="h-full flex items-center text-stone-500 hover:text-primary hover:bg-stone-50 px-3 transition-all duration-300 ease-out font-semibold text-sm" href="/contact/">Contact Us</a>
+      </nav>
+      <a href="/join_the_movement/" class="hidden md:inline-flex items-center justify-center px-8 py-2.5 bg-gradient-to-r from-primary to-[#0052a3] text-white rounded-full font-semibold hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 shadow-sm text-center">
+        Join the Movement
+      </a>
+      <button class="lg:hidden text-primary">
+        <span class="material-symbols-outlined text-[28px]">menu</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="flex-grow">
+
+    <!-- Hero Header -->
+    <section class="relative bg-gradient-to-br from-secondary to-primary text-white py-24 px-6 text-center overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-white/20 blur-3xl"></div>
+        <div class="absolute bottom-1/4 right-1/4 w-64 h-64 rounded-full bg-emerald-300/20 blur-3xl"></div>
+      </div>
+      <div class="max-w-4xl mx-auto space-y-6 relative z-10">
+        <span class="text-emerald-400 text-xs font-bold uppercase tracking-widest block">Bill of Senga</span>
+        <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">About BOS</h1>
+        <p class="text-stone-300 text-lg md:text-xl font-light max-w-2xl mx-auto leading-relaxed">
+          From a bare five-acre plot to a thriving living laboratory where indigenous knowledge meets agricultural science.
+        </p>
+      </div>
+    </section>
+
+    <!-- The Beginning -->
+    <section class="py-20 px-6">
+      <div class="max-w-3xl mx-auto">
+        <div class="space-y-6 text-stone-600 leading-relaxed text-lg">
+          <p>In 2007, I stood on a piece of land in Senga village, in Luweero District of central Uganda.</p>
+          <p>The five-acre plot was bare. Only one old mutuba tree stood tall, and the soil looked exhausted from years of overuse.</p>
+          <p class="font-display text-2xl text-secondary italic">I remember asking myself a difficult question: Can this really work for me?</p>
+          <p>The land was about 50 kilometres from my home. I had no car, and I couldn't afford one. The road was rough murram, riddled with potholes and so narrow in places that even a small car would struggle to pass.</p>
+          <p>Still, my desire for farmland outweighed my doubt.</p>
+          <p class="font-semibold text-secondary">So I paid the money.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- The Transformation -->
+    <section class="py-16 px-6 bg-stone-50">
+      <div class="max-w-3xl mx-auto">
+        <div class="space-y-6 text-stone-600 leading-relaxed text-lg">
+          <h2 class="font-display text-3xl md:text-4xl font-bold text-secondary mb-4">Today, a Different Story</h2>
+          <p>Today, that same land tells a very different story.</p>
+          <p>Where there was once bare ground, there is now a mini forest, thriving crops, insects, birds, and animals. The soil is alive again.</p>
+          <p>What began as a risky decision has slowly become a living laboratory where indigenous knowledge meets agricultural science, and where ideas about environmental restoration, healthy food, and sustainable farming are tested and shared.</p>
+        </div>
+
+        <!-- Quote Card -->
+        <div class="mt-12 bg-white border border-stone-200/60 rounded-2xl p-8 md:p-10 relative overflow-hidden shadow-sm">
+          <div class="absolute -right-12 -bottom-12 w-28 h-28 rounded-full bg-primary/5"></div>
+          <span class="material-symbols-outlined text-primary text-[40px] mb-4 block">format_quote</span>
+          <p class="font-display text-xl md:text-2xl text-stone-700 italic leading-relaxed mb-6">
+            "It is really fantastic. I am so happy that you are doing this. This shamba will be a paradise created by you."
+          </p>
+          <div>
+            <span class="font-bold text-secondary text-base">Bart Hilhorst</span>
+            <span class="text-stone-500 text-xs font-semibold tracking-wider uppercase ml-3">Former Employer & Long-time Mentor, July 2025</span>
+          </div>
+        </div>
+
+        <p class="text-center italic text-stone-500 text-lg mt-8">Those words capture the spirit of this place: a work in progress, grounded in hope, learning, and growth.</p>
+      </div>
+    </section>
+
+    <!-- Who I Am -->
+    <section class="py-20 px-6">
+      <div class="max-w-3xl mx-auto">
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-secondary mb-10">Who I Am</h2>
+        <div class="space-y-6 text-stone-600 leading-relaxed text-lg">
+          <p>My name is William Odinga Balikuddembe known as the Bill of Senga, or simply BOS.</p>
+          <p>I am a science journalist, communicator, and farmer.</p>
+          <p>For more than twenty years, I have reported on agriculture, water, the environment, and rural livelihoods across Uganda and beyond.</p>
+          <p>Alongside this work, I practice farming transforming a small piece of land into a living space where knowledge, ideas, and innovation grow alongside trees, crops, birds, animals, insects and other things.</p>
+          <p>Beyond journalism and farming, I serve as Secretary for Research and Head of the Department of Policy and Research at the National Unity Platform (NUP), a party I helped found.</p>
+          <p>I have held the first role since 2020 and the second since 2023 part of a long-standing commitment to public service, ensuring that research and policy translate into real benefits for communities.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-[#0f1f0f] text-white py-12 px-6 border-t border-white/5">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="flex items-center gap-3">
+        <img src="/logo.png" alt="" class="h-10 w-auto object-contain brightness-0 invert">
+        <span class="font-display text-xl font-bold tracking-wider">Bill of Senga</span>
+      </div>
+      <p class="text-stone-400 text-sm">&copy; 2026 Bill of Senga. Empowering Sustainable Regenerative Communities.</p>
+    </div>
+  </footer>
+</body>
+</html>

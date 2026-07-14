@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bill of Senga - Tree Billionaires</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Work+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#1b1c19",
+                        "on-primary": "#ffffff",
+                        "primary": "#003B73",
+                        "background": "#faf9f4",
+                        "surface-container-highest": "#e3e3de",
+                        "outline": "#737973",
+                        "on-secondary-fixed": "#2a170c",
+                        "on-primary-fixed-variant": "#364c3c",
+                        "primary-fixed-dim": "#b4cdb8",
+                        "inverse-surface": "#30312e",
+                        "primary-container": "#002a54",
+                        "inverse-on-surface": "#f2f1ec",
+                        "tertiary-fixed-dim": "#bacda4",
+                        "tertiary-fixed": "#d6e9be",
+                        "surface-variant": "#e3e3de",
+                        "surface-dim": "#dbdad5",
+                        "surface-container-high": "#e9e8e3",
+                        "secondary-container": "#fed8c5",
+                        "on-error": "#ffffff",
+                        "on-tertiary-fixed-variant": "#3c4c2c",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#003B73",
+                        "on-tertiary-fixed": "#111f05",
+                        "tertiary-container": "#213013",
+                        "secondary": "#1B3022",
+                        "surface-container-low": "#f5f4ef",
+                        "surface-container": "#efeee9",
+                        "surface": "#faf9f4",
+                        "secondary-fixed-dim": "#e3bfad",
+                        "on-tertiary-container": "#879973",
+                        "primary-fixed": "#d0e9d4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#ffdbca",
+                        "on-surface-variant": "#434843",
+                        "outline-variant": "#c3c8c1",
+                        "on-tertiary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-primary-container": "#4d6b8c",
+                        "surface-bright": "#faf9f4",
+                        "inverse-primary": "#b4cdb8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#1b1c19",
+                        "tertiary": "#0d1b03",
+                        "on-primary-fixed": "#0b2013",
+                        "on-secondary-container": "#795d4e",
+                        "on-error-container": "#93000a",
+                        "on-secondary-fixed-variant": "#5a4134"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "margin": "32px",
+                        "container-max": "1280px",
+                        "stack-sm": "12px",
+                        "gutter": "24px",
+                        "unit": "8px",
+                        "stack-lg": "48px",
+                        "stack-md": "24px"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Work Sans"],
+                        "caption": ["Work Sans"],
+                        "display": ["Newsreader"],
+                        "h3": ["Newsreader"],
+                        "body-md": ["Work Sans"],
+                        "h2": ["Newsreader"],
+                        "h1": ["Newsreader"],
+                        "body-lg": ["Work Sans"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", { "lineHeight": "1.2", "letterSpacing": "0.02em", "fontWeight": "600" }],
+                        "caption": ["12px", { "lineHeight": "1.4", "fontWeight": "400" }],
+                        "display": ["48px", { "lineHeight": "1.1", "fontWeight": "600" }],
+                        "h3": ["22px", { "lineHeight": "1.4", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "h2": ["28px", { "lineHeight": "1.3", "fontWeight": "500" }],
+                        "h1": ["36px", { "lineHeight": "1.2", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "1.6", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)" opacity="0.03"/%3E%3C/svg%3E');
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- TopAppBar -->
+<header class="bg-surface/80 backdrop-blur-md text-primary font-display full-width top-0 border-b border-surface-variant/50 shadow-sm sticky z-50 transition-all duration-300">
+<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full">
+<a href="/" class="flex items-center">
+    <img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+</a>
+<nav class="hidden lg:flex gap-6 lg:gap-8 items-center z-50">
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#1B3022] dark:hover:text-stone-200 transition-all duration-300 ease-out hover:bg-stone-50 dark:hover:bg-stone-900/50 px-3 py-2 rounded font-label-md" href="/">Home</a>
+
+<!-- About Dropdown -->
+<div class="relative group flex items-center">
+  <button class="flex items-center gap-1 text-stone-500 dark:text-stone-400 hover:text-[#1B3022] dark:hover:text-stone-200 transition-all duration-300 ease-out hover:bg-stone-50 dark:hover:bg-stone-900/50 px-3 py-2 rounded focus:outline-none font-label-md">
+    About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md tracking-normal">
+      <a href="/about/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+      <a href="/the_story_of_senga/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+      <a href="/mission/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+      <a href="/team/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+    </div>
+  </div>
+</div>
+
+<!-- Our Hubs Dropdown -->
+<div class="relative group flex items-center">
+  <button aria-current="page" class="flex items-center gap-1 text-[#1B3022] dark:text-emerald-400 border-b-2 border-[#1B3022] dark:border-emerald-400 pb-1 px-3 py-2 transition-all duration-300 ease-out focus:outline-none font-label-md">
+    Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+  </button>
+  <div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+    <div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1 font-label-md tracking-normal">
+      <a href="/practical_classroom/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+      <a href="/tree_billionaire_generation/" class="px-4 py-2 bg-surface-dim/50 rounded-lg text-sm text-primary transition-colors font-semibold">Tree Billionaires</a>
+      <a href="/community_villages/" class="px-4 py-2 hover:bg-surface-dim rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+    </div>
+  </div>
+</div>
+
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#1B3022] dark:hover:text-stone-200 transition-all duration-300 ease-out hover:bg-stone-50 dark:hover:bg-stone-900/50 px-3 py-2 rounded font-label-md" href="/#projects">Projects</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#1B3022] dark:hover:text-stone-200 transition-all duration-300 ease-out hover:bg-stone-50 dark:hover:bg-stone-900/50 px-3 py-2 rounded font-label-md" href="/gallery/">Gallery</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#1B3022] dark:hover:text-stone-200 transition-all duration-300 ease-out hover:bg-stone-50 dark:hover:bg-stone-900/50 px-3 py-2 rounded font-label-md" href="/blog/">Blog</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#1B3022] dark:hover:text-stone-200 transition-all duration-300 ease-out hover:bg-stone-50 dark:hover:bg-stone-900/50 px-3 py-2 rounded font-label-md" href="/contact/">Contact Us</a>
+</nav>
+<div class="flex-shrink-0">
+<a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-2.5 rounded-full font-label-md text-label-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 inline-block text-center">
+                    Join the Movement
+                </a>
+</div>
+</div>
+</header>
+<main class="flex-grow">
+<!-- Hero Section -->
+<section class="relative pt-24 pb-32 px-6 lg:px-12 max-w-container-max mx-auto overflow-hidden">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter items-center">
+<div class="lg:col-span-6 z-10 flex flex-col gap-stack-md">
+<div class="inline-flex items-center gap-2 px-4 py-2 bg-tertiary-fixed rounded-full w-fit">
+<span class="material-symbols-outlined text-on-tertiary-fixed text-sm" style="font-variation-settings: 'FILL' 1;">eco</span>
+<span class="font-label-md text-label-md text-on-tertiary-fixed">Tree Billionaire Generation</span>
+</div>
+<h1 class="font-display text-display text-primary-container leading-tight">
+                        The True Wealth of the Future Will Be Measured in Trees
+</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-xl">
+                        This is one of the central ideas behind BOS - a new, sustainable way of thinking about wealth. Trees provide oxygen, restore soils, regulate water, and offer food, medicine, fiber, and income.
+                    </p>
+<div class="flex flex-wrap gap-4 pt-4">
+<button class="bg-primary-container text-on-primary px-8 py-4 rounded-lg font-label-md text-label-md hover:bg-primary transition-all shadow-md shadow-primary-container/20 flex items-center gap-2">
+                            Plant Your First Tree
+                            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+<button class="bg-transparent border border-outline text-on-surface px-8 py-4 rounded-lg font-label-md text-label-md hover:bg-surface-container transition-all">
+                            Read the Manifesto
+                        </button>
+</div>
+</div>
+<div class="lg:col-span-6 relative h-[500px] w-full rounded-2xl overflow-hidden shadow-lg shadow-secondary/10">
+<img alt="Lush green forest canopy" class="absolute inset-0 w-full h-full object-cover" data-alt="A sweeping, breathtaking aerial view of a dense, vibrant green forest canopy bathed in warm, golden hour sunlight. The lighting is soft and directional, highlighting the textures of individual leaves and branches, creating a deep sense of lushness and prosperity. The mood is uplifting and grounded, fitting an organic modern aesthetic. The colors are rich emerald greens, deep earthy browns, and warm golden hues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzRuNRfnPmzSs3ING2jhEC-t4s_mg-SLc65GDi5tbQkoGTJTpOwOcFj2-bgHcDdc1tKR_7HtqJGu6M4ffr0eMUxhGBRwnzeyB_TebLvT_GU7YAvqbpMPxNAm-fP3dAu5UnFnrtDhTLs6kUMEWSvXP5-4ROS1iDMyBcIVtcLxYdSRjzPjs2RAHF6kZHAa_bpfyFsJ9R56UQbQ4A8Did42JFpMBTqULyljxv5e1hK-LcqAZ9c9gs-wSgF_Empeekn79HSITXxFzREFai"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container/60 to-transparent"></div>
+<!-- Floating Metric Card -->
+<div class="absolute bottom-6 right-6 bg-surface/90 backdrop-blur-md p-6 rounded-xl border border-surface-container-highest shadow-xl flex flex-col gap-2">
+<span class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider">Community Growth</span>
+<div class="flex items-baseline gap-1">
+<span class="font-display text-h1 text-primary-container">14,208</span>
+<span class="font-body-md text-body-md text-secondary">Trees Planted</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden mt-2">
+<div class="bg-tertiary-fixed w-[65%] h-full"></div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Trees Bento Grid -->
+<section class="bg-surface-container-low py-24 px-6 lg:px-12">
+<div class="max-w-container-max mx-auto flex flex-col gap-stack-lg">
+<div class="text-center max-w-2xl mx-auto flex flex-col gap-stack-sm">
+<h2 class="font-h1 text-h1 text-primary-container">Why Trees?</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Trees support biodiversity and help stabilize the climate, yet their true value is often overlooked.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px]">
+<!-- Bento Item 1: Carbon (Large) -->
+<div class="md:col-span-2 bg-surface rounded-2xl p-8 border border-surface-container-highest shadow-sm shadow-secondary/5 flex flex-col justify-between group hover:shadow-md transition-shadow relative overflow-hidden">
+<div class="z-10 flex flex-col gap-2">
+<span class="material-symbols-outlined text-tertiary-container p-3 bg-tertiary-fixed rounded-full w-fit mb-2" style="font-variation-settings: 'FILL' 1;">co2</span>
+<h3 class="font-h2 text-h2 text-on-surface">Life, Livelihoods, and Climate</h3>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-md">Nature's most efficient technology for locking away atmospheric carbon, building solid wood from thin air.</p>
+</div>
+<div class="absolute right-0 bottom-0 opacity-10 transform translate-x-1/4 translate-y-1/4 group-hover:scale-110 transition-transform duration-700">
+<span class="material-symbols-outlined text-[200px]" style="font-variation-settings: 'FILL' 1;">park</span>
+</div>
+</div>
+<!-- Bento Item 2: Oxygen -->
+<div class="bg-primary-container rounded-2xl p-8 border border-primary-fixed shadow-sm shadow-secondary/5 flex flex-col justify-between text-on-primary">
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-primary-fixed p-3 bg-primary rounded-full w-fit mb-2" style="font-variation-settings: 'FILL' 1;">air</span>
+<h3 class="font-h3 text-h3">Oxygen Engine</h3>
+<p class="font-body-md text-body-md text-on-primary-container">Trees provide oxygen, food, medicine, fiber, shelter, fertile soils, and habitat for countless organisms.</p>
+</div>
+</div>
+<!-- Bento Item 3: Soil -->
+<div class="bg-surface rounded-2xl p-8 border border-surface-container-highest shadow-sm shadow-secondary/5 flex flex-col justify-between relative overflow-hidden">
+<div class="flex flex-col gap-2 z-10">
+<span class="material-symbols-outlined text-secondary p-3 bg-secondary-container rounded-full w-fit mb-2" style="font-variation-settings: 'FILL' 1;">grass</span>
+<h3 class="font-h3 text-h3 text-on-surface">Soil Restoration</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Trees restore ecosystems, capture carbon dioxide, and help the land become a source of life and learning for generations.</p>
+</div>
+</div>
+<!-- Bento Item 4: Water -->
+<div class="bg-surface rounded-2xl p-8 border border-surface-container-highest shadow-sm shadow-secondary/5 flex flex-col justify-between">
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-surface-tint p-3 bg-inverse-primary rounded-full w-fit mb-2" style="font-variation-settings: 'FILL' 1;">water_drop</span>
+<h3 class="font-h3 text-h3 text-on-surface">Water Regulation</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Forests act as giant sponges, absorbing rainfall, preventing floods, and filtering water into pristine aquifers.</p>
+</div>
+</div>
+<!-- Bento Item 5: Food & Medicine -->
+<div class="bg-surface rounded-2xl p-8 border border-surface-container-highest shadow-sm shadow-secondary/5 flex flex-col justify-between">
+<div class="flex flex-col gap-2">
+<span class="material-symbols-outlined text-tertiary p-3 bg-tertiary-fixed-dim rounded-full w-fit mb-2" style="font-variation-settings: 'FILL' 1;">local_florist</span>
+<h3 class="font-h3 text-h3 text-on-surface">Food &amp; Medicine</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Providing sustenance and traditional remedies. A diverse agroforestry system is a living pharmacy and pantry.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- CTA Section -->
+<section class="py-32 px-6 lg:px-12 relative overflow-hidden">
+<div class="absolute inset-0 bg-primary-container"></div>
+<!-- Organic texture overlay -->
+<div class="absolute inset-0 opacity-20" style="background-image: url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.8\' numOctaves=\'4\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E');"></div>
+<div class="relative z-10 max-w-3xl mx-auto text-center flex flex-col items-center gap-stack-md">
+<span class="material-symbols-outlined text-primary-fixed text-5xl mb-4" style="font-variation-settings: 'FILL' 1;">psychiatry</span>
+<h2 class="font-display text-display text-on-primary">Bond with the Earth</h2>
+<p class="font-body-lg text-body-lg text-on-primary-container max-w-xl">
+                    At its heart, this is about bonding with trees. Growing trees becomes a pathway to happy living and prosperity for individuals, families, and communities.
+                </p>
+<div class="mt-8">
+<button class="bg-tertiary-fixed text-on-tertiary-container px-10 py-5 rounded-xl font-label-md text-[18px] hover:bg-tertiary-fixed-dim transition-all shadow-lg flex items-center gap-3 group">
+                        Plant a Seed Now
+                        <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="bg-[#111613] text-stone-300 font-body-md pt-16 mt-auto">
+  <div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+    
+    <!-- About Us -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">About Us</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <p class="text-sm leading-relaxed mb-6">
+        Rooted in Tradition, Growing for the Future. The Bill of Senga is a sustainable living hub where indigenous knowledge meets modern agricultural science to build thriving ecosystems.
+      </p>
+      <div class="flex gap-3">
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="text-sm font-bold">f</span>
+        </a>
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="text-sm font-bold">X</span>
+        </a>
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span>
+        </a>
+        <a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary-container flex items-center justify-center text-white transition-colors">
+          <span class="text-sm font-bold">in</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">Quick Links</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Home</a></li>
+        <li><a href="/the_story_of_senga/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> The Story</a></li>
+        <li><a href="/practical_classroom/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Classroom</a></li>
+        <li><a href="/tree_billionaire_generation/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Tree Billionaires</a></li>
+        <li><a href="/community_villages/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Community</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Impact Report</a></li>
+      </ul>
+    </div>
+
+    <!-- Our Hubs -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">Our Hubs</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <ul class="flex flex-col gap-3 text-sm">
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Practical Classroom</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Urban Farming</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Smart Villages</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Carbon Capture</a></li>
+        <li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Water Source</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="flex flex-col">
+      <h3 class="text-white font-bold text-lg font-display mb-2">Contact Information</h3>
+      <div class="w-8 h-0.5 bg-primary mb-6"></div>
+      <ul class="flex flex-col gap-4 text-sm mb-6">
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">call</span>
+          <span>+1 234 567 8900</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">mail</span>
+          <span>hello@billofsenga.org</span>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">location_on</span>
+          <span>123 Sustainable Way, Eco District</span>
+        </li>
+      </ul>
+      
+      <!-- Newsletter -->
+      <form class="relative w-full max-w-[280px]">
+        <input type="email" placeholder="Your email address" class="w-full bg-white text-stone-800 rounded-full py-3 px-4 pr-12 outline-none text-sm border-none focus:ring-2 focus:ring-[#003B73]">
+        <button type="button" class="absolute right-1 top-1 bottom-1 aspect-square bg-[#003B73] hover:bg-primary-container rounded-full flex items-center justify-center text-white transition-colors shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="bg-[#0b100c] py-5 border-t border-stone-800/50 relative">
+    <div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-stone-500">
+      <p>© Copyright 2024 Bill of Senga. All Rights Reserved</p>
+      <p class="mt-2 md:mt-0">Created by <span class="text-white">SoftCode Tech</span></p>
+    </div>
+    <!-- Back to top button -->
+    <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="absolute right-6 -top-5 w-10 h-10 bg-[#003B73] hover:bg-primary-container rounded-full flex items-center justify-center text-white transition-colors shadow-lg">
+      <span class="material-symbols-outlined">keyboard_arrow_up</span>
+    </button>
+  </div>
+</footer>
+</body></html>

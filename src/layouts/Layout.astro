@@ -1,0 +1,185 @@
+---
+interface Props {
+	title: string;
+}
+
+const { title } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>{title} - Bill of Senga</title>
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		
+		<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
+		<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+		
+		<script id="tailwind-config" is:inline>
+			tailwind.config = {
+				darkMode: "class",
+				theme: {
+					extend: {
+						"colors": {
+							"primary": "#003B73",
+							"secondary": "#1B3022",
+							"background": "#faf9f4",
+							"surface": "#faf9f4",
+							"surface-container": "#efeee9",
+							"surface-container-low": "#f5f4ef",
+							"surface-container-lowest": "#ffffff",
+							"on-surface": "#1b1c19",
+							"on-surface-variant": "#434843",
+							"outline-variant": "#c3c8c1",
+							"on-primary": "#ffffff",
+                            "tertiary-fixed": "#d6e9be",
+                            "on-tertiary-fixed": "#111f05",
+                            "surface-tint": "#003B73"
+						},
+						"fontFamily": {
+							"display": ["Newsreader"],
+							"body": ["Work Sans"],
+                            "label-md": ["Work Sans"],
+                            "body-md": ["Work Sans"]
+						}
+					}
+				}
+			}
+		</script>
+		<style is:global>
+			.texture-overlay {
+				position: fixed;
+				top: 0; left: 0; right: 0; bottom: 0;
+				opacity: 0.03;
+				pointer-events: none;
+				z-index: 50;
+				background-image: url('data:image/svg+xml,%3Csvg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"%3E%3Cfilter id="noiseFilter"%3E%3CfeTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/%3E%3C/filter%3E%3Crect width="100%25" height="100%25" filter="url(%23noiseFilter)"/%3E%3C/svg%3E');
+			}
+		</style>
+	</head>
+	<body class="bg-background text-on-surface min-h-screen relative font-body overflow-x-hidden flex flex-col">
+		<div class="texture-overlay"></div>
+
+		<!-- Header -->
+		<header class="sticky top-0 z-40 bg-surface/80 backdrop-blur-md text-primary font-display w-full border-b border-surface-container/50 shadow-sm transition-all duration-300 ease-out">
+			<div class="flex justify-between items-center h-20 px-6 lg:px-12 max-w-7xl mx-auto w-full transition-all duration-300 ease-out">
+				<a href="/" class="flex items-center">
+					<img src="/logo.png" alt="Bill of Senga" class="h-12 w-auto object-contain">
+				</a>
+				<nav class="hidden lg:flex space-x-6 items-center z-50">
+					<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm" href="/">Home</a>
+					<div class="relative group">
+						<button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-low group-hover:text-primary group-hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm focus:outline-none">
+							About <span class="material-symbols-outlined text-[18px]">expand_more</span>
+						</button>
+						<div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+							<div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1">
+								<a href="/about/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">About Us</a>
+								<a href="/the_story_of_senga/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Story</a>
+								<a href="/mission/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Mission</a>
+								<a href="/team/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Our Team</a>
+							</div>
+						</div>
+					</div>
+					<div class="relative group">
+						<button class="flex items-center gap-1 text-on-surface-variant hover:text-primary hover:bg-surface-container-low group-hover:text-primary group-hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm focus:outline-none">
+							Our Hubs <span class="material-symbols-outlined text-[18px]">expand_more</span>
+						</button>
+						<div class="absolute top-full left-0 pt-2 w-56 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-2 group-hover:translate-y-0 z-50">
+							<div class="bg-surface rounded-xl shadow-xl shadow-secondary/10 border border-outline-variant/30 p-2 flex flex-col gap-1">
+								<a href="/practical_classroom/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Practical Classroom</a>
+								<a href="/tree_billionaire_generation/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Tree Billionaires</a>
+								<a href="/community_villages/" class="px-4 py-2 hover:bg-stone-50 rounded-lg text-sm text-on-surface-variant hover:text-primary transition-colors">Community Villages</a>
+							</div>
+						</div>
+					</div>
+					<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm" href="/#projects">Projects</a>
+					<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm" href="/gallery/">Gallery</a>
+					<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm" href="/blog/">Blog</a>
+					<a class="text-on-surface-variant hover:text-primary hover:bg-surface-container-low px-2 py-1 rounded transition-all font-semibold text-sm" href="/contact/">Contact Us</a>
+				</nav>
+				<a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-2.5 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hidden md:flex items-center justify-center text-center">
+					Join the Movement
+				</a>
+				<button class="md:hidden text-primary"><span class="material-symbols-outlined">menu</span></button>
+			</div>
+		</header>
+
+		<main class="flex-grow">
+			<slot />
+		</main>
+
+		<!-- Footer -->
+		<footer class="bg-[#111613] text-stone-300 font-body pt-16 mt-auto">
+			<div class="max-w-7xl mx-auto px-6 lg:px-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+			<!-- About Us -->
+			<div class="flex flex-col">
+				<h3 class="text-white font-bold text-lg font-display mb-2">About Us</h3>
+				<div class="w-8 h-0.5 bg-primary mb-6"></div>
+				<p class="text-sm leading-relaxed mb-6">
+				Rooted in Tradition, Growing for the Future. The Bill of Senga is a sustainable living hub where indigenous knowledge meets modern agricultural science to build thriving ecosystems.
+				</p>
+				<div class="flex gap-3">
+				<a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary flex items-center justify-center text-white transition-colors"><span class="text-sm font-bold">f</span></a>
+				<a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary flex items-center justify-center text-white transition-colors"><span class="text-sm font-bold">X</span></a>
+				<a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary flex items-center justify-center text-white transition-colors"><span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">photo_camera</span></a>
+				<a href="#" class="w-8 h-8 rounded-full bg-[#003B73] hover:bg-primary flex items-center justify-center text-white transition-colors"><span class="text-sm font-bold">in</span></a>
+				</div>
+			</div>
+			<!-- Quick Links -->
+			<div class="flex flex-col">
+				<h3 class="text-white font-bold text-lg font-display mb-2">Quick Links</h3>
+				<div class="w-8 h-0.5 bg-primary mb-6"></div>
+				<ul class="flex flex-col gap-3 text-sm">
+				<li><a href="/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Home</a></li>
+				<li><a href="/the_story_of_senga/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> The Story</a></li>
+				<li><a href="/practical_classroom/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Classroom</a></li>
+				<li><a href="/tree_billionaire_generation/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Tree Billionaires</a></li>
+				<li><a href="/community_villages/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Community</a></li>
+				</ul>
+			</div>
+			<!-- Our Hubs -->
+			<div class="flex flex-col">
+				<h3 class="text-white font-bold text-lg font-display mb-2">Our Hubs</h3>
+				<div class="w-8 h-0.5 bg-primary mb-6"></div>
+				<ul class="flex flex-col gap-3 text-sm">
+				<li><a href="/practical_classroom/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Practical Classroom</a></li>
+				<li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Urban Farming</a></li>
+				<li><a href="/community_villages/" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Smart Villages</a></li>
+				<li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Carbon Capture</a></li>
+				<li><a href="#" class="hover:text-primary transition-colors flex items-center gap-2"><span class="text-primary font-bold text-lg leading-none">›</span> Water Source</a></li>
+				</ul>
+			</div>
+			<!-- Contact Info -->
+			<div class="flex flex-col">
+				<h3 class="text-white font-bold text-lg font-display mb-2">Contact Information</h3>
+				<div class="w-8 h-0.5 bg-primary mb-6"></div>
+				<ul class="flex flex-col gap-4 text-sm mb-6">
+				<li class="flex items-start gap-3"><span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">call</span><span>+1 234 567 8900</span></li>
+				<li class="flex items-start gap-3"><span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">mail</span><span>hello@billofsenga.org</span></li>
+				<li class="flex items-start gap-3"><span class="material-symbols-outlined text-[#e3a13d] text-[20px]" style="font-variation-settings: 'FILL' 1;">location_on</span><span>123 Sustainable Way, Eco District</span></li>
+				</ul>
+				<form class="relative w-full max-w-[280px]">
+				<input type="email" placeholder="Your email address" class="w-full bg-white text-stone-800 rounded-full py-3 px-4 pr-12 outline-none text-sm border-none focus:ring-2 focus:ring-[#003B73]">
+				<button type="button" class="absolute right-1 top-1 bottom-1 aspect-square bg-[#003B73] hover:bg-primary rounded-full flex items-center justify-center text-white transition-colors shadow-sm">
+					<span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+				</button>
+				</form>
+			</div>
+			</div>
+			<!-- Bottom Bar -->
+			<div class="bg-[#0b100c] py-5 border-t border-stone-800/50 relative">
+			<div class="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col md:flex-row justify-between items-center text-xs text-stone-500">
+				<p>&copy; Copyright 2026 Bill of Senga. All Rights Reserved</p>
+				<p class="mt-2 md:mt-0">Created by <span class="text-white">SoftCode Tech</span></p>
+			</div>
+			<button onclick="window.scrollTo({top: 0, behavior: 'smooth'})" class="absolute right-6 -top-5 w-10 h-10 bg-[#003B73] hover:bg-primary rounded-full flex items-center justify-center text-white transition-colors shadow-lg focus:outline-none">
+				<span class="material-symbols-outlined">keyboard_arrow_up</span>
+			</button>
+			</div>
+		</footer>
+	</body>
+</html>
