@@ -35,4 +35,4 @@ jobs:
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
         local-dir: dist/
-        server-dir: ./home_bos_bill_of_senga/code/
+        server-dir: ./billofsenga.com/
