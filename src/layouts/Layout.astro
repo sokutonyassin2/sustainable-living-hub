@@ -105,9 +105,115 @@ const { title } = Astro.props;
 				<a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-2.5 rounded-full font-semibold text-sm hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 hidden md:flex items-center justify-center text-center">
 					Join the Movement
 				</a>
-				<button class="md:hidden text-primary"><span class="material-symbols-outlined">menu</span></button>
+				<button id="mobile-menu-btn" class="lg:hidden text-primary z-50" aria-label="Open menu"><span class="material-symbols-outlined text-[28px]">menu</span></button>
 			</div>
 		</header>
+
+		<!-- Mobile Menu Overlay -->
+		<div id="mobile-menu-overlay" class="fixed inset-0 bg-black/50 z-[60] opacity-0 pointer-events-none transition-opacity duration-300 lg:hidden"></div>
+
+		<!-- Mobile Menu Panel -->
+		<nav id="mobile-menu-panel" class="fixed top-0 right-0 h-full w-[300px] max-w-[85vw] bg-surface z-[70] shadow-2xl transform translate-x-full transition-transform duration-300 ease-out lg:hidden overflow-y-auto">
+			<div class="flex items-center justify-between p-6 border-b border-outline-variant/30">
+				<a href="/" class="flex items-center">
+					<img src="/logo.png" alt="Bill of Senga" class="h-10 w-auto object-contain">
+				</a>
+				<button id="mobile-menu-close" class="text-on-surface-variant hover:text-primary transition-colors" aria-label="Close menu">
+					<span class="material-symbols-outlined text-[28px]">close</span>
+				</button>
+			</div>
+
+			<div class="flex flex-col py-4">
+				<a href="/" class="px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">Home</a>
+
+				<!-- About Accordion -->
+				<div class="mobile-accordion">
+					<button class="mobile-accordion-btn flex items-center justify-between w-full px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">
+						About <span class="material-symbols-outlined text-[18px] transition-transform duration-200">expand_more</span>
+					</button>
+					<div class="mobile-accordion-content hidden pl-4">
+						<a href="/about/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">About Us</a>
+						<a href="/the_story_of_senga/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">Our Story</a>
+						<a href="/mission/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">Our Mission</a>
+						<a href="/team/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">Our Team</a>
+					</div>
+				</div>
+
+				<!-- Our Hubs Accordion -->
+				<div class="mobile-accordion">
+					<button class="mobile-accordion-btn flex items-center justify-between w-full px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">
+						Our Hubs <span class="material-symbols-outlined text-[18px] transition-transform duration-200">expand_more</span>
+					</button>
+					<div class="mobile-accordion-content hidden pl-4">
+						<a href="/practical_classroom/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">Practical Classroom</a>
+						<a href="/tree_billionaire_generation/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">Tree Billionaires</a>
+						<a href="/community_villages/" class="block px-6 py-2.5 text-on-surface-variant hover:text-primary text-sm transition-colors">Community Villages</a>
+					</div>
+				</div>
+
+				<a href="/#projects" class="px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">Projects</a>
+				<a href="/gallery/" class="px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">Gallery</a>
+				<a href="/blog/" class="px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">Blog</a>
+				<a href="/forum/" class="px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">Forum</a>
+				<a href="/contact/" class="px-6 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-low font-semibold text-sm transition-all">Contact Us</a>
+
+				<div class="px-6 pt-6">
+					<a href="/join_the_movement/" class="block w-full bg-gradient-to-r from-primary to-[#0052a3] text-white px-6 py-3 rounded-full font-semibold text-sm text-center hover:shadow-lg hover:shadow-primary/20 transition-all">
+						Join the Movement
+					</a>
+				</div>
+			</div>
+		</nav>
+
+		<!-- Mobile Menu Script -->
+		<script is:inline>
+			(function() {
+				const btn = document.getElementById('mobile-menu-btn');
+				const closeBtn = document.getElementById('mobile-menu-close');
+				const overlay = document.getElementById('mobile-menu-overlay');
+				const panel = document.getElementById('mobile-menu-panel');
+				if (!btn || !panel) return;
+
+				function openMenu() {
+					panel.classList.remove('translate-x-full');
+					panel.classList.add('translate-x-0');
+					overlay.classList.remove('opacity-0', 'pointer-events-none');
+					overlay.classList.add('opacity-100', 'pointer-events-auto');
+					document.body.style.overflow = 'hidden';
+				}
+				function closeMenu() {
+					panel.classList.add('translate-x-full');
+					panel.classList.remove('translate-x-0');
+					overlay.classList.add('opacity-0', 'pointer-events-none');
+					overlay.classList.remove('opacity-100', 'pointer-events-auto');
+					document.body.style.overflow = '';
+				}
+
+				btn.addEventListener('click', openMenu);
+				if (closeBtn) closeBtn.addEventListener('click', closeMenu);
+				if (overlay) overlay.addEventListener('click', closeMenu);
+
+				// Accordion toggles
+				document.querySelectorAll('.mobile-accordion-btn').forEach(function(accBtn) {
+					accBtn.addEventListener('click', function() {
+						var content = this.nextElementSibling;
+						var icon = this.querySelector('.material-symbols-outlined');
+						if (content.classList.contains('hidden')) {
+							content.classList.remove('hidden');
+							icon.style.transform = 'rotate(180deg)';
+						} else {
+							content.classList.add('hidden');
+							icon.style.transform = 'rotate(0deg)';
+						}
+					});
+				});
+
+				// Close menu when a link is clicked
+				panel.querySelectorAll('a').forEach(function(link) {
+					link.addEventListener('click', closeMenu);
+				});
+			})();
+		</script>
 
 		<main class="flex-grow">
 			<slot />
