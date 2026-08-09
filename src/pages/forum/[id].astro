@@ -1,0 +1,173 @@
+---
+// src/pages/forum/[id].astro
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase.js';
+
+const { id } = Astro.params;
+
+// Fetch topic
+const { data: topic, error: topicError } = await supabase
+  .from('forum_topics')
+  .select('*')
+  .eq('id', id)
+  .single();
+
+if (topicError || !topic) {
+  return Astro.redirect('/forum');
+}
+
+// Fetch replies
+const { data: replies } = await supabase
+  .from('forum_replies')
+  .select('*')
+  .eq('topic_id', id)
+  .order('created_at', { ascending: true });
+
+const safeReplies = replies || [];
+const topicDate = new Date(topic.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+let catColor = 'bg-gray-100 text-gray-600';
+if (topic.category === 'Agriculture & Soil') catColor = 'bg-green-100 text-green-700';
+if (topic.category === 'Climate Solutions') catColor = 'bg-blue-100 text-blue-700';
+if (topic.category === 'Urban Farming') catColor = 'bg-amber-100 text-amber-700';
+if (topic.category === 'General Discussion') catColor = 'bg-purple-100 text-purple-700';
+---
+
+<Layout title={`${topic.title} - Community Forum`}>
+  <div class="bg-gray-50 min-h-screen">
+    <!-- Topic Header -->
+    <header class="bg-secondary text-white pt-24 pb-10 px-6 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <img src="/hero_slide2.png" alt="" class="w-full h-full object-cover"/>
+      </div>
+      <div class="relative z-10 max-w-4xl mx-auto">
+        <a href="/forum" class="inline-flex items-center gap-1 text-stone-300 hover:text-white text-sm mb-6 transition-colors">
+          <span class="material-symbols-outlined text-[18px]">arrow_back</span> Back to Forum
+        </a>
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+          <span class={`text-[10px] uppercase tracking-wider font-bold px-2.5 py-1 rounded-full ${catColor}`}>
+            {topic.category}
+          </span>
+          <span class="text-xs text-stone-400 flex items-center gap-1">
+            <span class="material-symbols-outlined text-[14px]">calendar_today</span> {topicDate}
+          </span>
+        </div>
+        <h1 class="font-display text-3xl md:text-4xl font-bold leading-tight">{topic.title}</h1>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="max-w-4xl mx-auto px-6 py-10 space-y-6">
+
+      <!-- Original Post -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center font-bold text-lg">
+            {topic.title.charAt(0).toUpperCase()}
+          </div>
+          <div>
+            <p class="font-semibold text-sm text-gray-800">Topic Author</p>
+            <p class="text-xs text-gray-400">{topicDate}</p>
+          </div>
+        </div>
+        <div class="text-gray-700 leading-relaxed whitespace-pre-wrap">{topic.description}</div>
+      </div>
+
+      <!-- Replies -->
+      <div class="space-y-4">
+        <h2 class="font-display text-lg font-bold text-secondary flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-600">chat_bubble</span>
+          {safeReplies.length} {safeReplies.length === 1 ? 'Reply' : 'Replies'}
+        </h2>
+
+        {safeReplies.length === 0 ? (
+          <div class="bg-white rounded-xl p-8 text-center text-gray-400 border border-gray-100">
+            <span class="material-symbols-outlined text-3xl mb-2">speaker_notes_off</span>
+            <p>No replies yet. Be the first to respond!</p>
+          </div>
+        ) : (
+          safeReplies.map((reply, idx) => {
+            const rDate = new Date(reply.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+            const initial = String.fromCharCode(65 + (idx % 26));
+            const colors = ['bg-blue-100 text-blue-600', 'bg-rose-100 text-rose-600', 'bg-teal-100 text-teal-600', 'bg-orange-100 text-orange-600', 'bg-violet-100 text-violet-600'];
+            const colorClass = colors[idx % colors.length];
+            return (
+              <div class="bg-white rounded-xl p-5 border border-gray-100 hover:shadow-sm transition-shadow">
+                <div class="flex items-center gap-3 mb-3">
+                  <div class={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${colorClass}`}>
+                    {initial}
+                  </div>
+                  <div>
+                    <p class="font-medium text-sm text-gray-700">Community Member</p>
+                    <p class="text-[11px] text-gray-400">{rDate}</p>
+                  </div>
+                </div>
+                <div class="text-gray-600 text-sm leading-relaxed whitespace-pre-wrap pl-11">{reply.message}</div>
+              </div>
+            )
+          })
+        )}
+      </div>
+
+      <!-- Reply Form -->
+      <div id="replySection" class="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+        <div id="replyAuth" class="hidden">
+          <h3 class="font-display text-lg font-bold text-secondary mb-4">Post a Reply</h3>
+          <form id="replyForm" class="space-y-4">
+            <textarea id="replyMessage" required rows="4" class="w-full border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="Share your thoughts..."></textarea>
+            <div class="flex justify-end">
+              <button type="submit" id="submitReplyBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors flex items-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">send</span> Post Reply
+              </button>
+            </div>
+          </form>
+        </div>
+        <div id="replyLoginPrompt" class="text-center py-4">
+          <p class="text-gray-500 text-sm mb-3">You need an account to reply to discussions.</p>
+          <a href="/forum/login" class="bg-primary hover:bg-[#002a54] text-white px-6 py-2.5 rounded-lg text-sm font-semibold transition-colors inline-block">Sign In / Register</a>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script define:vars={{ topicId: topic.id }}>
+    window.__TOPIC_ID__ = topicId;
+  </script>
+  <script>
+    import { supabase } from '../../lib/supabase.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (session) {
+        document.getElementById('replyLoginPrompt').classList.add('hidden');
+        document.getElementById('replyAuth').classList.remove('hidden');
+      }
+
+      document.getElementById('replyForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitReplyBtn');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> Posting...';
+
+        const message = document.getElementById('replyMessage').value;
+        const { data: { user } } = await supabase.auth.getUser();
+
+        const { error } = await supabase.from('forum_replies').insert([{
+          topic_id: window.__TOPIC_ID__,
+          user_id: user.id,
+          message: message
+        }]);
+
+        if (error) {
+          alert('Error posting reply: ' + error.message);
+          btn.disabled = false;
+          btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">send</span> Post Reply';
+        } else {
+          window.location.reload();
+        }
+      });
+    });
+  </script>
+</Layout>

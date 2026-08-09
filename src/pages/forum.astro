@@ -1,0 +1,324 @@
+---
+// src/pages/forum.astro
+export const prerender = false;
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Community Forum">
+  
+  <!-- Hero Banner -->
+  <section class="relative pt-32 pb-20 bg-gradient-to-br from-[#002a54] via-primary to-[#1B3022] overflow-hidden">
+    <div class="absolute inset-0 opacity-10">
+      <img src="/hero_slide2.png" alt="Background" class="w-full h-full object-cover"/>
+    </div>
+    <div class="relative z-10 max-w-4xl mx-auto px-6 text-center text-white">
+      <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-4">Connect & Share</p>
+      <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 leading-tight">BOS Community Forum</h1>
+      <p class="text-stone-300 text-lg max-w-2xl mx-auto leading-relaxed">Join the conversation. Ask questions, share your farming experiences, and connect with other members of the sustainable living movement.</p>
+    </div>
+  </section>
+
+  <main class="py-16 px-6 lg:px-12 max-w-7xl mx-auto bg-surface-container-lowest min-h-screen">
+    
+    <!-- Controls & Categories -->
+    <div class="flex flex-col md:flex-row justify-between items-center gap-6 mb-10">
+      
+      <div class="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0" id="category-filters">
+        <button class="cat-btn active bg-primary text-white px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors" data-cat="All">All Topics</button>
+        <button class="cat-btn bg-stone-100 text-stone-600 hover:bg-stone-200 px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors" data-cat="Soil Health">Soil Health</button>
+        <button class="cat-btn bg-stone-100 text-stone-600 hover:bg-stone-200 px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors" data-cat="Seed Swaps">Seed Swaps</button>
+        <button class="cat-btn bg-stone-100 text-stone-600 hover:bg-stone-200 px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors" data-cat="Urban Farming">Urban Farming</button>
+        <button class="cat-btn bg-stone-100 text-stone-600 hover:bg-stone-200 px-5 py-2 rounded-full text-sm font-semibold whitespace-nowrap transition-colors" data-cat="General Discussion">General Discussion</button>
+      </div>
+
+      <button id="btnNewTopic" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-6 py-2.5 rounded-full font-semibold text-sm hover:shadow-lg transition-all flex items-center gap-2 flex-shrink-0">
+        <span class="material-symbols-outlined text-[20px]">add_circle</span> New Topic
+      </button>
+
+    </div>
+
+    <!-- New Topic Modal (Hidden by default) -->
+    <div id="newTopicModal" class="hidden fixed inset-0 z-50 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl w-full max-w-2xl p-8 shadow-2xl relative">
+        <button id="btnCloseModal" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600 transition-colors">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+        <h2 class="font-display text-2xl font-bold text-secondary mb-6">Start a New Topic</h2>
+        <form id="newTopicForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Your Name</label>
+            <input type="text" id="ntName" required class="w-full rounded-xl border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary text-sm px-4 py-3 bg-stone-50" placeholder="Display name">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Category</label>
+            <select id="ntCategory" required class="w-full rounded-xl border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary text-sm px-4 py-3 bg-stone-50">
+              <option value="Soil Health">Soil Health</option>
+              <option value="Seed Swaps">Seed Swaps</option>
+              <option value="Urban Farming">Urban Farming</option>
+              <option value="General Discussion">General Discussion</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Topic Title</label>
+            <input type="text" id="ntTitle" required class="w-full rounded-xl border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary text-sm px-4 py-3 bg-stone-50" placeholder="What do you want to discuss?">
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Message</label>
+            <textarea id="ntContent" required rows="5" class="w-full rounded-xl border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary text-sm px-4 py-3 bg-stone-50" placeholder="Share your thoughts..."></textarea>
+          </div>
+          <div class="pt-4 border-t border-gray-100 flex justify-end">
+            <button type="submit" id="ntSubmitBtn" class="bg-primary text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-[#002a54] transition-colors">Post Topic</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Topics List -->
+    <div class="bg-white rounded-3xl shadow-sm border border-gray-100/80 overflow-hidden">
+      <!-- Loading State -->
+      <div id="loadingState" class="p-12 text-center text-stone-500">
+        <span class="material-symbols-outlined animate-spin text-4xl mb-4 text-primary">sync</span>
+        <p>Loading forum topics...</p>
+      </div>
+
+      <!-- Topics Container -->
+      <div id="topicsContainer" class="divide-y divide-gray-100 hidden">
+        <!-- Topic items will be injected here -->
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    import { supabase } from '../lib/supabase.js';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      let activeCategory = 'All';
+      let allTopics = [];
+      let allReplies = [];
+
+      const topicsContainer = document.getElementById('topicsContainer');
+      const loadingState = document.getElementById('loadingState');
+      const modal = document.getElementById('newTopicModal');
+      
+      // Initialize
+      loadForumData();
+
+      // UI Bindings
+      document.getElementById('btnNewTopic').addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+      document.getElementById('btnCloseModal').addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      document.querySelectorAll('.cat-btn').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          document.querySelectorAll('.cat-btn').forEach(b => {
+            b.classList.remove('bg-primary', 'text-white');
+            b.classList.add('bg-stone-100', 'text-stone-600');
+          });
+          e.target.classList.remove('bg-stone-100', 'text-stone-600');
+          e.target.classList.add('bg-primary', 'text-white');
+          
+          activeCategory = e.target.dataset.cat;
+          renderTopics();
+        });
+      });
+
+      // Handle New Topic
+      document.getElementById('newTopicForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('ntSubmitBtn');
+        btn.disabled = true;
+        btn.textContent = 'Posting...';
+
+        const name = document.getElementById('ntName').value;
+        const cat = document.getElementById('ntCategory').value;
+        const title = document.getElementById('ntTitle').value;
+        const content = document.getElementById('ntContent').value;
+
+        const { error } = await supabase.from('forum_topics').insert([{
+          display_name: name,
+          category: cat,
+          title: title,
+          content: content
+        }]);
+
+        if (error) {
+          alert('Error posting topic: ' + error.message);
+        } else {
+          document.getElementById('newTopicForm').reset();
+          modal.classList.add('hidden');
+          await loadForumData();
+        }
+        
+        btn.disabled = false;
+        btn.textContent = 'Post Topic';
+      });
+
+      async function loadForumData() {
+        loadingState.classList.remove('hidden');
+        topicsContainer.classList.add('hidden');
+
+        // Fetch topics and replies concurrently
+        const [topicsRes, repliesRes] = await Promise.all([
+          supabase.from('forum_topics').select('*').order('created_at', { ascending: false }),
+          supabase.from('forum_replies').select('*').order('created_at', { ascending: true })
+        ]);
+
+        if (topicsRes.error) console.error(topicsRes.error);
+        if (repliesRes.error) console.error(repliesRes.error);
+
+        allTopics = topicsRes.data || [];
+        allReplies = repliesRes.data || [];
+
+        loadingState.classList.add('hidden');
+        topicsContainer.classList.remove('hidden');
+        renderTopics();
+      }
+
+      function renderTopics() {
+        let filtered = allTopics;
+        if (activeCategory !== 'All') {
+          filtered = allTopics.filter(t => t.category === activeCategory);
+        }
+
+        if (filtered.length === 0) {
+          topicsContainer.innerHTML = `
+            <div class="p-12 text-center text-stone-500">
+              <span class="material-symbols-outlined text-4xl mb-4 text-stone-300">forum</span>
+              <p>No topics found in this category. Be the first to start a discussion!</p>
+            </div>
+          `;
+          return;
+        }
+
+        topicsContainer.innerHTML = filtered.map(topic => {
+          const topicReplies = allReplies.filter(r => r.topic_id === topic.id);
+          const replyCount = topicReplies.length;
+          const date = new Date(topic.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+          
+          let catBg = 'bg-gray-100 text-gray-600';
+          if (topic.category === 'Soil Health') catBg = 'bg-amber-100 text-amber-700';
+          if (topic.category === 'Seed Swaps') catBg = 'bg-emerald-100 text-emerald-700';
+          if (topic.category === 'Urban Farming') catBg = 'bg-blue-100 text-blue-700';
+
+          // Build HTML for the main topic row
+          let html = `
+            <div class="topic-row border-b border-gray-100 last:border-0" data-id="${topic.id}">
+              <div class="p-6 hover:bg-stone-50 cursor-pointer transition-colors flex flex-col md:flex-row md:items-center justify-between gap-4 topic-header">
+                <div class="flex-grow">
+                  <div class="flex items-center gap-3 mb-2">
+                    <span class="${catBg} px-2.5 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider">${topic.category}</span>
+                    <span class="text-xs text-stone-400 flex items-center gap-1"><span class="material-symbols-outlined text-[14px]">person</span> ${topic.display_name}</span>
+                    <span class="text-xs text-stone-400">• ${date}</span>
+                  </div>
+                  <h3 class="font-display text-xl font-bold text-secondary">${topic.title}</h3>
+                </div>
+                <div class="flex items-center gap-6 text-stone-500 flex-shrink-0">
+                  <div class="text-center">
+                    <span class="block text-lg font-semibold text-primary">${replyCount}</span>
+                    <span class="text-xs uppercase tracking-wider">Replies</span>
+                  </div>
+                  <span class="material-symbols-outlined text-stone-300 expand-icon transition-transform">expand_more</span>
+                </div>
+              </div>
+              
+              <!-- Expanded Thread View -->
+              <div class="thread-view hidden bg-stone-50 p-6 pt-0 border-t border-gray-100">
+                <!-- Original Post Content -->
+                <div class="bg-white rounded-xl p-5 mb-6 shadow-sm border border-gray-100 mt-6">
+                  <p class="text-stone-700 text-sm leading-relaxed whitespace-pre-wrap">${topic.content}</p>
+                </div>
+
+                <!-- Replies -->
+                <h4 class="font-semibold text-stone-600 mb-4 text-sm uppercase tracking-wider">Discussion</h4>
+                <div class="space-y-4 mb-6">
+                  ${topicReplies.length === 0 ? '<p class="text-xs text-stone-400 italic">No replies yet. Be the first!</p>' : ''}
+                  ${topicReplies.map(reply => `
+                    <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-100 flex gap-4">
+                      <div class="w-8 h-8 rounded-full bg-primary/10 text-primary flex items-center justify-center font-bold text-sm flex-shrink-0">
+                        ${reply.display_name.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <div class="flex items-center gap-2 mb-1">
+                          <span class="font-bold text-sm text-secondary">${reply.display_name}</span>
+                          <span class="text-[10px] text-stone-400">${new Date(reply.created_at).toLocaleString()}</span>
+                        </div>
+                        <p class="text-stone-600 text-sm leading-relaxed whitespace-pre-wrap">${reply.content}</p>
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+
+                <!-- Reply Form -->
+                <form class="reply-form mt-4 bg-white rounded-xl p-5 shadow-sm border border-gray-100" data-topic-id="${topic.id}">
+                  <h5 class="font-semibold text-stone-600 mb-3 text-sm">Post a Reply</h5>
+                  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-3">
+                    <input type="text" required placeholder="Your Name" class="reply-name col-span-1 rounded-lg border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary text-sm px-3 py-2 bg-stone-50">
+                    <input type="text" required placeholder="Type your reply..." class="reply-content md:col-span-2 rounded-lg border-gray-200 focus:border-primary focus:ring-1 focus:ring-primary text-sm px-3 py-2 bg-stone-50">
+                  </div>
+                  <div class="flex justify-end">
+                    <button type="submit" class="bg-emerald-600 text-white px-6 py-2 rounded-lg font-semibold text-xs hover:bg-emerald-700 transition-colors reply-submit">Submit Reply</button>
+                  </div>
+                </form>
+
+              </div>
+            </div>
+          `;
+          return html;
+        }).join('');
+
+        // Bind Accordion clicks
+        document.querySelectorAll('.topic-header').forEach(header => {
+          header.addEventListener('click', (e) => {
+            const threadView = header.nextElementSibling;
+            const icon = header.querySelector('.expand-icon');
+            if (threadView.classList.contains('hidden')) {
+              // Hide all other open threads
+              document.querySelectorAll('.thread-view').forEach(tv => tv.classList.add('hidden'));
+              document.querySelectorAll('.expand-icon').forEach(ic => ic.style.transform = 'rotate(0deg)');
+              // Open this one
+              threadView.classList.remove('hidden');
+              icon.style.transform = 'rotate(180deg)';
+            } else {
+              // Close this one
+              threadView.classList.add('hidden');
+              icon.style.transform = 'rotate(0deg)';
+            }
+          });
+        });
+
+        // Bind Reply submits
+        document.querySelectorAll('.reply-form').forEach(form => {
+          form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const topicId = form.dataset.topicId;
+            const nameInput = form.querySelector('.reply-name');
+            const contentInput = form.querySelector('.reply-content');
+            const submitBtn = form.querySelector('.reply-submit');
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = '...';
+
+            const { error } = await supabase.from('forum_replies').insert([{
+              topic_id: topicId,
+              display_name: nameInput.value,
+              content: contentInput.value
+            }]);
+
+            if (error) {
+              alert('Error replying: ' + error.message);
+            } else {
+              await loadForumData();
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Submit Reply';
+          });
+        });
+      }
+    });
+  </script>
+</Layout>

@@ -1,0 +1,201 @@
+---
+// src/pages/forum/index.astro
+export const prerender = false;
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase.js';
+
+// Fetch categories and topics server-side
+const { data: topics, error } = await supabase
+  .from('forum_topics')
+  .select('*, auth_users:user_id(email)')
+  .order('created_at', { ascending: false });
+
+const { data: replies } = await supabase
+  .from('forum_replies')
+  .select('topic_id');
+
+// Map replies to topics
+const topicCounts = {};
+if (replies) {
+  replies.forEach(r => {
+    topicCounts[r.topic_id] = (topicCounts[r.topic_id] || 0) + 1;
+  });
+}
+
+const safeTopics = topics || [];
+---
+
+<Layout title="Community Forum - Bill of Senga">
+  <div class="bg-gray-50 min-h-screen">
+    <!-- Forum Header -->
+    <header class="bg-secondary text-white pt-24 pb-12 px-6 relative overflow-hidden">
+      <div class="absolute inset-0 opacity-10">
+        <img src="/hero_slide2.png" alt="Background pattern" class="w-full h-full object-cover"/>
+      </div>
+      <div class="relative z-10 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div>
+          <h1 class="font-display text-4xl font-bold mb-2 text-emerald-400">Community Forum</h1>
+          <p class="text-stone-300 max-w-xl text-sm">Join the discussion on sustainable living, agriculture, and community building.</p>
+        </div>
+        <div id="authStatus" class="bg-white/10 p-4 rounded-xl border border-white/20 hidden">
+          <p class="text-xs text-stone-300 mb-1">Logged in as:</p>
+          <p id="userEmail" class="font-semibold text-emerald-400 text-sm mb-3"></p>
+          <div class="flex gap-2">
+            <button id="newTopicBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-semibold transition-colors">Start Discussion</button>
+            <button id="logoutBtn" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs transition-colors">Sign Out</button>
+          </div>
+        </div>
+        <div id="loginPrompt" class="bg-white/10 p-4 rounded-xl border border-white/20">
+          <p class="text-sm font-medium mb-3">Join the conversation</p>
+          <a href="/forum/login" class="bg-primary hover:bg-[#002a54] text-white px-6 py-2 rounded-lg text-sm font-semibold transition-colors inline-block">Sign In / Register</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-6 py-12">
+      <!-- New Topic Modal (Hidden) -->
+      <div id="newTopicModal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl">
+          <h2 class="text-2xl font-bold font-display text-secondary mb-4">Start a Discussion</h2>
+          <form id="newTopicForm" class="space-y-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
+              <select id="topicCategory" class="w-full border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+                <option value="General Discussion">General Discussion</option>
+                <option value="Agriculture & Soil">Agriculture & Soil</option>
+                <option value="Climate Solutions">Climate Solutions</option>
+                <option value="Urban Farming">Urban Farming</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
+              <input type="text" id="topicTitle" required class="w-full border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="What's on your mind?">
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+              <textarea id="topicDesc" required rows="4" class="w-full border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="Explain your topic..."></textarea>
+            </div>
+            <div class="flex justify-end gap-3 mt-6">
+              <button type="button" id="cancelBtn" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
+              <button type="submit" id="submitTopicBtn" class="px-6 py-2 text-sm bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">Post Topic</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <!-- Topics List -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+        {safeTopics.length === 0 ? (
+          <div class="p-12 text-center text-gray-500">
+            <span class="material-symbols-outlined text-4xl mb-2 text-gray-300">forum</span>
+            <p>No discussions yet. Be the first to start one!</p>
+          </div>
+        ) : (
+          <div class="divide-y divide-gray-100">
+            {safeTopics.map(topic => {
+              const replies = topicCounts[topic.id] || 0;
+              const date = new Date(topic.created_at).toLocaleDateString();
+              
+              let catColor = 'bg-gray-100 text-gray-600';
+              if (topic.category === 'Agriculture & Soil') catColor = 'bg-green-100 text-green-700';
+              if (topic.category === 'Climate Solutions') catColor = 'bg-blue-100 text-blue-700';
+              if (topic.category === 'Urban Farming') catColor = 'bg-amber-100 text-amber-700';
+              if (topic.category === 'General Discussion') catColor = 'bg-purple-100 text-purple-700';
+
+              // Extract first part of email for username
+              // Since auth_users might not be directly available in client view depending on RLS, we use a fallback
+              const author = "Community Member";
+
+              return (
+                <a href={`/forum/${topic.id}`} class="block hover:bg-gray-50 p-6 transition-colors group">
+                  <div class="flex items-start gap-4">
+                    <div class="hidden sm:flex w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 items-center justify-center font-bold text-lg flex-shrink-0">
+                      {topic.title.charAt(0).toUpperCase()}
+                    </div>
+                    <div class="flex-grow">
+                      <div class="flex flex-wrap items-center gap-2 mb-2">
+                        <span class={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full ${catColor}`}>
+                          {topic.category}
+                        </span>
+                        <span class="text-xs text-gray-400 flex items-center gap-1">
+                          <span class="material-symbols-outlined text-[14px]">calendar_today</span> {date}
+                        </span>
+                      </div>
+                      <h3 class="text-lg font-bold text-secondary group-hover:text-primary transition-colors mb-1">{topic.title}</h3>
+                      <p class="text-gray-500 text-sm line-clamp-1">{topic.description}</p>
+                    </div>
+                    <div class="flex flex-col items-center justify-center min-w-[60px] text-gray-400 group-hover:text-emerald-500 transition-colors">
+                      <span class="material-symbols-outlined">chat_bubble</span>
+                      <span class="text-xs font-bold mt-1">{replies} replies</span>
+                    </div>
+                  </div>
+                </a>
+              )
+            })}
+          </div>
+        )}
+      </div>
+    </main>
+  </div>
+
+  <script>
+    import { supabase } from '../../lib/supabase.js';
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      // Check auth status
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session) {
+        document.getElementById('loginPrompt').classList.add('hidden');
+        const authStatus = document.getElementById('authStatus');
+        authStatus.classList.remove('hidden');
+        document.getElementById('userEmail').textContent = session.user.email;
+      }
+
+      // Modal logic
+      const modal = document.getElementById('newTopicModal');
+      document.getElementById('newTopicBtn')?.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+      document.getElementById('cancelBtn')?.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      // Submit topic
+      document.getElementById('newTopicForm')?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitTopicBtn');
+        btn.disabled = true;
+        btn.textContent = 'Posting...';
+
+        const title = document.getElementById('topicTitle').value;
+        const desc = document.getElementById('topicDesc').value;
+        const cat = document.getElementById('topicCategory').value;
+
+        const { data: { user } } = await supabase.auth.getUser();
+
+        const { error } = await supabase.from('forum_topics').insert([{
+          title: title,
+          description: desc,
+          category: cat,
+          user_id: user.id
+        }]);
+
+        if (error) {
+          alert('Error posting topic: ' + error.message);
+          btn.disabled = false;
+          btn.textContent = 'Post Topic';
+        } else {
+          window.location.reload();
+        }
+      });
+
+      // Logout
+      document.getElementById('logoutBtn')?.addEventListener('click', async () => {
+        await supabase.auth.signOut();
+        window.location.reload();
+      });
+    });
+  </script>
+</Layout>

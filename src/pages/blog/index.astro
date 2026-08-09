@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Blog — Bill of Senga</title>
+  <title>Blog ΓÇö Bill of Senga</title>
   <meta name="description" content="From ancient soil wisdom to cutting-edge urban farming, the BOS blog covers the full spectrum of sustainable living."/>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
@@ -165,7 +165,7 @@
     <div class="relative z-10 max-w-4xl mx-auto px-6 text-center text-white">
       <p class="text-emerald-400 font-semibold text-sm uppercase tracking-widest mb-4">BOS Blog Insights</p>
       <h1 class="font-display text-5xl md:text-6xl font-bold mb-6 leading-tight">Stay On Top of The<br/>Latest From BOS</h1>
-      <p class="text-stone-300 text-lg max-w-2xl mx-auto leading-relaxed">From ancient soil wisdom to cutting-edge urban farming, our blog covers the full spectrum of sustainable living. Learn, grow, and join a movement restoring the earth — one seed at a time.</p>
+      <p class="text-stone-300 text-lg max-w-2xl mx-auto leading-relaxed">From ancient soil wisdom to cutting-edge urban farming, our blog covers the full spectrum of sustainable living. Learn, grow, and join a movement restoring the earth ΓÇö one seed at a time.</p>
     </div>
   </section>
 
@@ -223,37 +223,37 @@
           </h3>
           <div class="flex flex-col gap-4">
             
-            <a href="/blog/post-1-healthy-soil.html" class="flex gap-3 group">
+            <a href="/blog/post-1-healthy-soil" class="flex gap-3 group">
               <img src="/blog_soil.png" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
               <div>
                 <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">From "Hell" to a Living Laboratory</h4>
                 <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
                   <span>May 15, 2026</span>
-                  <span>•</span>
+                  <span>ΓÇó</span>
                   <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-post-1-healthy-soil">Loading...</span></span>
                 </div>
               </div>
             </a>
 
-            <a href="/blog/post-2-tree-billionaire.html" class="flex gap-3 group">
+            <a href="/blog/post-2-tree-billionaire" class="flex gap-3 group">
               <img src="/blog_tree.png" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
               <div>
                 <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">Become a Tree Billionaire in 5 Years</h4>
                 <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
                   <span>Jun 02, 2026</span>
-                  <span>•</span>
+                  <span>ΓÇó</span>
                   <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-post-2-tree-billionaire">Loading...</span></span>
                 </div>
               </div>
             </a>
 
-            <a href="/blog/post-3-urban-rooftop.html" class="flex gap-3 group">
+            <a href="/blog/post-3-urban-rooftop" class="flex gap-3 group">
               <img src="/blog_rooftop.png" alt="" class="w-16 h-16 object-cover rounded-xl flex-shrink-0 group-hover:opacity-90 transition-opacity border border-gray-100"/>
               <div>
                 <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">Urban Rooftop Farming: Feeding Cities</h4>
                 <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
                   <span>Jun 20, 2026</span>
-                  <span>•</span>
+                  <span>ΓÇó</span>
                   <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-post-3-urban-rooftop">Loading...</span></span>
                 </div>
               </div>
@@ -294,10 +294,12 @@
 </main>
 
 <footer class="bg-[#111613] text-stone-400 py-8 text-center text-sm">
-  <p>© 2026 Bill of Senga. Created by <span class="text-white font-semibold">SoftCode Tech</span></p>
+  <p>┬⌐ 2026 Bill of Senga. Created by <span class="text-white font-semibold">SoftCode Tech</span></p>
 </footer>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+  import { supabase } from '../../lib/supabase.js';
+
+  document.addEventListener('DOMContentLoaded', async () => {
     // --- NATIVE POSTS SEED DATA ---
     const nativePosts = [
       {
@@ -310,7 +312,7 @@
         readTime: 6,
         featuredImage: '/blog_soil.png',
         isCustom: false,
-        link: '/blog/post-1-healthy-soil.html',
+        link: '/blog/post-1-healthy-soil',
         initialViews: 142
       },
       {
@@ -318,12 +320,12 @@
         title: 'How to Become a Tree Billionaire in 5 Years',
         category: 'Forestry & Climate',
         publishDate: '2026-06-02T10:00:00.000Z',
-        description: 'Planting trees is not just an act of love for the environment — it is a generational investment. Learn how BOS is turning ordinary farmers into Tree Billionaires.',
+        description: 'Planting trees is not just an act of love for the environment â€” it is a generational investment. Learn how BOS is turning ordinary farmers into Tree Billionaires.',
         author: 'BOS Editorial Team',
         readTime: 7,
         featuredImage: '/blog_tree.png',
         isCustom: false,
-        link: '/blog/post-2-tree-billionaire.html',
+        link: '/blog/post-2-tree-billionaire',
         initialViews: 89
       },
       {
@@ -336,7 +338,7 @@
         readTime: 5,
         featuredImage: '/blog_rooftop.png',
         isCustom: false,
-        link: '/blog/post-3-urban-rooftop.html',
+        link: '/blog/post-3-urban-rooftop',
         initialViews: 64
       }
     ];
@@ -375,26 +377,35 @@
       });
     }
 
-    function loadCustomPosts() {
-      return JSON.parse(localStorage.getItem('bos_custom_posts') || '[]');
+    async function loadCustomPosts() {
+      const { data, error } = await supabase
+        .from('blogs')
+        .select('*')
+        .eq('is_published', true);
+      
+      if (error || !data) return [];
+      
+      return data.map(p => ({
+        id: p.id,
+        title: p.title,
+        slug: p.slug,
+        category: 'Community Post', 
+        publishDate: p.created_at,
+        description: p.content.substring(0, 150) + '...',
+        author: 'Community Member',
+        readTime: 5,
+        featuredImage: p.image_url || '/blog_soil.png',
+        isCustom: true,
+        link: `/blog/${p.slug}`,
+        initialViews: p.views_count
+      }));
     }
 
-    function renderFeed() {
-      const customPosts = loadCustomPosts();
+    async function renderFeed() {
+      const customPosts = await loadCustomPosts();
       
-      // Filter out draft or future scheduled custom posts
-      const activeCustom = customPosts.filter(p => {
-        const isDraft = p.status === 'draft';
-        const isScheduled = p.status === 'scheduled' || (p.status === 'published' && new Date(p.publishDate) > new Date());
-        return !isDraft && !isScheduled;
-      }).map(p => ({
-        ...p,
-        isCustom: true,
-        link: `/blog/view.html?id=${p.id}`
-      }));
-
       // Combine
-      let allPosts = [...nativePosts, ...activeCustom];
+      let allPosts = [...nativePosts, ...customPosts];
 
       // Sort by publish date (newest first)
       allPosts.sort((a, b) => new Date(b.publishDate || b.createdAt) - new Date(a.publishDate || a.createdAt));
@@ -578,23 +589,17 @@
         return { ...np, views, link: np.link };
       });
 
-      // Filter active custom
+      // Add custom posts
       customPosts.forEach(cp => {
-        const isDraft = cp.status === 'draft';
-        const isScheduled = cp.status === 'scheduled' || (cp.status === 'published' && new Date(cp.publishDate) > new Date());
-        if (!isDraft && !isScheduled) {
-          const vKey = `bos_views_${cp.id}`;
-          let views = parseInt(localStorage.getItem(vKey)) || cp.initialViews || 42;
-          mergedPopular.push({
-            id: cp.id,
-            title: cp.title,
-            category: cp.category,
-            featuredImage: cp.featuredImage || '/blog_soil.png',
-            publishDate: cp.publishDate || cp.createdAt,
-            views,
-            link: `/blog/view.html?id=${cp.id}`
-          });
-        }
+        mergedPopular.push({
+          id: cp.id,
+          title: cp.title,
+          category: cp.category,
+          featuredImage: cp.featuredImage || '/blog_soil.png',
+          publishDate: cp.publishDate || cp.createdAt,
+          views: cp.initialViews,
+          link: cp.link
+        });
       });
 
       // Sort by views
@@ -615,8 +620,8 @@
               <h4 class="font-display text-sm font-semibold text-secondary group-hover:text-primary transition-colors line-clamp-2 leading-snug">${postItem.title}</h4>
               <div class="flex items-center gap-2 text-[11px] text-gray-400 mt-1">
                 <span>${formattedD}</span>
-                <span>•</span>
-                <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span class="pop-views-${postItem.id}">${postItem.views.toLocaleString()} views</span></span>
+                <span>â€¢</span>
+                <span class="flex items-center gap-0.5"><span class="material-symbols-outlined text-[12px] text-primary">visibility</span> <span>${(postItem.views || 0).toLocaleString()} views</span></span>
               </div>
             </div>
           </a>
@@ -628,22 +633,11 @@
     renderFeed();
 
     // Trigger views syncing loop
-    setInterval(() => {
-      // Add 5 views to each post
-      const customPosts = loadCustomPosts();
-      
-      // Native posts views increase
+    setInterval(async () => {
+      // Add 5 views to each native post
       nativePosts.forEach(np => {
         const vKey = `bos_views_${np.id}`;
         let viewsVal = parseInt(localStorage.getItem(vKey)) || np.initialViews;
-        viewsVal += 5;
-        localStorage.setItem(vKey, viewsVal);
-      });
-
-      // Custom posts views increase
-      customPosts.forEach(cp => {
-        const vKey = `bos_views_${cp.id}`;
-        let viewsVal = parseInt(localStorage.getItem(vKey)) || cp.initialViews || 42;
         viewsVal += 5;
         localStorage.setItem(vKey, viewsVal);
       });

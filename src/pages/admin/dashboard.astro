@@ -1,5 +1,6 @@
 ---
 // src/pages/admin/dashboard.astro
+export const prerender = true;
 ---
 
 <!DOCTYPE html>
@@ -8,59 +9,185 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Dashboard - Bill of Senga</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <script id="tailwind-config" is:inline>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { primary: "#003B73", secondary: "#1B3022", surface: "#faf9f4" },
+          fontFamily: { display: ["Newsreader"], body: ["Work Sans"] }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-gray-50 min-h-screen hidden" id="dashboardBody">
-  <nav class="bg-white shadow-sm px-6 py-4 flex justify-between items-center">
-    <h1 class="text-xl font-bold text-gray-800">Bill of Senga Admin</h1>
-    <button id="logoutBtn" class="text-sm text-gray-600 hover:text-red-600">Log Out</button>
-  </nav>
+<body class="bg-gray-50 min-h-screen font-body hidden flex flex-col md:flex-row" id="dashboardBody">
 
-  <main class="max-w-5xl mx-auto p-6 mt-6 grid grid-cols-1 md:grid-cols-3 gap-8">
+  <!-- Sidebar -->
+  <aside class="w-full md:w-64 bg-secondary text-white flex flex-col">
+    <div class="p-6 border-b border-white/10 text-center md:text-left">
+      <img src="/logo.png" alt="BOS" class="h-8 w-auto mb-4 brightness-0 invert opacity-90 mx-auto md:mx-0">
+      <h1 class="text-xl font-bold font-display">Control Panel</h1>
+    </div>
+    <nav class="flex-grow p-4 space-y-2">
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg bg-white/10 text-emerald-400 font-medium transition-colors" data-target="tab-text">
+        <span class="material-symbols-outlined">edit_note</span> Text Overrides
+      </button>
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg hover:bg-white/5 text-stone-300 font-medium transition-colors" data-target="tab-hero">
+        <span class="material-symbols-outlined">panorama</span> Hero Sliders
+      </button>
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg hover:bg-white/5 text-stone-300 font-medium transition-colors" data-target="tab-blog">
+        <span class="material-symbols-outlined">article</span> Blog Ingestion
+      </button>
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg hover:bg-white/5 text-stone-300 font-medium transition-colors" data-target="tab-forum">
+        <span class="material-symbols-outlined">forum</span> Forum Moderator
+      </button>
+    </nav>
+    <div class="p-4 border-t border-white/10">
+      <button id="logoutBtn" class="w-full flex items-center justify-center gap-2 text-stone-400 hover:text-red-400 py-2 transition-colors">
+        <span class="material-symbols-outlined text-[18px]">logout</span> Log Out
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-grow p-6 md:p-10 h-screen overflow-y-auto">
     
-    <!-- Blog List Column -->
-    <div class="md:col-span-1 bg-white p-4 rounded-lg shadow-sm">
-      <h2 class="font-semibold text-lg mb-4">Your Blog Posts</h2>
-      <button id="newPostBtn" class="w-full bg-blue-50 text-blue-600 py-2 rounded mb-4 text-sm font-medium hover:bg-blue-100">+ New Post</button>
-      <div id="blogList" class="space-y-2">
-        <p class="text-sm text-gray-500 italic">Loading posts...</p>
+    <!-- Tab 1: Text Overrides -->
+    <section id="tab-text" class="tab-content block">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 font-display">Text Overrides</h2>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 max-w-2xl">
+        <form id="textOverrideForm" class="space-y-4">
+          <div class="grid grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-semibold text-gray-600 mb-1">Page</label>
+              <select id="textPage" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm">
+                <option value="home">Home</option>
+                <option value="about">About</option>
+                <option value="mission">Mission</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-600 mb-1">Block Key</label>
+              <input type="text" id="textKey" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm" placeholder="e.g. about_description">
+            </div>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Value</label>
+            <textarea id="textValue" rows="5" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm"></textarea>
+          </div>
+          <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-[#002a54] transition-colors">Save Override</button>
+          <p id="textStatus" class="text-sm text-emerald-600 hidden mt-2">Saved successfully!</p>
+        </form>
       </div>
-    </div>
+    </section>
 
-    <!-- Editor Column -->
-    <div class="md:col-span-2 bg-white p-6 rounded-lg shadow-sm border border-gray-100">
-      <h2 id="editorTitle" class="font-semibold text-xl mb-6">Create New Post</h2>
+    <!-- Tab 2: Hero Sliders -->
+    <section id="tab-hero" class="tab-content hidden">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 font-display">Hero Sliders</h2>
+      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 max-w-2xl">
+        <form id="heroSliderForm" class="space-y-4">
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Select Slide</label>
+            <select id="slideSelect" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm">
+              <option value="hero_slide_1">Slide 1</option>
+              <option value="hero_slide_2">Slide 2</option>
+              <option value="hero_slide_3">Slide 3</option>
+              <option value="hero_slide_4">Slide 4</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm font-semibold text-gray-600 mb-1">Upload New Image</label>
+            <input type="file" id="heroFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer">
+          </div>
+          <button type="submit" id="heroBtn" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-[#002a54] transition-colors disabled:opacity-50">Upload & Save Slide</button>
+          <p id="heroStatus" class="text-sm text-emerald-600 hidden mt-2"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- Tab 3: Blog Ingestion -->
+    <section id="tab-blog" class="tab-content hidden">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold text-gray-800 font-display">Blog Ingestion</h2>
+        <button id="newPostBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors flex items-center gap-2">
+          <span class="material-symbols-outlined text-[18px]">add</span> New Post
+        </button>
+      </div>
       
-      <form id="postForm" class="space-y-4">
-        <input type="hidden" id="postId" />
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <!-- List -->
+        <div class="lg:col-span-1 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 max-h-[600px] overflow-y-auto">
+          <h3 class="font-semibold text-gray-700 mb-4 px-2">Published & Drafts</h3>
+          <div id="blogList" class="space-y-2">
+            <p class="text-sm text-gray-500 italic px-2">Loading posts...</p>
+          </div>
+        </div>
         
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Title</label>
-          <input type="text" id="title" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Enter blog title...">
+        <!-- Editor -->
+        <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
+          <h3 id="editorTitle" class="font-semibold text-lg text-gray-800 mb-4">Create New Post</h3>
+          <form id="postForm" class="space-y-4">
+            <input type="hidden" id="postId" />
+            <div>
+              <label class="block text-sm font-semibold text-gray-600 mb-1">Title</label>
+              <input type="text" id="title" required class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm" placeholder="Enter blog title...">
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-600 mb-1">Cover Image Upload</label>
+              <input type="file" id="blogImageFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
+              <input type="hidden" id="imageUrl" />
+              <p id="blogImgStatus" class="text-xs text-primary mt-1 hidden">Uploading...</p>
+            </div>
+            <div>
+              <label class="block text-sm font-semibold text-gray-600 mb-1">Content (HTML allowed)</label>
+              <textarea id="content" required rows="10" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm font-mono" placeholder="<p>Write your blog post here...</p>"></textarea>
+            </div>
+            <div class="flex items-center gap-2 pt-2">
+              <input type="checkbox" id="published" class="rounded text-primary focus:ring-primary">
+              <label for="published" class="text-sm text-gray-700 font-medium">Publish instantly</label>
+            </div>
+            <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
+              <button type="button" id="deleteBtn" class="hidden text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Delete</button>
+              <button type="submit" id="saveBtn" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-[#002a54] transition-colors">Save Post</button>
+            </div>
+          </form>
         </div>
+      </div>
+    </section>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Image URL (Optional)</label>
-          <input type="text" id="imageUrl" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="https://example.com/image.jpg">
+    <!-- Tab 4: Forum Moderator -->
+    <section id="tab-forum" class="tab-content hidden">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6 font-display">Forum Moderator</h2>
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-gray-50 text-gray-600 font-medium border-b border-gray-100">
+              <tr>
+                <th class="px-6 py-3">Topic Title</th>
+                <th class="px-6 py-3">Category</th>
+                <th class="px-6 py-3">Date</th>
+                <th class="px-6 py-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="forumList" class="divide-y divide-gray-100">
+              <tr>
+                <td colspan="4" class="px-6 py-4 text-center text-gray-500 italic">Loading topics...</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+      </div>
+    </section>
 
-        <div>
-          <label class="block text-sm font-medium text-gray-700">Content (HTML allowed)</label>
-          <textarea id="content" required rows="12" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm p-2 border" placeholder="Write your blog post here..."></textarea>
-        </div>
-
-        <div class="flex justify-end gap-3 pt-4">
-          <button type="button" id="deleteBtn" class="hidden text-red-600 hover:bg-red-50 px-4 py-2 rounded">Delete</button>
-          <button type="submit" id="saveBtn" class="bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700">Publish Post</button>
-        </div>
-      </form>
-    </div>
   </main>
 
   <script>
     import { supabase } from '../../lib/supabase.js';
 
-    // 1. Check Auth Status
+    // 1. Auth & Tabs
     const checkAuth = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
@@ -68,41 +195,128 @@
       } else {
         document.getElementById('dashboardBody').classList.remove('hidden');
         loadBlogs();
+        loadForumTopics();
       }
     };
+    checkAuth();
 
-    // 2. Load Blogs
+    document.getElementById('logoutBtn').addEventListener('click', async () => {
+      await supabase.auth.signOut();
+      window.location.href = '/admin/login';
+    });
+
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    tabBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        tabBtns.forEach(b => {
+          b.classList.remove('bg-white/10', 'text-emerald-400');
+          b.classList.add('text-stone-300');
+        });
+        btn.classList.add('bg-white/10', 'text-emerald-400');
+        btn.classList.remove('text-stone-300');
+
+        tabContents.forEach(content => content.classList.add('hidden'));
+        document.getElementById(btn.dataset.target).classList.remove('hidden');
+      });
+    });
+
+    // 2. Text Overrides
+    document.getElementById('textOverrideForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const page = document.getElementById('textPage').value;
+      const key = document.getElementById('textKey').value;
+      const val = document.getElementById('textValue').value;
+
+      const { error } = await supabase.from('content_blocks').upsert({
+        page: page,
+        block_key: key,
+        value: val,
+        kind: 'text'
+      }, { onConflict: 'page,block_key' });
+
+      const status = document.getElementById('textStatus');
+      if (error) {
+        status.textContent = 'Error: ' + error.message;
+        status.classList.remove('text-emerald-600');
+        status.classList.add('text-red-500');
+      } else {
+        status.textContent = 'Saved successfully!';
+        status.classList.remove('text-red-500');
+        status.classList.add('text-emerald-600');
+      }
+      status.classList.remove('hidden');
+      setTimeout(() => status.classList.add('hidden'), 3000);
+    });
+
+    // 3. Hero Sliders Upload
+    document.getElementById('heroSliderForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const slide = document.getElementById('slideSelect').value;
+      const fileInput = document.getElementById('heroFile');
+      const file = fileInput.files[0];
+      const status = document.getElementById('heroStatus');
+      const btn = document.getElementById('heroBtn');
+
+      if (!file) return alert('Please select a file');
+
+      btn.disabled = true;
+      status.textContent = 'Uploading...';
+      status.classList.remove('hidden');
+
+      const fileName = `${Date.now()}_${file.name}`;
+      const { data: uploadData, error: uploadError } = await supabase.storage.from('site-images').upload(fileName, file);
+
+      if (uploadError) {
+        status.textContent = 'Upload failed: ' + uploadError.message;
+        btn.disabled = false;
+        return;
+      }
+
+      const { data: { publicUrl } } = supabase.storage.from('site-images').getPublicUrl(fileName);
+
+      const { error: dbError } = await supabase.from('content_blocks').upsert({
+        page: 'home',
+        block_key: slide,
+        value: publicUrl,
+        kind: 'image'
+      }, { onConflict: 'page,block_key' });
+
+      if (dbError) {
+        status.textContent = 'DB Save failed: ' + dbError.message;
+      } else {
+        status.textContent = 'Slide updated successfully!';
+        fileInput.value = '';
+      }
+      btn.disabled = false;
+      setTimeout(() => status.classList.add('hidden'), 4000);
+    });
+
+    // 4. Blog Ingestion
     const loadBlogs = async () => {
       const { data: blogs, error } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
       const listEl = document.getElementById('blogList');
       
-      if (error) {
-        listEl.innerHTML = `<p class="text-red-500 text-sm">Error loading blogs.</p>`;
-        return;
-      }
-
-      if (blogs.length === 0) {
-        listEl.innerHTML = `<p class="text-sm text-gray-500 italic">No posts yet.</p>`;
+      if (error || blogs.length === 0) {
+        listEl.innerHTML = `<p class="text-sm text-gray-500 italic px-2">No posts found.</p>`;
         return;
       }
 
       listEl.innerHTML = blogs.map(blog => `
-        <button class="w-full text-left p-3 rounded border hover:bg-gray-50 truncate edit-blog-btn" data-id="${blog.id}">
-          <p class="font-medium text-sm text-gray-800 truncate">${blog.title}</p>
-          <p class="text-xs text-gray-400 mt-1">${new Date(blog.created_at).toLocaleDateString()}</p>
+        <button class="w-full text-left p-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-between group edit-blog-btn" data-id="${blog.id}">
+          <div class="overflow-hidden">
+            <p class="font-medium text-sm text-gray-800 truncate">${blog.title}</p>
+            <p class="text-[11px] text-gray-400 mt-0.5">${new Date(blog.created_at).toLocaleDateString()}</p>
+          </div>
+          ${blog.is_published ? '<span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>' : '<span class="w-2 h-2 rounded-full bg-gray-300 flex-shrink-0"></span>'}
         </button>
       `).join('');
 
-      // Add click listeners to edit buttons
       document.querySelectorAll('.edit-blog-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-          const blog = blogs.find(b => b.id === btn.dataset.id);
-          openEditor(blog);
-        });
+        btn.addEventListener('click', () => openEditor(blogs.find(b => b.id === btn.dataset.id)));
       });
     };
 
-    // 3. Open Editor
     const openEditor = (blog = null) => {
       const form = document.getElementById('postForm');
       if (blog) {
@@ -111,29 +325,49 @@
         document.getElementById('title').value = blog.title;
         document.getElementById('imageUrl').value = blog.image_url || '';
         document.getElementById('content').value = blog.content;
+        document.getElementById('published').checked = blog.is_published;
         document.getElementById('saveBtn').textContent = 'Update Post';
         document.getElementById('deleteBtn').classList.remove('hidden');
       } else {
         document.getElementById('editorTitle').textContent = 'Create New Post';
         form.reset();
         document.getElementById('postId').value = '';
-        document.getElementById('saveBtn').textContent = 'Publish Post';
+        document.getElementById('imageUrl').value = '';
+        document.getElementById('saveBtn').textContent = 'Save Post';
         document.getElementById('deleteBtn').classList.add('hidden');
       }
     };
 
-    // 4. Save/Update Post
+    // Blog Image Upload listener
+    document.getElementById('blogImageFile').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      const status = document.getElementById('blogImgStatus');
+      status.textContent = 'Uploading cover image...';
+      status.classList.remove('hidden');
+      
+      const fileName = `blog_${Date.now()}_${file.name}`;
+      const { data, error } = await supabase.storage.from('site-images').upload(fileName, file);
+      
+      if (error) {
+        status.textContent = 'Failed: ' + error.message;
+      } else {
+        const { data: { publicUrl } } = supabase.storage.from('site-images').getPublicUrl(fileName);
+        document.getElementById('imageUrl').value = publicUrl;
+        status.textContent = 'Uploaded successfully!';
+      }
+    });
+
     document.getElementById('postForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const id = document.getElementById('postId').value;
       const title = document.getElementById('title').value;
       const content = document.getElementById('content').value;
       const imageUrl = document.getElementById('imageUrl').value;
+      const published = document.getElementById('published').checked;
       
-      // Basic slug generator
-      const slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-
-      const postData = { title, slug, content, image_url: imageUrl };
+      let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      const postData = { title, slug, content, image_url: imageUrl, is_published: published };
 
       const saveBtn = document.getElementById('saveBtn');
       saveBtn.disabled = true;
@@ -146,36 +380,57 @@
         result = await supabase.from('blogs').insert([postData]);
       }
 
-      if (result.error) {
-        alert("Error saving: " + result.error.message);
-      } else {
-        openEditor(); // Reset
-        loadBlogs(); // Refresh list
+      if (result.error) alert("Error saving: " + result.error.message);
+      else {
+        openEditor();
+        loadBlogs();
       }
-      
       saveBtn.disabled = false;
     });
 
-    // 5. Delete Post
     document.getElementById('deleteBtn').addEventListener('click', async () => {
-      if (confirm('Are you sure you want to delete this post?')) {
-        const id = document.getElementById('postId').value;
-        await supabase.from('blogs').delete().eq('id', id);
+      if (confirm('Delete this post? This cannot be undone.')) {
+        await supabase.from('blogs').delete().eq('id', document.getElementById('postId').value);
         openEditor();
         loadBlogs();
       }
     });
 
-    // 6. UI Listeners
     document.getElementById('newPostBtn').addEventListener('click', () => openEditor());
-    
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
-      await supabase.auth.signOut();
-      window.location.href = '/admin/login';
-    });
 
-    // Initialize
-    checkAuth();
+    // 5. Forum Moderator
+    const loadForumTopics = async () => {
+      const { data: topics, error } = await supabase.from('forum_topics').select('*').order('created_at', { ascending: false });
+      const tbody = document.getElementById('forumList');
+      
+      if (error || topics.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No topics found.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = topics.map(topic => `
+        <tr class="hover:bg-gray-50 transition-colors">
+          <td class="px-6 py-4">
+            <p class="font-medium text-gray-800">${topic.title}</p>
+          </td>
+          <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">${topic.category}</span></td>
+          <td class="px-6 py-4 text-gray-500 text-xs">${new Date(topic.created_at).toLocaleDateString()}</td>
+          <td class="px-6 py-4 text-right">
+            <button class="text-red-500 hover:text-red-700 font-medium text-xs delete-topic-btn" data-id="${topic.id}">Delete</button>
+          </td>
+        </tr>
+      `).join('');
+
+      document.querySelectorAll('.delete-topic-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          if (confirm('Delete this topic and all its replies?')) {
+            const id = e.target.dataset.id;
+            await supabase.from('forum_topics').delete().eq('id', id);
+            loadForumTopics();
+          }
+        });
+      });
+    };
   </script>
 </body>
 </html>

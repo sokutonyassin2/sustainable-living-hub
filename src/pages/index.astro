@@ -1,8 +1,28 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { supabase } from '../lib/supabase.js';
+
+// Fetch Content Blocks for Home
+const { data: blocksData } = await supabase.from('content_blocks').select('*').eq('page', 'home');
+const blocks = {};
+if (blocksData) {
+  blocksData.forEach(b => {
+    blocks[b.block_key] = b.value;
+  });
+}
+
+// Fetch Latest 3 Blogs
+const { data: latestBlogs } = await supabase.from('blogs')
+  .select('*')
+  .eq('is_published', true)
+  .order('created_at', { ascending: false })
+  .limit(3);
+
+const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 ---
 
 <Layout title="Home">
+
 
 <!-- Hero Slider Section -->
 <section id="hero-slider" class="relative h-[560px] md:h-[620px] overflow-hidden bg-[#0d1f0f]">
@@ -13,7 +33,7 @@ import Layout from '../layouts/Layout.astro';
       <img
         alt="Lush agricultural field at golden hour"
         class="w-full h-full object-cover"
-        src="https://lh3.googleusercontent.com/aida-public/AB6AXuBX0Eud1qUoapoREDsrDvcw6sfejSo8qcgozVB6XLiaJGgQ8KAE_obyNZ85AYruKIPocHsgBn6gpjhLSWxMpjtMEvHmnE7LpeTVvL9fugOVQq2AaDNOUFzrakjYYxibwFhY3XDzcBJMLQCgk7zAyXyw2qD81XBfzCq1c50cCJXQVgz2FZfW-JwiE6QsbO6idqRYzECRWQn7XVGLI7O-5j-cThQNVWEap3wtRHpCyTQNTcas7T4P18iRElsRRpCH-kv7EntQuEAM3JbX"
+        src={blocks['hero_slide_1'] || "https://lh3.googleusercontent.com/aida-public/AB6AXuBX0Eud1qUoapoREDsrDvcw6sfejSo8qcgozVB6XLiaJGgQ8KAE_obyNZ85AYruKIPocHsgBn6gpjhLSWxMpjtMEvHmnE7LpeTVvL9fugOVQq2AaDNOUFzrakjYYxibwFhY3XDzcBJMLQCgk7zAyXyw2qD81XBfzCq1c50cCJXQVgz2FZfW-JwiE6QsbO6idqRYzECRWQn7XVGLI7O-5j-cThQNVWEap3wtRHpCyTQNTcas7T4P18iRElsRRpCH-kv7EntQuEAM3JbX"}
       />
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"></div>
     </div>
@@ -39,7 +59,7 @@ import Layout from '../layouts/Layout.astro';
       <img
         alt="Indigenous farmers working alongside agricultural scientists"
         class="w-full h-full object-cover"
-        src="/hero_slide2.png"
+        src={blocks['hero_slide_2'] || "/hero_slide2.png"}
       />
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/65"></div>
     </div>
@@ -65,7 +85,7 @@ import Layout from '../layouts/Layout.astro';
       <img
         alt="Rich dark fertile soil with green seedlings sprouting"
         class="w-full h-full object-cover"
-        src="/hero_slide3.png"
+        src={blocks['hero_slide_3'] || "/hero_slide3.png"}
       />
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
     </div>
@@ -91,7 +111,7 @@ import Layout from '../layouts/Layout.astro';
       <img
         alt="Champion Farmer in Action (video)"
         class="w-full h-full object-cover"
-        src="/hero_slide2.png"
+        src={blocks['hero_slide_4'] || "/hero_slide2.png"}
       />
       <!-- Video play button overlay simulation -->
       <div class="absolute inset-0 flex items-center justify-center opacity-50 z-10 pointer-events-none">
@@ -181,30 +201,31 @@ import Layout from '../layouts/Layout.astro';
     startTimer();
   })();
 </script>
-<!-- About Section (Bento Style) -->
-<section class="py-24 px-6 lg:px-12 max-w-7xl mx-auto">
-<div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
-<div class="md:col-span-5 relative">
-<div class="aspect-[4/5] rounded-xl overflow-hidden shadow-lg shadow-secondary/10 border border-outline-variant relative z-10">
-<img alt="William Odinga Balikuddembe" class="w-full h-full object-cover" src="/mr_william.png"/>
-</div>
-<!-- Decorative Element -->
-<div class="absolute -bottom-6 -right-6 w-48 h-48 bg-tertiary-fixed rounded-full z-0 opacity-50 blur-3xl"></div>
-</div>
-<div class="md:col-span-7 md:pl-12">
-<h2 class="font-display text-h1 text-on-background mb-6">About BOS</h2>
-<div class="space-y-4 font-body-md text-body-md text-on-surface-variant">
+<!-- About Section -->
+<section class="py-24 px-6 lg:px-12 max-w-4xl mx-auto">
+<div class="flex flex-col items-center">
+<h2 class="font-display text-h1 text-on-background mb-8 text-center">About BOS</h2>
+<div class="space-y-5 font-body-md text-body-md text-on-surface-variant">
 <p>
-  My name is William, the founder of Bill of Senga (BOS). I turned a 'tired' piece of land into a productive one through natural way and that is the foundation of what I do today.
+  BOS is an open community learning model for regenerative agriculture. It enables communities to generate, test, adapt, document and share knowledge that restores ecosystems, strengthens livelihoods and builds resilient knowledge systems.
 </p>
 <p>
-  Welcome to this living platform — a space for practical ideas and real-world insights on sustainable farming and smarter living. Anchored in Uganda, Africa, this platform shows you how smallholder farmers can base on indigenous and scientific knowledge to transform themselves and eventually supply the world with safe products produced organically and sustainably. To quickly get you up to speed read <a href="/about/" class="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors">about us</a>, or <a href="/the_story_of_senga/" class="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors">the story that started everything</a>.
+  We advance regenerative agriculture through an agroecological approach that brings together indigenous knowledge, scientific evidence, community learning and environmental stewardship. 
 </p>
 <p>
-  BOS is about learning from the land, learning from each other, and using that knowledge to build more resilient and sustainable communities.
+  We believe that the most sustainable solutions emerge when communities become active creators of knowledge rather than passive recipients of information.
+</p>
+<p>
+  This is a living platform—a place where practical experience, local innovation and scientific understanding come together to restore ecosystems, strengthen livelihoods and build resilient farming communities.
+</p>
+<p>
+  Whether you are a smallholder farmer, researcher, student, policymaker or simply curious about sustainable living, BOS invites you to learn from the land, learn from others and contribute your own experiences to a growing community of practice.
+</p>
+<p>
+  <a href="/about/" class="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors">To get started, learn more about our founder and the journey that inspired this community learning model</a> or <a href="/blog/" class="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors">explore the story behind BOS.</a>
 </p>
 </div>
-<div class="mt-8 pt-8 border-t border-surface-variant flex gap-6">
+<div class="mt-10 pt-8 border-t border-surface-variant w-full flex justify-center gap-8">
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-surface-tint text-3xl">psychiatry</span>
 <span class="font-label-md text-label-md text-on-background">Ancestral Roots</span>
@@ -212,7 +233,6 @@ import Layout from '../layouts/Layout.astro';
 <div class="flex items-center gap-3">
 <span class="material-symbols-outlined text-surface-tint text-3xl">science</span>
 <span class="font-label-md text-label-md text-on-background">Modern Science</span>
-</div>
 </div>
 </div>
 </div>
@@ -610,86 +630,39 @@ import Layout from '../layouts/Layout.astro';
 
     <!-- Blog Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-      <!-- Card 1 -->
-      <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
-        <div class="relative overflow-hidden">
-          <img
-            src="/blog_soil.png"
-            alt="Hands holding fertile soil with seedlings"
-            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          <!-- Date Badge -->
-          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
-            <span class="text-base font-extrabold leading-none">15</span>
-            <span class="uppercase tracking-wider">May</span>
-          </div>
-        </div>
-        <div class="p-6 pt-10">
-          <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors">
-            The Secret Life of Healthy Soil — What Science Says
-          </h3>
-          <p class="text-stone-500 text-sm leading-relaxed mb-5">
-            Good soil is far more than dirt. Discover how billions of microorganisms beneath your feet are the true engine of food security and planetary health.
-          </p>
-          <a href="/blog/post-1-healthy-soil.html" class="inline-block bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
-            Read More
-          </a>
-        </div>
-      </article>
-
-      <!-- Card 2 -->
-      <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
-        <div class="relative overflow-hidden">
-          <img
-            src="/blog_tree.png"
-            alt="Young man planting a tree sapling"
-            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
-            <span class="text-base font-extrabold leading-none">02</span>
-            <span class="uppercase tracking-wider">Jun</span>
-          </div>
-        </div>
-        <div class="p-6 pt-10">
-          <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors">
-            How to Become a Tree Billionaire in 5 Years
-          </h3>
-          <p class="text-stone-500 text-sm leading-relaxed mb-5">
-            Planting trees is not just an act of love for the environment — it is a generational investment. Learn how BOS is turning ordinary farmers into Tree Billionaires.
-          </p>
-          <a href="/blog/post-2-tree-billionaire.html" class="inline-block bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
-            Read More
-          </a>
-        </div>
-      </article>
-
-      <!-- Card 3 -->
-      <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group">
-        <div class="relative overflow-hidden">
-          <img
-            src="/blog_rooftop.png"
-            alt="Lush urban rooftop garden"
-            class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-          />
-          <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
-            <span class="text-base font-extrabold leading-none">20</span>
-            <span class="uppercase tracking-wider">Jun</span>
-          </div>
-        </div>
-        <div class="p-6 pt-10">
-          <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors">
-            Urban Rooftop Farming: Feeding Cities from Above
-          </h3>
-          <p class="text-stone-500 text-sm leading-relaxed mb-5">
-            Cities need not be food deserts. Discover how BOS Smart Villages are transforming rooftops into productive organic gardens that feed families and build community.
-          </p>
-          <a href="/blog/post-3-urban-rooftop.html" class="inline-block bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
-            Read More
-          </a>
-        </div>
-      </article>
-
+      {latestBlogs && latestBlogs.length > 0 ? (
+        latestBlogs.map(blog => {
+          const d = new Date(blog.created_at);
+          const day = String(d.getDate()).padStart(2, '0');
+          const month = months[d.getMonth()];
+          return (
+            <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group flex flex-col">
+              <div class="relative overflow-hidden">
+                <img
+                  src={blog.image_url || '/blog_soil.png'}
+                  alt={blog.title}
+                  class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+                <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+                  <span class="text-base font-extrabold leading-none">{day}</span>
+                  <span class="uppercase tracking-wider">{month}</span>
+                </div>
+              </div>
+              <div class="p-6 pt-10 flex flex-col flex-grow">
+                <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                  {blog.title}
+                </h3>
+                <div class="text-stone-500 text-sm leading-relaxed mb-5 flex-grow line-clamp-3" set:html={blog.content}></div>
+                <a href={`/blog/${blog.slug}`} class="inline-block self-start bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
+                  Read More
+                </a>
+              </div>
+            </article>
+          );
+        })
+      ) : (
+        <p class="col-span-3 text-center text-stone-500">No blog posts found.</p>
+      )}
     </div>
   </div>
 </section>
