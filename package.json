@@ -11,8 +11,10 @@
     "start": "astro dev"
   },
   "dependencies": {
+    "@astrojs/check": "^0.9.10",
     "@astrojs/netlify": "^8.2.0",
-    "@supabase/supabase-js": "^2.110.2"
+    "@supabase/supabase-js": "^2.110.2",
+    "typescript": "^6.0.3"
   },
   "devDependencies": {
     "astro": "^7.0.7",
