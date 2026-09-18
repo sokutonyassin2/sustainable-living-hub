@@ -330,20 +330,23 @@ import Layout from '../../layouts/Layout.astro';
     // Modal Control: Create Topic
     function openCreateModal() {
         const modal = document.getElementById("create-modal");
+        if (!modal) return;
         modal.classList.remove("hidden");
         setTimeout(() => {
             modal.classList.remove("opacity-0");
-            modal.querySelector("div").classList.remove("scale-95");
+            modal.querySelector("div")?.classList.remove("scale-95");
         }, 10);
     }
 
     function closeCreateModal() {
         const modal = document.getElementById("create-modal");
+        if (!modal) return;
         modal.classList.add("opacity-0");
-        modal.querySelector("div").classList.add("scale-95");
+        modal.querySelector("div")?.classList.add("scale-95");
         setTimeout(() => {
             modal.classList.add("hidden");
-            document.getElementById("create-topic-form").reset();
+            const form = document.getElementById("create-topic-form");
+            if (form) form.reset();
         }, 300);
     }
 
@@ -404,21 +407,24 @@ import Layout from '../../layouts/Layout.astro';
 
         // Open modal
         const modal = document.getElementById("details-modal");
+        if (!modal) return;
         modal.classList.remove("hidden");
         setTimeout(() => {
             modal.classList.remove("opacity-0");
-            modal.querySelector("div").classList.remove("scale-95");
+            modal.querySelector("div")?.classList.remove("scale-95");
         }, 10);
     }
 
     function closeDetailsModal() {
         const modal = document.getElementById("details-modal");
+        if (!modal) return;
         modal.classList.add("opacity-0");
-        modal.querySelector("div").classList.add("scale-95");
+        modal.querySelector("div")?.classList.add("scale-95");
         setTimeout(() => {
             modal.classList.add("hidden");
             activeTopicId = null;
-            document.getElementById("add-comment-form").reset();
+            const form = document.getElementById("add-comment-form");
+            if (form) form.reset();
         }, 300);
     }
 

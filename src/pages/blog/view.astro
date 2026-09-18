@@ -108,7 +108,7 @@ import Layout from '../../layouts/Layout.astro';
             <a href="/blog/" class="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm">
               <span class="material-symbols-outlined text-[18px]">arrow_back</span> All Blog Posts
             </a>
-            <a href="/blog/admin.html" class="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm">
+            <a href="/blog/admin" class="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm">
               Publishing Dashboard <span class="material-symbols-outlined text-[18px]">edit_note</span>
             </a>
           </div>
@@ -395,7 +395,7 @@ import Layout from '../../layouts/Layout.astro';
       const mergedPopular = nativePopular.map(np => {
         const vKey = `bos_views_${np.id}`;
         let viewsVal = parseInt(localStorage.getItem(vKey)) || np.initial;
-        return { ...np, views: viewsVal, isCustom: false, link: `/blog/${np.id}.html` };
+        return { ...np, views: viewsVal, isCustom: false, link: `/blog/${np.id}` };
       });
 
       // Add custom published ones
@@ -410,7 +410,7 @@ import Layout from '../../layouts/Layout.astro';
             date: formatDate(cp.publishDate || cp.createdAt),
             views: viewsVal,
             isCustom: true,
-            link: `/blog/view.html?id=${cp.id}`
+            link: `/blog/view?id=${cp.id}`
           });
         }
       });

@@ -647,7 +647,7 @@ import Layout from '../../layouts/Layout.astro';
         <td class="px-6 py-4 text-xs">${formatDate(p.publishDate || p.createdAt)}</td>
         <td class="px-6 py-4 text-right">
           <div class="flex items-center justify-end gap-2.5">
-            <a href="/blog/view.html?id=${p.id}&preview=true" class="text-stone-400 hover:text-primary transition-colors" title="Preview Article"><span class="material-symbols-outlined text-[20px]">visibility</span></a>
+            <a href="/blog/view?id=${p.id}&preview=true" class="text-stone-400 hover:text-primary transition-colors" title="Preview Article"><span class="material-symbols-outlined text-[20px]">visibility</span></a>
             <button onclick="editPost('${p.id}')" class="text-stone-400 hover:text-primary transition-colors" title="Edit Article"><span class="material-symbols-outlined text-[20px]">edit</span></button>
             <button onclick="deletePost('${p.id}')" class="text-stone-400 hover:text-red-500 transition-colors" title="Delete Article"><span class="material-symbols-outlined text-[20px]">delete</span></button>
           </div>

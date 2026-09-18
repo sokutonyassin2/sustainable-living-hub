@@ -224,24 +224,31 @@ import Layout from '../../layouts/Layout.astro';
     async function loadCustomPosts() {
       const { data, error } = await supabase
         .from('blogs')
-        .select('*')
-        .eq('is_published', true);
+        .select('*');
       
       if (error || !data) return [];
       
-      return data.map(p => ({
+      const now = new Date();
+      // Only show published posts or scheduled posts whose date has arrived
+      const livePosts = data.filter(p => {
+        if (p.is_published) return true;
+        if (p.scheduled_at && new Date(p.scheduled_at) <= now) return true;
+        return false;
+      });
+
+      return livePosts.map(p => ({
         id: p.id,
         title: p.title,
         slug: p.slug,
-        category: 'Community Post', 
-        publishDate: p.created_at,
-        description: p.content.substring(0, 150) + '...',
-        author: 'Community Member',
-        readTime: 5,
+        category: p.category || 'Community Post', 
+        publishDate: p.scheduled_at || p.created_at,
+        description: p.excerpt || (p.content ? p.content.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim().substring(0, 150) + '...' : ''),
+        author: p.author || 'BOS Editorial Team',
+        readTime: Math.max(3, Math.ceil((p.content || '').split(' ').length / 180)),
         featuredImage: p.image_url || '/blog_soil.png',
         isCustom: true,
         link: `/blog/${p.slug}`,
-        initialViews: p.views_count
+        initialViews: p.views_count || 0
       }));
     }
 

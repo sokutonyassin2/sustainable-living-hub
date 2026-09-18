@@ -1,0 +1,889 @@
+---
+// In-Place Inline Visual Page Text Editor for Authenticated Admins
+---
+
+<!-- In-Place Visual Editor Widget Container -->
+<div id="inPlaceEditorContainer" class="fixed bottom-6 right-6 z-[9999] font-sans">
+  <!-- Collapsed Toggle Button (Visible when minimized) -->
+  <button
+    id="inPlaceCollapsedBtn"
+    class="hidden bg-[#003B73] hover:bg-[#002850] text-white p-3.5 rounded-full shadow-2xl transition-all duration-300 items-center justify-center border-2 border-white/30 group focus:outline-none focus:ring-4 focus:ring-primary/40 relative"
+    title="Open In-Place Visual Editor"
+  >
+    <span class="material-symbols-outlined text-[24px] group-hover:scale-110 transition-transform">edit_note</span>
+    <span id="collapsedPendingDot" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-amber-400 border-2 border-white rounded-full"></span>
+  </button>
+
+  <!-- Expanded Admin Floating Dock -->
+  <div
+    id="inPlaceDock"
+    class="hidden bg-[#1B3022]/95 backdrop-blur-md text-white rounded-2xl p-4 shadow-2xl border border-white/15 w-80 sm:w-96 transition-all duration-300"
+  >
+    <!-- Dock Header -->
+    <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3">
+      <div class="flex items-center gap-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        <span class="text-xs font-bold uppercase tracking-wider text-emerald-300">Live Visual Editor</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <a
+          href="/admin/dashboard"
+          class="text-stone-300 hover:text-white p-1 rounded hover:bg-white/10 transition-colors text-xs flex items-center gap-1"
+          title="Go to Admin Dashboard"
+        >
+          <span class="material-symbols-outlined text-[16px]">dashboard</span>
+          <span class="hidden sm:inline">Dashboard</span>
+        </a>
+        <button
+          id="inPlaceMinimizeBtn"
+          class="text-stone-300 hover:text-white p-1 rounded hover:bg-white/10 transition-colors"
+          title="Minimize Dock"
+        >
+          <span class="material-symbols-outlined text-[18px]">minimize</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Toggle Edit Mode Switch -->
+    <div class="flex items-center justify-between bg-white/5 rounded-xl p-3 mb-3 border border-white/10">
+      <div>
+        <p class="text-sm font-semibold text-white">Direct Page Editing</p>
+        <p class="text-[11px] text-stone-300" id="editModeDesc">Click any text or image on page to edit</p>
+      </div>
+      <label class="relative inline-flex items-center cursor-pointer">
+        <input type="checkbox" id="inPlaceToggleSwitch" class="sr-only peer">
+        <div class="w-11 h-6 bg-stone-600 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-stone-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+      </label>
+    </div>
+
+    <!-- Status & Unsaved Controls -->
+    <div class="flex items-center justify-between text-xs mb-3 px-1">
+      <div class="flex items-center gap-1.5 text-stone-300">
+        <span id="inPlaceStatusIcon" class="material-symbols-outlined text-[15px] text-emerald-400">check_circle</span>
+        <span id="inPlaceStatusText">All changes saved</span>
+      </div>
+      <div class="flex gap-2">
+        <button
+          id="inPlaceDiscardBtn"
+          class="hidden px-2.5 py-1 text-stone-300 hover:text-white hover:bg-white/10 rounded font-medium transition-colors"
+        >
+          Discard
+        </button>
+        <button
+          id="inPlaceSaveAllBtn"
+          class="hidden px-3 py-1 bg-primary hover:bg-primary/90 text-white rounded-lg font-semibold transition-all shadow flex items-center gap-1 text-xs"
+        >
+          <span class="material-symbols-outlined text-[14px]">save</span>
+          <span>Save All</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer Help -->
+    <div class="text-[11px] text-stone-400 border-t border-white/10 pt-2 flex items-center justify-between">
+      <span>Logged in: <strong class="text-stone-200 truncate max-w-[120px] inline-block align-bottom" id="inPlaceAdminEmail">admin@bos.org</strong></span>
+      <div class="flex items-center gap-2">
+        <button id="inPlaceHighlightToggle" class="text-emerald-400 hover:underline">Highlight</button>
+        <span class="text-stone-600">•</span>
+        <button id="inPlaceSignOutBtn" class="text-stone-400 hover:text-red-300">Log out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Guest Quick-Access Pill (Allows activating Admin mode directly) -->
+  <div
+    id="inPlaceGuestHint"
+    class="hidden bg-stone-900/90 backdrop-blur-sm text-white rounded-full py-1.5 px-3 shadow-xl border border-stone-700 text-xs flex items-center gap-2.5 transition-opacity duration-300"
+  >
+    <span class="material-symbols-outlined text-primary text-[18px]">edit_note</span>
+    <span class="text-[11px] text-stone-300">Admin Editor</span>
+    <button
+      id="inPlaceQuickLoginBtn"
+      class="bg-primary hover:bg-primary/90 text-white px-2.5 py-0.5 rounded-full text-[11px] font-semibold transition-colors flex items-center gap-1"
+    >
+      <span>Enable</span>
+    </button>
+  </div>
+</div>
+
+<!-- Inline Floating Action Mini-Toolbar (Attaches above/below the actively edited element) -->
+<div
+  id="inPlaceActiveToolbar"
+  class="fixed hidden z-[10000] bg-stone-900 text-white text-xs px-2.5 py-1.5 rounded-lg shadow-2xl border border-stone-700 flex items-center gap-2 pointer-events-auto transition-all"
+  style="transform: translate(-50%, -100%); margin-top: -8px;"
+>
+  <span class="font-mono text-[10px] text-emerald-400 bg-emerald-950 px-1.5 py-0.5 rounded border border-emerald-800" id="activeKeyBadge">key</span>
+  <span class="text-stone-400">|</span>
+  <button
+    id="activeSaveBtn"
+    class="bg-primary hover:bg-primary/90 text-white px-2 py-0.5 rounded flex items-center gap-1 font-semibold transition-colors"
+    title="Save changes to Supabase"
+  >
+    <span class="material-symbols-outlined text-[13px]">check</span> Save
+  </button>
+  <button
+    id="activeCancelBtn"
+    class="text-stone-400 hover:text-white px-1 py-0.5 rounded transition-colors"
+    title="Cancel changes"
+  >
+    <span class="material-symbols-outlined text-[13px]">close</span>
+  </button>
+</div>
+
+<!-- Notification Toast -->
+<div
+  id="inPlaceToast"
+  class="fixed bottom-24 right-6 z-[10001] bg-stone-900 text-white text-sm px-4 py-2.5 rounded-xl shadow-2xl border border-emerald-500/50 flex items-center gap-2 transform translate-y-4 opacity-0 pointer-events-none transition-all duration-300"
+>
+  <span class="material-symbols-outlined text-emerald-400 text-[20px]">check_circle</span>
+  <span id="inPlaceToastMessage">Changes saved to Supabase!</span>
+</div>
+
+<!-- On-the-Go Image Edit Modal -->
+<div id="inPlaceImageModal" class="hidden fixed inset-0 z-[10002] bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl p-6 sm:p-7 w-full max-w-lg shadow-2xl border border-gray-100 animate-in fade-in zoom-in duration-200">
+    <div class="flex items-center justify-between pb-3 mb-4 border-b border-gray-100">
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
+          <span class="material-symbols-outlined text-[20px]">photo_camera</span>
+        </div>
+        <div>
+          <h3 class="font-bold text-gray-900 text-base">Change Image On-the-Go</h3>
+          <p class="text-[11px] text-gray-400 font-mono" id="inplaceModalImgKey">img_key</p>
+        </div>
+      </div>
+      <button type="button" id="closeImageModalBtn" class="text-gray-400 hover:text-gray-600 p-1.5 rounded-lg hover:bg-gray-100 transition-colors">
+        <span class="material-symbols-outlined text-[20px]">close</span>
+      </button>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Live Preview -->
+      <div class="relative w-full h-44 rounded-2xl bg-gray-100 border-2 border-dashed border-gray-300 overflow-hidden flex items-center justify-center group">
+        <img id="modalImgPreview" src="" alt="Preview" class="w-full h-full object-cover">
+        <div class="absolute bottom-2 left-2 bg-black/70 text-white text-[10px] px-2 py-0.5 rounded-md backdrop-blur-xs">
+          Live Preview
+        </div>
+      </div>
+
+      <!-- Option 1: File Upload from local device -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5 flex items-center gap-1">
+          <span class="material-symbols-outlined text-[15px] text-emerald-600">upload_file</span>
+          Upload From Your Device
+        </label>
+        <input 
+          type="file" 
+          id="modalFileInput" 
+          accept="image/*" 
+          class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 file:text-emerald-800 hover:file:bg-emerald-200 cursor-pointer border border-gray-200 rounded-xl p-1 bg-gray-50/50"
+        />
+      </div>
+
+      <!-- Option 2: Image URL -->
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1.5 flex items-center gap-1">
+          <span class="material-symbols-outlined text-[15px] text-emerald-600">link</span>
+          Or Image Web URL
+        </label>
+        <input 
+          type="text" 
+          id="modalUrlInput" 
+          placeholder="https://... or /hero_slide1.png" 
+          class="w-full text-xs px-3.5 py-2.5 rounded-xl border border-gray-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none"
+        />
+      </div>
+
+      <!-- Option 3: Quick Media Presets -->
+      <div>
+        <span class="block text-[11px] font-semibold text-gray-500 mb-1.5">Or choose a media preset:</span>
+        <div class="flex flex-wrap gap-1.5" id="modalPresetsContainer">
+          <button type="button" class="preset-img-btn text-[10px] font-medium px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 hover:text-emerald-800 border border-gray-200 transition-colors" data-src="/hero_slide1.png">Hero Slide 1</button>
+          <button type="button" class="preset-img-btn text-[10px] font-medium px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 hover:text-emerald-800 border border-gray-200 transition-colors" data-src="/hero_slide2.png">Hero Slide 2</button>
+          <button type="button" class="preset-img-btn text-[10px] font-medium px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 hover:text-emerald-800 border border-gray-200 transition-colors" data-src="/hero_slide3.png">Hero Slide 3</button>
+          <button type="button" class="preset-img-btn text-[10px] font-medium px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 hover:text-emerald-800 border border-gray-200 transition-colors" data-src="/hero_slide4.png">Hero Slide 4</button>
+          <button type="button" class="preset-img-btn text-[10px] font-medium px-2.5 py-1 rounded-lg bg-gray-100 hover:bg-emerald-100 hover:text-emerald-800 border border-gray-200 transition-colors" data-src="/blog_soil.png">Soil & Plants</button>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="pt-3 border-t border-gray-100 flex items-center justify-end gap-2.5">
+        <button type="button" id="cancelImageModalBtn" class="px-4 py-2 rounded-xl text-xs font-semibold text-gray-600 hover:bg-gray-100 transition-colors">
+          Cancel
+        </button>
+        <button type="button" id="saveImageModalBtn" class="px-5 py-2 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs flex items-center gap-1.5 transition-colors">
+          <span class="material-symbols-outlined text-[16px]">check</span> Apply & Save Image
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style is:global>
+  /* In-Place Editable Elements Styling when Edit Mode is active */
+  body.bos-edit-mode-active [data-bos-editable="true"] {
+    outline: 2px dashed rgba(0, 59, 115, 0.4) !important;
+    outline-offset: 3px !important;
+    border-radius: 4px !important;
+    cursor: text !important;
+    transition: outline-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  body.bos-edit-mode-active [data-bos-editable="true"]:hover {
+    outline: 2px dashed #0052a3 !important;
+    outline-offset: 3px !important;
+    background-color: rgba(0, 82, 163, 0.06) !important;
+  }
+
+  body.bos-edit-mode-active [data-bos-editable="true"]:focus {
+    outline: 2px solid #0052a3 !important;
+    outline-offset: 3px !important;
+    background-color: rgba(255, 255, 255, 0.2) !important;
+  }
+
+  /* In-Place Editable Images on the go */
+  body.bos-edit-mode-active [data-bos-image-editable="true"] {
+    outline: 3px dashed #059669 !important;
+    outline-offset: 3px !important;
+    cursor: pointer !important;
+    transition: all 0.2s ease;
+  }
+
+  body.bos-edit-mode-active [data-bos-image-editable="true"]:hover {
+    outline: 3px solid #047857 !important;
+    filter: brightness(0.92);
+  }
+
+  /* Dirty/Changed element indicator */
+  body.bos-edit-mode-active [data-bos-dirty="true"] {
+    outline: 2px solid #f59e0b !important;
+    background-color: rgba(245, 158, 11, 0.08) !important;
+  }
+
+  /* Pulse animation for active highlights */
+  body.bos-edit-mode-active.bos-highlight-on [data-bos-editable="true"],
+  body.bos-edit-mode-active.bos-highlight-on [data-bos-image-editable="true"] {
+    animation: bosPulseHighlight 1.5s ease-in-out infinite alternate;
+  }
+
+  @keyframes bosPulseHighlight {
+    0% { outline-color: rgba(0, 82, 163, 0.3); }
+    100% { outline-color: rgba(0, 82, 163, 0.9); }
+  }
+</style>
+
+<script>
+  import { supabase } from '../lib/supabase.js';
+
+  // Current state
+  let isEditMode = false;
+  let isAdmin = false;
+  let stagedChanges = new Map(); // block_key -> { page, block_key, value, originalValue, element }
+  let activeElement = null;
+
+  // DOM References
+  const dock = document.getElementById('inPlaceDock');
+  const collapsedBtn = document.getElementById('inPlaceCollapsedBtn');
+  const minimizeBtn = document.getElementById('inPlaceMinimizeBtn');
+  const toggleSwitch = document.getElementById('inPlaceToggleSwitch') as HTMLInputElement | null;
+  const statusIcon = document.getElementById('inPlaceStatusIcon');
+  const statusText = document.getElementById('inPlaceStatusText');
+  const saveAllBtn = document.getElementById('inPlaceSaveAllBtn');
+  const discardBtn = document.getElementById('inPlaceDiscardBtn');
+  const adminEmailText = document.getElementById('inPlaceAdminEmail');
+  const highlightToggle = document.getElementById('inPlaceHighlightToggle');
+  const guestHint = document.getElementById('inPlaceGuestHint');
+  const quickLoginBtn = document.getElementById('inPlaceQuickLoginBtn');
+  const signOutBtn = document.getElementById('inPlaceSignOutBtn');
+  const activeToolbar = document.getElementById('inPlaceActiveToolbar');
+  const activeKeyBadge = document.getElementById('activeKeyBadge');
+  const activeSaveBtn = document.getElementById('activeSaveBtn');
+  const activeCancelBtn = document.getElementById('activeCancelBtn');
+  const toast = document.getElementById('inPlaceToast');
+  const toastMessage = document.getElementById('inPlaceToastMessage');
+  const collapsedPendingDot = document.getElementById('collapsedPendingDot');
+
+  // Get current normalized page identifier
+  function getPageKey() {
+    const rawPath = window.location.pathname.replace(/^\/|\/$/g, '');
+    if (!rawPath || rawPath === '') return 'home';
+    return rawPath;
+  }
+
+  // Show Toast Notification
+  function showToast(message: string) {
+    if (!toast || !toastMessage) return;
+    toastMessage.textContent = message;
+    toast.classList.remove('translate-y-4', 'opacity-0', 'pointer-events-none');
+    toast.classList.add('translate-y-0', 'opacity-100');
+    setTimeout(() => {
+      toast.classList.remove('translate-y-0', 'opacity-100');
+      toast.classList.add('translate-y-4', 'opacity-0', 'pointer-events-none');
+    }, 3000);
+  }
+
+  // Authenticate Admin Check
+  async function checkAdminAuth() {
+    try {
+      let user = null;
+      // Check localStorage first
+      const raw = localStorage.getItem('bos_mock_auth_user');
+      if (raw) {
+        try { user = JSON.parse(raw); } catch(e) {}
+      }
+
+      // If not in localStorage, check supabase.auth
+      if (!user) {
+        const { data } = await supabase.auth.getSession();
+        if (data?.session?.user) {
+          user = data.session.user;
+        }
+      }
+
+      if (user && (user.role === 'admin' || user.email === 'admin@bos.org' || user.user_metadata?.role === 'admin')) {
+        isAdmin = true;
+        if (adminEmailText) adminEmailText.textContent = user.email || 'Admin';
+        dock?.classList.remove('hidden');
+        guestHint?.classList.add('hidden');
+        setupEditableElements();
+        setupEditableImages();
+      } else {
+        isAdmin = false;
+        dock?.classList.add('hidden');
+        collapsedBtn?.classList.add('hidden');
+        guestHint?.classList.remove('hidden');
+      }
+    } catch (err) {
+      console.error('[InPlaceEditor] Auth check failed:', err);
+    }
+  }
+
+  // Scan & Prepare Editable Elements on Page
+  function setupEditableElements() {
+    const pageKey = getPageKey();
+
+    // 1. Elements explicitly marked with data-content-key
+    const explicitElements = Array.from(document.querySelectorAll('[data-content-key]'));
+
+    // 2. Main content headings and paragraphs that can also be edited
+    const genericElements = Array.from(document.querySelectorAll('main h1, main h2, main h3, main p, article h1, article h2, article h3, article p, section h1, section h2, section h3'));
+
+    const allTargets = new Set([...explicitElements, ...genericElements]);
+
+    let index = 1;
+    allTargets.forEach(el => {
+      // Skip editor's own elements
+      if (el.closest('#inPlaceEditorContainer') || el.closest('#inPlaceActiveToolbar') || el.closest('#inPlaceToast')) return;
+      if (el.closest('footer') && !el.hasAttribute('data-content-key')) return;
+      if (el.closest('nav') && !el.hasAttribute('data-content-key')) return;
+
+      let blockKey = el.getAttribute('data-content-key');
+      let blockPage = el.getAttribute('data-content-page') || pageKey;
+
+      if (!blockKey) {
+        const tag = el.tagName.toLowerCase();
+        const cleanText = (el.textContent || '').trim().slice(0, 15).toLowerCase().replace(/[^a-z0-9]+/g, '_');
+        blockKey = `${tag}_${cleanText || index}`;
+        el.setAttribute('data-content-key', blockKey);
+        el.setAttribute('data-content-page', blockPage);
+      }
+
+      el.setAttribute('data-bos-editable', 'true');
+      el.setAttribute('title', `Click to edit (${blockKey})`);
+
+      // Intercept clicks
+      el.addEventListener('click', onElementClick);
+      el.addEventListener('input', onElementInput);
+      el.addEventListener('keydown', onElementKeydown);
+      el.addEventListener('blur', onElementBlur);
+
+      index++;
+    });
+  }
+
+  // Current target image for modal
+  let activeImageElement: HTMLImageElement | null = null;
+  const imageModal = document.getElementById('inPlaceImageModal');
+  const modalImgPreview = document.getElementById('modalImgPreview') as HTMLImageElement;
+  const modalFileInput = document.getElementById('modalFileInput') as HTMLInputElement;
+  const modalUrlInput = document.getElementById('modalUrlInput') as HTMLInputElement;
+  const inplaceModalImgKey = document.getElementById('inplaceModalImgKey');
+  const closeImageModalBtn = document.getElementById('closeImageModalBtn');
+  const cancelImageModalBtn = document.getElementById('cancelImageModalBtn');
+  const saveImageModalBtn = document.getElementById('saveImageModalBtn');
+
+  // Scan & Prepare Editable Images on Page
+  function setupEditableImages() {
+    const pageKey = getPageKey();
+    const images = Array.from(document.querySelectorAll('img'));
+    let imgIdx = 1;
+
+    images.forEach(img => {
+      // Skip editor elements
+      if (img.closest('#inPlaceEditorContainer') || img.closest('#inPlaceActiveToolbar') || img.closest('#inPlaceToast') || img.closest('#inPlaceImageModal')) return;
+
+      let blockKey = img.getAttribute('data-content-key');
+      let blockPage = img.getAttribute('data-content-page') || pageKey;
+
+      if (!blockKey) {
+        const altClean = (img.getAttribute('alt') || '').trim().slice(0, 18).toLowerCase().replace(/[^a-z0-9]+/g, '_');
+        blockKey = `img_${altClean || ('photo_' + imgIdx)}`;
+        img.setAttribute('data-content-key', blockKey);
+        img.setAttribute('data-content-page', blockPage);
+      }
+
+      img.setAttribute('data-bos-image-editable', 'true');
+      img.setAttribute('title', `Click to change image on-the-go (${blockKey})`);
+
+      // Avoid adding duplicate click listeners
+      if (!img.dataset.hasBosImageListener) {
+        img.dataset.hasBosImageListener = 'true';
+        img.addEventListener('click', (e) => {
+          if (!isEditMode || !isAdmin) return;
+          e.preventDefault();
+          e.stopPropagation();
+          openImageModal(img);
+        });
+      }
+
+      imgIdx++;
+    });
+  }
+
+  // Open Image Modal
+  function openImageModal(img: HTMLImageElement) {
+    activeImageElement = img;
+    const key = img.getAttribute('data-content-key') || 'img_block';
+    const currentSrc = img.src || img.getAttribute('src') || '';
+
+    if (inplaceModalImgKey) inplaceModalImgKey.textContent = key;
+    if (modalImgPreview) modalImgPreview.src = currentSrc;
+    if (modalUrlInput) modalUrlInput.value = currentSrc;
+    if (modalFileInput) modalFileInput.value = '';
+
+    imageModal?.classList.remove('hidden');
+  }
+
+  // Close Image Modal
+  function closeImageModal() {
+    imageModal?.classList.add('hidden');
+    activeImageElement = null;
+  }
+
+  closeImageModalBtn?.addEventListener('click', closeImageModal);
+  cancelImageModalBtn?.addEventListener('click', closeImageModal);
+
+  // File Upload Preview
+  modalFileInput?.addEventListener('change', (e: any) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const dataUrl = event.target?.result as string;
+      if (modalImgPreview) modalImgPreview.src = dataUrl;
+      if (modalUrlInput) modalUrlInput.value = dataUrl;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // URL Input Preview
+  modalUrlInput?.addEventListener('input', () => {
+    const url = modalUrlInput.value.trim();
+    if (modalImgPreview && url) {
+      modalImgPreview.src = url;
+    }
+  });
+
+  // Preset Buttons
+  document.querySelectorAll('.preset-img-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      const src = (e.currentTarget as HTMLElement).dataset.src;
+      if (src) {
+        if (modalImgPreview) modalImgPreview.src = src;
+        if (modalUrlInput) modalUrlInput.value = src;
+      }
+    });
+  });
+
+  // Save Image Changes
+  saveImageModalBtn?.addEventListener('click', async () => {
+    if (!activeImageElement) return;
+
+    const fileInput = document.getElementById('modalFileInput') as HTMLInputElement;
+    const file = fileInput?.files?.[0];
+    let newUrl = modalUrlInput?.value.trim();
+
+    if (file) {
+      if (saveImageModalBtn) {
+        (saveImageModalBtn as HTMLButtonElement).disabled = true;
+        saveImageModalBtn.innerHTML = '<span class="material-symbols-outlined text-[16px] animate-spin">progress_activity</span> Uploading...';
+      }
+      try {
+        const filePath = `inline_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+        const { data, error } = await supabase.storage.from('site-images').upload(filePath, file);
+        if (error) {
+          console.warn('[InPlaceEditor] Storage upload warning:', error.message);
+          // Fall back to data URL
+          newUrl = modalImgPreview?.src;
+        } else {
+          newUrl = data?.publicUrl || (supabase.storage.from('site-images').getPublicUrl(filePath).data.publicUrl);
+        }
+      } catch (uploadErr) {
+        console.error('[InPlaceEditor] Upload error:', uploadErr);
+        newUrl = modalImgPreview?.src;
+      }
+      if (saveImageModalBtn) {
+        (saveImageModalBtn as HTMLButtonElement).disabled = false;
+        saveImageModalBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">check</span> Apply & Save Image';
+      }
+    }
+
+    if (!newUrl) {
+      newUrl = modalImgPreview?.src;
+    }
+
+    if (!newUrl) {
+      alert('Please select an image file or provide a valid image URL.');
+      return;
+    }
+
+    const key = activeImageElement.getAttribute('data-content-key') || 'img_block';
+    const page = activeImageElement.getAttribute('data-content-page') || getPageKey();
+
+    // Update the DOM immediately
+    activeImageElement.src = newUrl;
+
+    // Persist to Supabase and LocalStorage
+    await persistBlock(page, key, newUrl, 'image');
+
+    showToast(`Image "${key}" updated & saved to Supabase!`);
+    closeImageModal();
+  });
+
+  // Click handler for editable elements
+  function onElementClick(e: Event) {
+    if (!isEditMode || !isAdmin) return;
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    const el = e.currentTarget as HTMLElement;
+    activateElement(el);
+  }
+
+  // Input handler
+  function onElementInput(e: Event) {
+    if (!isEditMode || !isAdmin) return;
+    const el = e.currentTarget as HTMLElement;
+    const key = el.getAttribute('data-content-key') || '';
+    const page = el.getAttribute('data-content-page') || getPageKey();
+    const currentVal = el.innerText.trim();
+
+    if (!stagedChanges.has(key)) {
+      stagedChanges.set(key, {
+        page,
+        block_key: key,
+        value: currentVal,
+        originalValue: el.getAttribute('data-bos-original') || currentVal,
+        element: el
+      });
+    } else {
+      const item = stagedChanges.get(key);
+      if (item) item.value = currentVal;
+    }
+
+    el.setAttribute('data-bos-dirty', 'true');
+    updateStatusIndicator();
+    positionToolbar(el);
+  }
+
+  // Keydown handler
+  function onElementKeydown(e: KeyboardEvent) {
+    if (!isEditMode || !isAdmin) return;
+
+    // Cmd+Enter or Ctrl+Enter saves immediately
+    if ((e.metaKey || e.ctrlKey) && e.key === 'Enter') {
+      e.preventDefault();
+      saveActiveElement();
+    }
+
+    // Escape cancels active edit
+    if (e.key === 'Escape') {
+      e.preventDefault();
+      cancelActiveElement();
+    }
+  }
+
+  // Blur handler
+  function onElementBlur() {
+    setTimeout(() => {
+      if (document.activeElement && activeToolbar?.contains(document.activeElement)) return;
+    }, 150);
+  }
+
+  // Activate Inline Edit Mode on a specific element
+  function activateElement(el: HTMLElement) {
+    activeElement = el;
+    if (!el.hasAttribute('data-bos-original')) {
+      el.setAttribute('data-bos-original', el.innerText.trim());
+    }
+
+    el.setAttribute('contenteditable', 'true');
+    el.focus();
+
+    // Show floating mini toolbar
+    const key = el.getAttribute('data-content-key') || 'text_block';
+    if (activeKeyBadge) activeKeyBadge.textContent = key;
+    positionToolbar(el);
+    activeToolbar?.classList.remove('hidden');
+  }
+
+  // Position the floating mini toolbar
+  function positionToolbar(el: HTMLElement) {
+    if (!el || !activeToolbar) return;
+    const rect = el.getBoundingClientRect();
+    const top = Math.max(10, rect.top + window.scrollY - 10);
+    const left = rect.left + window.scrollX + (rect.width / 2);
+
+    activeToolbar.style.top = `${top}px`;
+    activeToolbar.style.left = `${left}px`;
+  }
+
+  // Save Active Element
+  async function saveActiveElement() {
+    if (!activeElement) return;
+    const el = activeElement;
+    const key = el.getAttribute('data-content-key') || '';
+    const page = el.getAttribute('data-content-page') || getPageKey();
+    const value = el.innerText.trim();
+
+    await persistBlock(page, key, value);
+
+    el.setAttribute('data-bos-original', value);
+    el.removeAttribute('data-bos-dirty');
+    el.removeAttribute('contenteditable');
+
+    stagedChanges.delete(key);
+    updateStatusIndicator();
+    activeToolbar?.classList.add('hidden');
+    activeElement = null;
+
+    showToast(`Saved "${key}" to Supabase!`);
+  }
+
+  // Cancel Active Element
+  function cancelActiveElement() {
+    if (!activeElement) return;
+    const el = activeElement;
+    const key = el.getAttribute('data-content-key') || '';
+    const original = el.getAttribute('data-bos-original');
+
+    if (original !== null) {
+      el.innerText = original;
+    }
+    el.removeAttribute('data-bos-dirty');
+    el.removeAttribute('contenteditable');
+
+    stagedChanges.delete(key);
+    updateStatusIndicator();
+    activeToolbar?.classList.add('hidden');
+    activeElement = null;
+  }
+
+  // Persist content block to Supabase and LocalStorage
+  async function persistBlock(page: string, block_key: string, value: string, kind: string = 'text') {
+    try {
+      // 1. Update Mock Storage (Local cache)
+      const raw = localStorage.getItem('bos_mock_content_blocks');
+      let blocks = [];
+      if (raw) {
+        try { blocks = JSON.parse(raw); } catch(e) {}
+      }
+      const existingIdx = blocks.findIndex((b: any) => b.page === page && b.block_key === block_key);
+      if (existingIdx >= 0) {
+        blocks[existingIdx].value = value;
+        blocks[existingIdx].kind = kind;
+        blocks[existingIdx].updated_at = new Date().toISOString();
+      } else {
+        blocks.push({
+          id: 'mock-' + Date.now(),
+          page,
+          block_key,
+          value,
+          kind,
+          created_at: new Date().toISOString(),
+          updated_at: new Date().toISOString()
+        });
+      }
+      localStorage.setItem('bos_mock_content_blocks', JSON.stringify(blocks));
+
+      // 2. Call Supabase Upsert
+      await supabase.from('content_blocks').upsert({
+        page,
+        block_key,
+        value,
+        kind
+      }, { onConflict: 'page,block_key' });
+
+      // Notify other components
+      window.dispatchEvent(new CustomEvent('bos:content_updated', { detail: { page, block_key, value, kind } }));
+    } catch (err) {
+      console.error('[InPlaceEditor] Persist failed:', err);
+    }
+  }
+
+  // Save All Staged Changes
+  async function saveAllChanges() {
+    if (stagedChanges.size === 0) return;
+
+    if (statusText) statusText.textContent = `Saving ${stagedChanges.size} changes...`;
+    if (statusIcon) {
+      statusIcon.textContent = 'sync';
+      statusIcon.classList.add('animate-spin');
+    }
+
+    for (const [key, item] of stagedChanges) {
+      await persistBlock(item.page, item.block_key, item.value);
+      if (item.element) {
+        item.element.setAttribute('data-bos-original', item.value);
+        item.element.removeAttribute('data-bos-dirty');
+        item.element.removeAttribute('contenteditable');
+      }
+    }
+
+    stagedChanges.clear();
+    activeToolbar?.classList.add('hidden');
+    activeElement = null;
+
+    if (statusIcon) statusIcon.classList.remove('animate-spin');
+    updateStatusIndicator();
+    showToast('All changes successfully saved to Supabase!');
+  }
+
+  // Discard All Staged Changes
+  function discardAllChanges() {
+    for (const [key, item] of stagedChanges) {
+      if (item.element && item.originalValue !== undefined) {
+        item.element.innerText = item.originalValue;
+        item.element.removeAttribute('data-bos-dirty');
+        item.element.removeAttribute('contenteditable');
+      }
+    }
+    stagedChanges.clear();
+    activeToolbar?.classList.add('hidden');
+    activeElement = null;
+    updateStatusIndicator();
+    showToast('Unsaved edits discarded.');
+  }
+
+  // Update Status Indicator
+  function updateStatusIndicator() {
+    const count = stagedChanges.size;
+    if (count === 0) {
+      if (statusText) statusText.textContent = 'All changes saved';
+      if (statusIcon) {
+        statusIcon.textContent = 'check_circle';
+        statusIcon.className = 'material-symbols-outlined text-[15px] text-emerald-400';
+      }
+      saveAllBtn?.classList.add('hidden');
+      discardBtn?.classList.add('hidden');
+      collapsedPendingDot?.classList.add('hidden');
+    } else {
+      if (statusText) statusText.textContent = `${count} unsaved change${count > 1 ? 's' : ''}`;
+      if (statusIcon) {
+        statusIcon.textContent = 'edit';
+        statusIcon.className = 'material-symbols-outlined text-[15px] text-amber-400 animate-pulse';
+      }
+      saveAllBtn?.classList.remove('hidden');
+      discardBtn?.classList.remove('hidden');
+      collapsedPendingDot?.classList.remove('hidden');
+    }
+  }
+
+  // Toggle Edit Mode ON/OFF
+  function setEditMode(active: boolean) {
+    isEditMode = active;
+    if (toggleSwitch) toggleSwitch.checked = active;
+
+    if (active) {
+      document.body.classList.add('bos-edit-mode-active');
+      setupEditableElements();
+      setupEditableImages();
+      showToast('Edit Mode ON: Click any text or image directly on page to edit.');
+    } else {
+      document.body.classList.remove('bos-edit-mode-active');
+      if (activeElement) {
+        cancelActiveElement();
+      }
+      activeToolbar?.classList.add('hidden');
+    }
+  }
+
+  // UI Event Listeners
+  toggleSwitch?.addEventListener('change', (e) => {
+    const target = e.target as HTMLInputElement;
+    setEditMode(target.checked);
+  });
+  saveAllBtn?.addEventListener('click', saveAllChanges);
+  discardBtn?.addEventListener('click', discardAllChanges);
+  activeSaveBtn?.addEventListener('click', saveActiveElement);
+  activeCancelBtn?.addEventListener('click', cancelActiveElement);
+
+  minimizeBtn?.addEventListener('click', () => {
+    dock?.classList.add('hidden');
+    collapsedBtn?.classList.remove('hidden');
+  });
+
+  collapsedBtn?.addEventListener('click', () => {
+    collapsedBtn?.classList.add('hidden');
+    dock?.classList.remove('hidden');
+  });
+
+  highlightToggle?.addEventListener('click', () => {
+    document.body.classList.toggle('bos-highlight-on');
+    const isOn = document.body.classList.contains('bos-highlight-on');
+    if (highlightToggle) highlightToggle.textContent = isOn ? 'Unhighlight' : 'Highlight';
+  });
+
+  // Quick Login as Admin
+  quickLoginBtn?.addEventListener('click', async () => {
+    const { data } = await supabase.auth.signInWithPassword({
+      email: 'admin@bos.org',
+      password: 'admin123'
+    });
+    if (data?.user) {
+      showToast('Welcome Admin! Initializing In-Place Editor...');
+      checkAdminAuth();
+      setTimeout(() => setEditMode(true), 400);
+    }
+  });
+
+  // Sign out
+  signOutBtn?.addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    localStorage.removeItem('bos_mock_auth_user');
+    isAdmin = false;
+    setEditMode(false);
+    dock?.classList.add('hidden');
+    collapsedBtn?.classList.add('hidden');
+    guestHint?.classList.remove('hidden');
+    showToast('Signed out of admin session.');
+  });
+
+  // Window scroll/resize repositions active toolbar
+  window.addEventListener('scroll', () => {
+    if (activeElement) positionToolbar(activeElement);
+  }, { passive: true });
+
+  window.addEventListener('resize', () => {
+    if (activeElement) positionToolbar(activeElement);
+  });
+
+  // Initialize on load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', checkAdminAuth);
+  } else {
+    checkAdminAuth();
+  }
+</script>

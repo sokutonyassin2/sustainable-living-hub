@@ -5,16 +5,20 @@ import Layout from '../../layouts/Layout.astro';
 import { supabase } from '../../lib/supabase.js';
 
 // Fetch categories and topics server-side
-const { data: topics, error } = await supabase
+const { data: topics } = await supabase
   .from('forum_topics')
-  .select('*, auth_users:user_id(email)')
+  .select('*')
   .order('created_at', { ascending: false });
 
 const { data: replies } = await supabase
   .from('forum_replies')
   .select('topic_id');
 
-// Map replies to topics
+const { data: reactions } = await supabase
+  .from('forum_reactions')
+  .select('*');
+
+// Map replies count
 const topicCounts = {};
 if (replies) {
   replies.forEach(r => {
@@ -22,176 +26,483 @@ if (replies) {
   });
 }
 
-const safeTopics = topics || [];
+// Map reactions count
+const topicReactionsMap = {};
+if (reactions) {
+  reactions.forEach(react => {
+    if (!react.reply_id && react.topic_id) {
+      if (!topicReactionsMap[react.topic_id]) {
+        topicReactionsMap[react.topic_id] = { like: 0, helpful: 0, insightful: 0, total: 0 };
+      }
+      const type = react.reaction_type || 'like';
+      topicReactionsMap[react.topic_id][type] = (topicReactionsMap[react.topic_id][type] || 0) + 1;
+      topicReactionsMap[react.topic_id].total += 1;
+    }
+  });
+}
+
+// Sort: pinned first, then newest
+const safeTopics = (topics || []).sort((a, b) => {
+  if (a.is_pinned && !b.is_pinned) return -1;
+  if (!a.is_pinned && b.is_pinned) return 1;
+  return new Date(b.created_at).getTime() - new Date(a.created_at).getTime();
+});
 ---
 
 <Layout title="Community Forum - Bill of Senga">
-  <div class="bg-gray-50 min-h-screen">
+  <div class="bg-gray-50 min-h-screen pb-16">
     <!-- Forum Header -->
     <header class="bg-secondary text-white pt-24 pb-12 px-6 relative overflow-hidden">
       <div class="absolute inset-0 opacity-10">
         <img src="/hero_slide2.png" alt="Background pattern" class="w-full h-full object-cover"/>
       </div>
-      <div class="relative z-10 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+      <div class="relative z-10 max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
         <div>
-          <h1 class="font-display text-4xl font-bold mb-2 text-emerald-400">Community Forum</h1>
-          <p class="text-stone-300 max-w-xl text-sm">Join the discussion on sustainable living, agriculture, and community building.</p>
+          <div class="flex items-center gap-2 mb-2">
+            <span class="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-wider text-emerald-300 bg-emerald-950/60 px-2.5 py-0.5 rounded-full border border-emerald-500/30">
+              <span class="material-symbols-outlined text-[14px]">groups</span> Senga Living Laboratory
+            </span>
+          </div>
+          <h1 class="font-display text-3xl sm:text-4xl font-bold mb-2 text-white">Community Forum</h1>
+          <p class="text-stone-300 max-w-xl text-sm leading-relaxed">Join the discussion on regenerative agriculture, indigenous trees, rainwater harvesting, and smart village living.</p>
         </div>
-        <div id="authStatus" class="bg-white/10 p-4 rounded-xl border border-white/20 hidden">
-          <p class="text-xs text-stone-300 mb-1">Logged in as:</p>
-          <p id="userEmail" class="font-semibold text-emerald-400 text-sm mb-3"></p>
-          <div class="flex gap-2">
-            <button id="newTopicBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-xs font-semibold transition-colors">Start Discussion</button>
-            <button id="logoutBtn" class="bg-white/10 hover:bg-white/20 text-white px-4 py-2 rounded-lg text-xs transition-colors">Sign Out</button>
+        
+        <!-- Auth widget (Loaded dynamically) -->
+        <div id="authStatus" class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20 hidden">
+          <div class="flex items-center justify-between gap-3 mb-1">
+            <span class="text-[11px] text-stone-300 uppercase tracking-wider font-semibold">Signed in</span>
+            <span id="userRoleBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-400/20 text-emerald-300 border border-emerald-400/30">Member</span>
+          </div>
+          <p id="userEmail" class="font-bold text-white text-sm mb-3 truncate max-w-[200px]"></p>
+          <div class="flex items-center gap-2">
+            <button id="newTopicBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-colors flex items-center gap-1.5 shadow-sm">
+              <span class="material-symbols-outlined text-[16px]">add_circle</span> New Topic
+            </button>
+            <button id="logoutBtn" class="bg-white/10 hover:bg-white/20 text-stone-300 hover:text-white px-3 py-1.5 rounded-lg text-xs transition-colors">
+              Sign Out
+            </button>
           </div>
         </div>
-        <div id="loginPrompt" class="bg-white/10 p-4 rounded-xl border border-white/20">
-          <p class="text-sm font-medium mb-3">Join the conversation</p>
-          <a href="/forum/login" class="bg-primary hover:bg-[#002a54] text-white px-6 py-2 rounded-lg text-sm font-semibold transition-colors inline-block">Sign In / Register</a>
+
+        <!-- Guest Prompt -->
+        <div id="loginPrompt" class="bg-white/10 backdrop-blur-md p-4 rounded-2xl border border-white/20">
+          <p class="text-xs text-stone-300 mb-1">Join the conversation</p>
+          <p class="text-sm font-semibold text-white mb-3">Sign in to react & reply</p>
+          <a href="/forum/login?redirect=/forum" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2 rounded-xl text-xs font-semibold transition-all inline-flex items-center gap-1.5 shadow-sm">
+            <span class="material-symbols-outlined text-[16px]">login</span> Sign In / Register
+          </a>
         </div>
       </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="max-w-5xl mx-auto px-6 py-12">
-      <!-- New Topic Modal (Hidden) -->
-      <div id="newTopicModal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl">
-          <h2 class="text-2xl font-bold font-display text-secondary mb-4">Start a Discussion</h2>
-          <form id="newTopicForm" class="space-y-4">
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Category</label>
-              <select id="topicCategory" class="w-full border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm">
-                <option value="General Discussion">General Discussion</option>
-                <option value="Agriculture & Soil">Agriculture & Soil</option>
-                <option value="Climate Solutions">Climate Solutions</option>
-                <option value="Urban Farming">Urban Farming</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Title</label>
-              <input type="text" id="topicTitle" required class="w-full border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="What's on your mind?">
-            </div>
-            <div>
-              <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
-              <textarea id="topicDesc" required rows="4" class="w-full border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="Explain your topic..."></textarea>
-            </div>
-            <div class="flex justify-end gap-3 mt-6">
-              <button type="button" id="cancelBtn" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
-              <button type="submit" id="submitTopicBtn" class="px-6 py-2 text-sm bg-emerald-600 text-white font-semibold rounded-lg hover:bg-emerald-700 transition-colors">Post Topic</button>
-            </div>
-          </form>
+    <!-- Moderator Mode Banner (Visible to Admin and Moderator) -->
+    <div id="modBanner" class="hidden bg-emerald-950 text-emerald-200 border-b border-emerald-800 px-6 py-2.5">
+      <div class="max-w-5xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="material-symbols-outlined text-emerald-400 text-[18px]">gavel</span>
+          <span><strong>Moderator Mode Active:</strong> You have permission to Pin, Lock, and Delete community discussions.</span>
         </div>
+        <a href="/admin/dashboard" class="underline hover:text-white font-medium flex items-center gap-1">
+          Open Admin Dashboard <span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+      
+      <!-- Filter & Action Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+        <div>
+          <h2 class="text-xl font-bold text-secondary font-display">All Discussions ({safeTopics.length})</h2>
+          <p class="text-xs text-gray-500">Read topics openly. Registered members can participate, reply, and react.</p>
+        </div>
+        
+        <button id="openNewTopicGuestBtn" class="bg-secondary hover:bg-black text-white px-4 py-2 rounded-xl text-xs font-semibold transition-colors flex items-center gap-2 shadow-xs">
+          <span class="material-symbols-outlined text-[16px]">chat_bubble_outline</span> Start a Discussion
+        </button>
       </div>
 
       <!-- Topics List -->
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-200 overflow-hidden">
+      <div class="bg-white rounded-2xl shadow-xs border border-gray-200 divide-y divide-gray-100 overflow-hidden">
         {safeTopics.length === 0 ? (
           <div class="p-12 text-center text-gray-500">
-            <span class="material-symbols-outlined text-4xl mb-2 text-gray-300">forum</span>
-            <p>No discussions yet. Be the first to start one!</p>
+            <span class="material-symbols-outlined text-5xl mb-2 text-gray-300">forum</span>
+            <p class="font-medium text-gray-700">No discussions yet.</p>
+            <p class="text-xs text-gray-400 mt-1">Be the first to start a conversation in our community!</p>
           </div>
         ) : (
-          <div class="divide-y divide-gray-100">
-            {safeTopics.map(topic => {
-              const replies = topicCounts[topic.id] || 0;
-              const date = new Date(topic.created_at).toLocaleDateString();
-              
-              let catColor = 'bg-gray-100 text-gray-600';
-              if (topic.category === 'Agriculture & Soil') catColor = 'bg-green-100 text-green-700';
-              if (topic.category === 'Climate Solutions') catColor = 'bg-blue-100 text-blue-700';
-              if (topic.category === 'Urban Farming') catColor = 'bg-amber-100 text-amber-700';
-              if (topic.category === 'General Discussion') catColor = 'bg-purple-100 text-purple-700';
+          safeTopics.map(topic => {
+            const repliesCount = topicCounts[topic.id] || 0;
+            const topicReacts = topicReactionsMap[topic.id] || { total: 0, like: 0, helpful: 0, insightful: 0 };
+            const date = new Date(topic.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            const isPinned = !!topic.is_pinned;
+            const isLocked = !!topic.is_locked;
+            const totalLikes = (topic.likes_count || 0) + topicReacts.total;
+            const author = topic.author_name || topic.display_name || 'Community Member';
+            const authorRole = topic.author_role || (author.includes('Admin') ? 'Admin' : 'Normal User');
 
-              // Extract first part of email for username
-              // Since auth_users might not be directly available in client view depending on RLS, we use a fallback
-              const author = "Community Member";
+            return (
+              <div class={`p-5 sm:p-6 transition-colors hover:bg-gray-50/80 ${isPinned ? 'bg-emerald-50/20' : ''}`} data-topic-id={topic.id}>
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                  
+                  <!-- Topic Content Info -->
+                  <div class="flex-grow space-y-1.5 w-full">
+                    <div class="flex flex-wrap items-center gap-2">
+                      {isPinned && (
+                        <span class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                          <span class="material-symbols-outlined text-[13px]">push_pin</span> Pinned Announcement
+                        </span>
+                      )}
+                      {isLocked && (
+                        <span class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
+                          <span class="material-symbols-outlined text-[13px]">lock</span> Locked
+                        </span>
+                      )}
+                      <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700">
+                        {topic.category || 'General'}
+                      </span>
+                      <span class="text-xs text-gray-400">by <strong class="text-gray-700 font-medium">{author}</strong> <span class="text-[10px] text-gray-400 uppercase">({authorRole})</span> &bull; {date}</span>
+                    </div>
 
-              return (
-                <a href={`/forum/${topic.id}`} class="block hover:bg-gray-50 p-6 transition-colors group">
-                  <div class="flex items-start gap-4">
-                    <div class="hidden sm:flex w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 items-center justify-center font-bold text-lg flex-shrink-0">
-                      {topic.title.charAt(0).toUpperCase()}
-                    </div>
-                    <div class="flex-grow">
-                      <div class="flex flex-wrap items-center gap-2 mb-2">
-                        <span class={`text-[10px] uppercase tracking-wider font-bold px-2 py-0.5 rounded-full ${catColor}`}>
-                          {topic.category}
-                        </span>
-                        <span class="text-xs text-gray-400 flex items-center gap-1">
-                          <span class="material-symbols-outlined text-[14px]">calendar_today</span> {date}
-                        </span>
-                      </div>
-                      <h3 class="text-lg font-bold text-secondary group-hover:text-primary transition-colors mb-1">{topic.title}</h3>
-                      <p class="text-gray-500 text-sm line-clamp-1">{topic.description}</p>
-                    </div>
-                    <div class="flex flex-col items-center justify-center min-w-[60px] text-gray-400 group-hover:text-emerald-500 transition-colors">
-                      <span class="material-symbols-outlined">chat_bubble</span>
-                      <span class="text-xs font-bold mt-1">{replies} replies</span>
+                    <a href={`/forum/${topic.id}`} class="block group">
+                      <h3 class="text-base sm:text-lg font-bold text-secondary group-hover:text-primary transition-colors line-clamp-1">
+                        {topic.title}
+                      </h3>
+                      <p class="text-gray-500 text-xs sm:text-sm line-clamp-2 mt-0.5 leading-relaxed">
+                        {topic.description || topic.content}
+                      </p>
+                    </a>
+
+                    <!-- Reactions & Engagement Toolbar -->
+                    <div class="pt-2 flex flex-wrap items-center gap-2">
+                      <!-- Reaction Button: Like -->
+                      <button 
+                        type="button" 
+                        class="reaction-btn inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-rose-50 hover:text-rose-600 transition-colors"
+                        data-topic-id={topic.id}
+                        data-reaction="like"
+                        title="React with Love"
+                      >
+                        <span class="material-symbols-outlined text-[15px] text-rose-500">favorite</span>
+                        <span class="reaction-count">{totalLikes}</span>
+                      </button>
+
+                      <!-- Reaction Button: Helpful -->
+                      <button 
+                        type="button" 
+                        class="reaction-btn inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+                        data-topic-id={topic.id}
+                        data-reaction="helpful"
+                        title="React as Helpful"
+                      >
+                        <span class="material-symbols-outlined text-[15px] text-emerald-600">eco</span>
+                        <span class="reaction-count">{(topic.helpful_count || 0) + topicReacts.helpful}</span>
+                      </button>
+
+                      <!-- Reaction Button: Insightful -->
+                      <button 
+                        type="button" 
+                        class="reaction-btn inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-semibold text-gray-600 bg-gray-100 hover:bg-amber-50 hover:text-amber-700 transition-colors"
+                        data-topic-id={topic.id}
+                        data-reaction="insightful"
+                        title="React as Insightful"
+                      >
+                        <span class="material-symbols-outlined text-[15px] text-amber-500">lightbulb</span>
+                        <span class="reaction-count">{(topic.insightful_count || 0) + topicReacts.insightful}</span>
+                      </button>
+
+                      <!-- Reply count indicator -->
+                      <a href={`/forum/${topic.id}`} class="inline-flex items-center gap-1 text-xs text-gray-400 hover:text-primary ml-2">
+                        <span class="material-symbols-outlined text-[15px]">chat_bubble</span>
+                        <span>{repliesCount} replies</span>
+                      </a>
                     </div>
                   </div>
-                </a>
-              )
-            })}
-          </div>
+
+                  <!-- Moderator Controls (Visible only if moderator/admin) -->
+                  <div class="mod-controls hidden flex sm:flex-col items-center gap-1.5 flex-shrink-0 self-end sm:self-center border-t sm:border-t-0 sm:border-l border-gray-100 pt-2 sm:pt-0 sm:pl-3">
+                    <button 
+                      type="button"
+                      class="topic-pin-toggle p-1.5 rounded-lg text-xs font-semibold text-gray-500 hover:text-emerald-700 hover:bg-emerald-50 transition-colors"
+                      data-topic-id={topic.id}
+                      data-pinned={isPinned ? "true" : "false"}
+                      title={isPinned ? "Unpin Topic" : "Pin Topic to Top"}
+                    >
+                      <span class="material-symbols-outlined text-[18px]">{isPinned ? "push_pin" : "push_pin"}</span>
+                    </button>
+
+                    <button 
+                      type="button"
+                      class="topic-lock-toggle p-1.5 rounded-lg text-xs font-semibold text-gray-500 hover:text-amber-700 hover:bg-amber-50 transition-colors"
+                      data-topic-id={topic.id}
+                      data-locked={isLocked ? "true" : "false"}
+                      title={isLocked ? "Unlock Discussion" : "Lock Discussion"}
+                    >
+                      <span class="material-symbols-outlined text-[18px]">{isLocked ? "lock_open" : "lock"}</span>
+                    </button>
+
+                    <button 
+                      type="button"
+                      class="topic-delete-btn p-1.5 rounded-lg text-xs font-semibold text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
+                      data-topic-id={topic.id}
+                      title="Delete Topic"
+                    >
+                      <span class="material-symbols-outlined text-[18px]">delete</span>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+            );
+          })
         )}
       </div>
     </main>
+
+    <!-- AUTH GATE MODAL: Triggered when a guest clicks react, reply, or new topic -->
+    <div id="authGateModal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-md shadow-2xl text-center relative animate-in fade-in zoom-in duration-200">
+        <button id="closeAuthGateBtn" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 p-1">
+          <span class="material-symbols-outlined text-[20px]">close</span>
+        </button>
+
+        <div class="w-14 h-14 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center mx-auto mb-4 border border-rose-100">
+          <span class="material-symbols-outlined text-3xl">favorite</span>
+        </div>
+
+        <h3 class="font-display text-2xl font-bold text-gray-900 mb-2">Sign In to React</h3>
+        <p class="text-gray-500 text-sm mb-6 leading-relaxed">
+          Only registered community members can like, react, or participate in discussions. Create an account or sign in to join the conversation.
+        </p>
+
+        <div class="space-y-2.5">
+          <a href="/forum/login?redirect=/forum" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-3 rounded-xl text-sm transition-all flex items-center justify-center gap-2 shadow-sm">
+            <span class="material-symbols-outlined text-[18px]">login</span> Sign In / Register
+          </a>
+          <button id="authGateDismissBtn" class="w-full text-gray-500 hover:text-gray-700 font-medium py-2 text-xs transition-colors">
+            Continue browsing as Guest
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- New Topic Modal (For authenticated users) -->
+    <div id="newTopicModal" class="hidden fixed inset-0 bg-black/60 z-50 flex items-center justify-center p-4">
+      <div class="bg-white rounded-2xl p-6 w-full max-w-lg shadow-2xl">
+        <h2 class="text-2xl font-bold font-display text-secondary mb-4">Start a Discussion</h2>
+        <form id="newTopicForm" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Category</label>
+            <select id="topicCategory" class="w-full border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 text-sm">
+              <option value="Agriculture & Soil">Agriculture & Soil</option>
+              <option value="Climate Solutions">Climate Solutions</option>
+              <option value="Urban Farming">Urban Farming</option>
+              <option value="General Discussion">General Discussion</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Title</label>
+            <input type="text" id="topicTitle" required class="w-full border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="What would you like to discuss?">
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-1">Content / Details</label>
+            <textarea id="topicDesc" required rows="4" class="w-full border-gray-300 rounded-xl focus:ring-emerald-500 focus:border-emerald-500 text-sm" placeholder="Provide background or ask specific questions..."></textarea>
+          </div>
+          <div class="flex justify-end gap-3 mt-6">
+            <button type="button" id="cancelBtn" class="px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">Cancel</button>
+            <button type="submit" id="submitTopicBtn" class="px-6 py-2 text-sm bg-emerald-600 text-white font-semibold rounded-xl hover:bg-emerald-700 transition-colors">Post Discussion</button>
+          </div>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script>
     import { supabase } from '../../lib/supabase.js';
 
     document.addEventListener('DOMContentLoaded', async () => {
-      // Check auth status
+      let currentUser = null;
+      let currentUserRole = 'Normal User';
+      let isModOrAdmin = false;
+
+      // 1. Check Auth Status
       const { data: { session } } = await supabase.auth.getSession();
       
-      if (session) {
-        document.getElementById('loginPrompt').classList.add('hidden');
+      if (session && session.user) {
+        currentUser = session.user;
+        const rawRole = currentUser.user_metadata?.role || currentUser.role || 'Normal User';
+        if (rawRole === 'admin' || rawRole === 'Admin') currentUserRole = 'Admin';
+        else if (rawRole === 'moderator' || rawRole === 'Moderator') currentUserRole = 'Moderator';
+        else if (rawRole.includes('Editor')) currentUserRole = 'Editor(Blogs)';
+        else currentUserRole = 'Normal User';
+
+        isModOrAdmin = currentUserRole === 'Admin' || currentUserRole === 'Moderator';
+
+        // Update UI for logged-in user
+        document.getElementById('loginPrompt')?.classList.add('hidden');
         const authStatus = document.getElementById('authStatus');
-        authStatus.classList.remove('hidden');
-        document.getElementById('userEmail').textContent = session.user.email;
+        authStatus?.classList.remove('hidden');
+        
+        const emailEl = document.getElementById('userEmail');
+        if (emailEl) emailEl.textContent = currentUser.email;
+
+        const roleBadge = document.getElementById('userRoleBadge');
+        if (roleBadge) {
+          roleBadge.textContent = currentUserRole;
+          if (currentUserRole === 'Admin') roleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/40';
+          else if (currentUserRole === 'Moderator') roleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/40';
+          else if (currentUserRole === 'Editor(Blogs)') roleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/40';
+        }
+
+        // Show moderator banner and buttons
+        if (isModOrAdmin) {
+          document.getElementById('modBanner')?.classList.remove('hidden');
+          document.querySelectorAll('.mod-controls').forEach(el => el.classList.remove('hidden'));
+        }
       }
 
-      // Modal logic
-      const modal = document.getElementById('newTopicModal');
-      document.getElementById('newTopicBtn')?.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-      });
+      // 2. Auth Gate Modal handling
+      const authGateModal = document.getElementById('authGateModal');
+      const showAuthGate = () => {
+        authGateModal?.classList.remove('hidden');
+      };
+      const hideAuthGate = () => {
+        authGateModal?.classList.add('hidden');
+      };
+
+      document.getElementById('closeAuthGateBtn')?.addEventListener('click', hideAuthGate);
+      document.getElementById('authGateDismissBtn')?.addEventListener('click', hideAuthGate);
+
+      // 3. New Topic Trigger
+      const newTopicModal = document.getElementById('newTopicModal');
+      const handleOpenNewTopic = () => {
+        if (!currentUser) {
+          showAuthGate();
+        } else {
+          newTopicModal?.classList.remove('hidden');
+        }
+      };
+
+      document.getElementById('newTopicBtn')?.addEventListener('click', handleOpenNewTopic);
+      document.getElementById('openNewTopicGuestBtn')?.addEventListener('click', handleOpenNewTopic);
       document.getElementById('cancelBtn')?.addEventListener('click', () => {
-        modal.classList.add('hidden');
+        newTopicModal?.classList.add('hidden');
       });
 
       // Submit topic
       document.getElementById('newTopicForm')?.addEventListener('submit', async (e) => {
         e.preventDefault();
-        const btn = document.getElementById('submitTopicBtn');
+        const btn = document.getElementById('submitTopicBtn') as HTMLButtonElement;
         btn.disabled = true;
         btn.textContent = 'Posting...';
 
-        const title = document.getElementById('topicTitle').value;
-        const desc = document.getElementById('topicDesc').value;
-        const cat = document.getElementById('topicCategory').value;
-
-        const { data: { user } } = await supabase.auth.getUser();
+        const title = (document.getElementById('topicTitle') as HTMLInputElement).value;
+        const desc = (document.getElementById('topicDesc') as HTMLTextAreaElement).value;
+        const cat = (document.getElementById('topicCategory') as HTMLSelectElement).value;
 
         const { error } = await supabase.from('forum_topics').insert([{
-          title: title,
+          title,
           description: desc,
+          content: desc,
           category: cat,
-          user_id: user.id
+          author_name: currentUser?.user_metadata?.full_name || currentUser?.email?.split('@')[0] || 'Community Member',
+          author_role: currentUserRole,
+          user_id: currentUser.id,
+          is_pinned: false,
+          is_locked: false,
+          likes_count: 0
         }]);
 
         if (error) {
           alert('Error posting topic: ' + error.message);
           btn.disabled = false;
-          btn.textContent = 'Post Topic';
+          btn.textContent = 'Post Discussion';
         } else {
           window.location.reload();
         }
       });
 
-      // Logout
+      // 4. Reaction Button Click Handling (Auth-Gated)
+      document.querySelectorAll('.reaction-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // Rule: If user is not logged in, prompt them to sign in!
+          if (!currentUser) {
+            showAuthGate();
+            return;
+          }
+
+          const button = (e.target as HTMLElement).closest('.reaction-btn') as HTMLButtonElement;
+          const topicId = button.dataset.topicId;
+          const reactionType = button.dataset.reaction || 'like';
+          const countEl = button.querySelector('.reaction-count');
+
+          // Record reaction in supabase
+          const { error } = await supabase.from('forum_reactions').insert({
+            topic_id: topicId,
+            reply_id: null,
+            user_id: currentUser.id,
+            reaction_type: reactionType
+          });
+
+          if (!error) {
+            // Optimistic UI update
+            if (countEl) {
+              const cur = parseInt(countEl.textContent || '0', 10);
+              countEl.textContent = String(cur + 1);
+            }
+            button.classList.remove('bg-gray-100', 'text-gray-600');
+            button.classList.add('bg-rose-100', 'text-rose-700', 'border', 'border-rose-300');
+          }
+        });
+      });
+
+      // 5. Moderator Actions: Pin, Lock, Delete
+      document.querySelectorAll('.topic-pin-toggle').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const target = (e.target as HTMLElement).closest('.topic-pin-toggle') as HTMLElement;
+          const id = target.dataset.topicId;
+          const currentPinned = target.dataset.pinned === 'true';
+
+          await supabase.from('forum_topics').update({ is_pinned: !currentPinned }).eq('id', id);
+          window.location.reload();
+        });
+      });
+
+      document.querySelectorAll('.topic-lock-toggle').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const target = (e.target as HTMLElement).closest('.topic-lock-toggle') as HTMLElement;
+          const id = target.dataset.topicId;
+          const currentLocked = target.dataset.locked === 'true';
+
+          await supabase.from('forum_topics').update({ is_locked: !currentLocked }).eq('id', id);
+          window.location.reload();
+        });
+      });
+
+      document.querySelectorAll('.topic-delete-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          const target = (e.target as HTMLElement).closest('.topic-delete-btn') as HTMLElement;
+          const id = target.dataset.topicId;
+
+          if (confirm('Permanently delete this topic?')) {
+            await supabase.from('forum_topics').delete().eq('id', id);
+            await supabase.from('forum_replies').delete().eq('topic_id', id);
+            window.location.reload();
+          }
+        });
+      });
+
+      // 6. Sign Out
       document.getElementById('logoutBtn')?.addEventListener('click', async () => {
         await supabase.auth.signOut();
         window.location.reload();

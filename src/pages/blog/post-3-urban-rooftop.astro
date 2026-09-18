@@ -111,7 +111,7 @@ import Layout from '../../layouts/Layout.astro';
 
         <!-- Related / Back -->
         <div class="mt-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <a href="/blog/post-2-tree-billionaire.html" class="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm">
+          <a href="/blog/post-2-tree-billionaire" class="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm">
             <span class="material-symbols-outlined text-[18px]">arrow_back</span> Previous Post
           </a>
           <a href="/blog/" class="flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm">
@@ -306,7 +306,7 @@ import Layout from '../../layouts/Layout.astro';
         const mergedPopular = nativePopular.map(np => {
           const vKey = `bos_views_${np.id}`;
           let viewsVal = parseInt(localStorage.getItem(vKey)) || np.initial;
-          return { ...np, views: viewsVal, link: `/blog/${np.id}.html` };
+          return { ...np, views: viewsVal, link: `/blog/${np.id}` };
         });
 
         // Add custom published ones
@@ -321,7 +321,7 @@ import Layout from '../../layouts/Layout.astro';
               img: cp.featuredImage || '/blog_soil.png',
               date: formatDate(cp.publishDate || cp.createdAt),
               views: viewsVal,
-              link: `/blog/view.html?id=${cp.id}`
+              link: `/blog/view?id=${cp.id}`
             });
           }
         });

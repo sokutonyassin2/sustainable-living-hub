@@ -81,6 +81,29 @@ export const prerender = true;
         </button>
       </form>
 
+      <!-- Quick Demo Login Switchers -->
+      <div class="mt-6 pt-4 border-t border-white/10 text-center">
+        <p class="text-[11px] uppercase tracking-wider text-stone-400 font-semibold mb-2.5">Demo Testing Accounts</p>
+        <div class="grid grid-cols-2 gap-2 text-left">
+          <button type="button" class="demo-acc-btn p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs transition-colors" data-email="admin@senga.org" data-pass="admin123">
+            <span class="font-bold text-emerald-400 block">Admin</span>
+            <span class="text-[10px] text-stone-400">admin@senga.org</span>
+          </button>
+          <button type="button" class="demo-acc-btn p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs transition-colors" data-email="editor@senga.org" data-pass="editor123">
+            <span class="font-bold text-blue-400 block">Editor(Blogs)</span>
+            <span class="text-[10px] text-stone-400">editor@senga.org</span>
+          </button>
+          <button type="button" class="demo-acc-btn p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs transition-colors" data-email="mod@senga.org" data-pass="mod123">
+            <span class="font-bold text-amber-400 block">Moderator</span>
+            <span class="text-[10px] text-stone-400">mod@senga.org</span>
+          </button>
+          <button type="button" class="demo-acc-btn p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-xs transition-colors" data-email="user@senga.org" data-pass="user123">
+            <span class="font-bold text-stone-300 block">Normal User</span>
+            <span class="text-[10px] text-stone-400">user@senga.org</span>
+          </button>
+        </div>
+      </div>
+
       <div class="text-center mt-6">
         <a href="/forum" class="text-stone-400 hover:text-white text-xs transition-colors">&larr; Back to Forum</a>
       </div>
@@ -89,6 +112,28 @@ export const prerender = true;
 
   <script>
     import { supabase } from '../../lib/supabase.js';
+
+    // Get return redirect if present
+    const urlParams = new URLSearchParams(window.location.search);
+    const redirectTarget = urlParams.get('redirect') || '/forum';
+
+    // Quick demo account fill & submit
+    document.querySelectorAll('.demo-acc-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const email = (btn as HTMLElement).dataset.email;
+        const pass = (btn as HTMLElement).dataset.pass;
+        const emailInput = document.getElementById('loginEmail') as HTMLInputElement;
+        const passInput = document.getElementById('loginPassword') as HTMLInputElement;
+        if (emailInput && passInput) {
+          emailInput.value = email;
+          passInput.value = pass;
+          const { error } = await supabase.auth.signInWithPassword({ email, password: pass });
+          if (!error) {
+            window.location.href = redirectTarget;
+          }
+        }
+      });
+    });
 
     // Tab switching
     const tabLogin = document.getElementById('tabLogin');
@@ -117,10 +162,10 @@ export const prerender = true;
     // Login
     loginForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('loginEmail').value;
-      const password = document.getElementById('loginPassword').value;
+      const email = (document.getElementById('loginEmail') as HTMLInputElement).value;
+      const password = (document.getElementById('loginPassword') as HTMLInputElement).value;
       const errorEl = document.getElementById('loginError');
-      const btn = document.getElementById('loginBtn');
+      const btn = document.getElementById('loginBtn') as HTMLButtonElement;
 
       btn.disabled = true;
       btn.innerHTML = 'Signing in...';
@@ -134,19 +179,19 @@ export const prerender = true;
         btn.disabled = false;
         btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">login</span> Sign In';
       } else {
-        window.location.href = '/forum';
+        window.location.href = redirectTarget;
       }
     });
 
     // Register
     registerForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const email = document.getElementById('regEmail').value;
-      const password = document.getElementById('regPassword').value;
-      const confirm = document.getElementById('regConfirm').value;
+      const email = (document.getElementById('regEmail') as HTMLInputElement).value;
+      const password = (document.getElementById('regPassword') as HTMLInputElement).value;
+      const confirm = (document.getElementById('regConfirm') as HTMLInputElement).value;
       const errorEl = document.getElementById('regError');
       const successEl = document.getElementById('regSuccess');
-      const btn = document.getElementById('regBtn');
+      const btn = document.getElementById('regBtn') as HTMLButtonElement;
 
       errorEl.classList.add('hidden');
       successEl.classList.add('hidden');
@@ -160,7 +205,15 @@ export const prerender = true;
       btn.disabled = true;
       btn.innerHTML = 'Creating account...';
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ 
+        email, 
+        password,
+        options: {
+          data: {
+            role: 'Normal User'
+          }
+        }
+      });
 
       if (error) {
         errorEl.textContent = error.message;
@@ -168,10 +221,9 @@ export const prerender = true;
         btn.disabled = false;
         btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">person_add</span> Create Account';
       } else {
-        successEl.textContent = 'Account created! Check your email to confirm, then sign in.';
-        successEl.classList.remove('hidden');
-        btn.disabled = false;
-        btn.innerHTML = '<span class="material-symbols-outlined text-[18px]">person_add</span> Create Account';
+        // Automatically signed in or auto-sign in
+        await supabase.auth.signInWithPassword({ email, password });
+        window.location.href = redirectTarget;
       }
     });
 
@@ -179,7 +231,7 @@ export const prerender = true;
     const checkSession = async () => {
       const { data: { session } } = await supabase.auth.getSession();
       if (session) {
-        window.location.href = '/forum';
+        window.location.href = redirectTarget;
       }
     };
     checkSession();

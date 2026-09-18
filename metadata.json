@@ -1,0 +1,6 @@
+{
+  "name": "Bill of Senga",
+  "description": "BOS (Bill of Senga) sustainable living hub, practical classrooms, community villages, and organic modernism agriculture learning model.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
