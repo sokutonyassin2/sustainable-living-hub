@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS public.blogs (
     created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL,
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now()) NOT NULL
 );
-
+   
 -- If the blogs table already existed, ensure it has the new columns
 DO $$
 BEGIN
