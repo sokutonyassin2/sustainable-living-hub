@@ -12,11 +12,53 @@ if (blocksData) {
 }
 
 // Fetch Latest 3 Blogs
-const { data: latestBlogs } = await supabase.from('blogs')
-  .select('*')
-  .eq('is_published', true)
-  .order('created_at', { ascending: false })
-  .limit(3);
+let latestBlogs = [];
+try {
+  const { data } = await supabase.from('blogs')
+    .select('*')
+    .eq('is_published', true)
+    .order('created_at', { ascending: false })
+    .limit(3);
+  if (data && Array.isArray(data) && data.length > 0) {
+    latestBlogs = data;
+  }
+} catch (e) {
+  console.warn("Supabase blogs fetch skipped/fallback:", e);
+}
+
+// Built-in Demo Blog Posts (ensures home page always showcases rich, verified articles)
+const demoBlogs = [
+  {
+    title: 'From "Hell" to a Living Laboratory: The Story of My Land in Senga',
+    slug: 'post-1-healthy-soil',
+    created_at: '2026-05-15T09:00:00.000Z',
+    image_url: '/blog_soil.png',
+    content: 'A personal journey of doubt, loss, persistence, and restoring life to an exhausted piece of land through living soil science and ecological farming.'
+  },
+  {
+    title: 'How to Become a Tree Billionaire in 5 Years',
+    slug: 'post-2-tree-billionaire',
+    created_at: '2026-06-02T10:00:00.000Z',
+    image_url: '/blog_tree.png',
+    content: 'Planting trees is not just an act of love for the environment — it is a generational investment. Learn how BOS turns ordinary farmers into Tree Billionaires.'
+  },
+  {
+    title: 'Urban Rooftop Farming: Feeding Cities from Above',
+    slug: 'post-3-urban-rooftop',
+    created_at: '2026-06-20T11:00:00.000Z',
+    image_url: '/blog_rooftop.png',
+    content: 'Cities need not be food deserts. Discover how BOS Smart Villages are transforming rooftops into productive organic gardens that feed families.'
+  }
+];
+
+// Combine custom Supabase blogs with demo blogs so the grid is always complete
+const displayBlogs = [...latestBlogs];
+for (const demo of demoBlogs) {
+  if (displayBlogs.length >= 3) break;
+  if (!displayBlogs.some(b => b.slug === demo.slug)) {
+    displayBlogs.push(demo);
+  }
+}
 
 const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 ---
@@ -38,16 +80,18 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/60"></div>
     </div>
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg leading-tight uppercase">
-        BOS – BILL OF SENGA
+      <h1 data-content-key="hero_title" data-content-page="home" class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 drop-shadow-lg leading-tight uppercase">
+        {blocks['hero_title'] || "BOS – BILL OF SENGA"}
       </h1>
-      <p class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-6 drop-shadow">GROWING CHAMPION FARMERS</p>
+      <p data-content-key="hero_tagline" data-content-page="home" class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-6 drop-shadow">
+        {blocks['hero_tagline'] || "GROWING CHAMPION FARMERS"}
+      </p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
-          Join the Community
+        <a href="/join_the_movement/" data-content-key="hero_btn_community" data-content-page="home" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
+          {blocks['hero_btn_community'] || "Join the Community"}
         </a>
-        <a href="/the_story_of_senga/" class="bg-transparent border border-white/70 text-white px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all text-center">
-          Explore Our Roots
+        <a href="/the_story_of_senga/" data-content-key="hero_btn_roots" data-content-page="home" class="bg-transparent border border-white/70 text-white px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all text-center">
+          {blocks['hero_btn_roots'] || "Explore Our Roots"}
         </a>
       </div>
     </div>
@@ -64,8 +108,8 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/40 to-black/65"></div>
     </div>
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight uppercase">
-        WHERE INDIGENOUS KNOWLEDGE MEETS AGRICULTURAL SCIENCE
+      <h1 data-content-key="slide2_title" data-content-page="home" class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight uppercase">
+        {blocks['slide2_title'] || "WHERE INDIGENOUS KNOWLEDGE MEETS AGRICULTURAL SCIENCE"}
       </h1>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
@@ -89,9 +133,11 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-black/50 to-black/70"></div>
     </div>
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto">
-      <p class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-3 drop-shadow">Our Philosophy</p>
-      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight uppercase">
-        HEALTHY SOIL. HEALTHY FOOD.<br class="hidden md:block"/> HEALTHY PEOPLE. HEALTHY PLANET.
+      <p data-content-key="slide3_subtitle" data-content-page="home" class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-3 drop-shadow">
+        {blocks['slide3_subtitle'] || "Our Philosophy"}
+      </p>
+      <h1 data-content-key="slide3_title" data-content-page="home" class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight uppercase">
+        {blocks['slide3_title'] || "HEALTHY SOIL. HEALTHY FOOD. HEALTHY PEOPLE. HEALTHY PLANET."}
       </h1>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="/join_the_movement/" class="bg-gradient-to-r from-primary to-[#0052a3] text-white px-8 py-3 rounded-full font-label-md text-label-md shadow-lg hover:shadow-primary/20 transition-all border border-primary/50 text-center flex items-center justify-center">
@@ -120,8 +166,8 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     </div>
     <div class="relative z-10 text-center px-6 max-w-4xl mx-auto mt-8">
       <p class="text-[#4d94ff] font-label-md text-xs md:text-sm uppercase tracking-[0.25em] mb-3 drop-shadow">Practical Classroom</p>
-      <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight uppercase">
-        CHAMPION FARMER IN ACTION (VIDEO)
+      <h1 data-content-key="slide4_title" data-content-page="home" class="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-lg leading-tight uppercase">
+        {blocks['slide4_title'] || "CHAMPION FARMER IN ACTION (VIDEO)"}
       </h1>
       <div class="flex flex-col sm:flex-row gap-4 justify-center">
         <a href="/practical_classroom/" class="bg-transparent border border-white/70 text-white px-8 py-3 rounded-full font-label-md text-label-md hover:bg-white/10 transition-all text-center flex items-center justify-center gap-2">
@@ -158,21 +204,30 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     let current  = 0;
     let timer;
 
+    if (!slides.length) return;
+
     function goTo(index) {
-      // Hide current slide
-      slides[current].style.opacity = '0';
-      slides[current].style.zIndex  = '0';
-      slides[current].style.pointerEvents = 'none';
-      dots[current].classList.remove('bg-white');
-      dots[current].classList.add('bg-white/40', 'w-3');
+      if (slides[current]) {
+        slides[current].style.opacity = '0';
+        slides[current].style.zIndex  = '0';
+        slides[current].style.pointerEvents = 'none';
+      }
+      if (dots[current]) {
+        dots[current].classList.remove('bg-white');
+        dots[current].classList.add('bg-white/40', 'w-3');
+      }
 
       // Show new slide
       current = (index + slides.length) % slides.length;
-      slides[current].style.opacity = '1';
-      slides[current].style.zIndex  = '10';
-      slides[current].style.pointerEvents = 'auto';
-      dots[current].classList.add('bg-white');
-      dots[current].classList.remove('bg-white/40');
+      if (slides[current]) {
+        slides[current].style.opacity = '1';
+        slides[current].style.zIndex  = '10';
+        slides[current].style.pointerEvents = 'auto';
+      }
+      if (dots[current]) {
+        dots[current].classList.add('bg-white');
+        dots[current].classList.remove('bg-white/40');
+      }
     }
 
     function startTimer() {
@@ -183,16 +238,16 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     // Dot clicks
     dots.forEach(function (dot) {
       dot.addEventListener('click', function () {
-        goTo(parseInt(this.dataset.index));
+        goTo(parseInt(this.dataset.index || '0'));
         startTimer();
       });
     });
 
     // Arrow clicks
-    document.getElementById('slider-prev').addEventListener('click', function () {
+    document.getElementById('slider-prev')?.addEventListener('click', function () {
       goTo(current - 1); startTimer();
     });
-    document.getElementById('slider-next').addEventListener('click', function () {
+    document.getElementById('slider-next')?.addEventListener('click', function () {
       goTo(current + 1); startTimer();
     });
 
@@ -204,17 +259,17 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 <section class="py-24 px-6 lg:px-12 max-w-4xl mx-auto">
 <div class="flex flex-col items-center">
 <div class="space-y-5 font-body-md text-body-md text-on-surface-variant">
-<p>
-  Bill of Senga (BOS) is an open community learning model for regenerative agriculture. It enables communities to generate, test, adapt, document and share knowledge that restores ecosystems and strengthens livelihoods.
+<p data-content-key="about_p1" data-content-page="home">
+  {blocks['about_p1'] || "Bill of Senga (BOS) is an open community learning model for regenerative agriculture. It enables communities to generate, test, adapt, document and share knowledge that restores ecosystems and strengthens livelihoods."}
 </p>
-<p>
-  We advance regenerative agriculture through an agroecological approach that brings together indigenous knowledge, scientific evidence, community learning and environmental stewardship.
+<p data-content-key="about_p2" data-content-page="home">
+  {blocks['about_p2'] || "We advance regenerative agriculture through an agroecological approach that brings together indigenous knowledge, scientific evidence, community learning and environmental stewardship."}
 </p>
-<p>
-  We believe that the most sustainable solutions emerge when communities become active creators and co-creators of knowledge rather than passive recipients of information.
+<p data-content-key="about_p3" data-content-page="home">
+  {blocks['about_p3'] || "We believe that the most sustainable solutions emerge when communities become active creators and co-creators of knowledge rather than passive recipients of information."}
 </p>
-<p>
-  Are you a smallholder farmer, an upcoming farmer, researcher, student, policymaker, or simply curious about sustainable living? We invite you to learn from the land, learn from others and contribute your own experiences.
+<p data-content-key="about_p4" data-content-page="home">
+  {blocks['about_p4'] || "Are you a smallholder farmer, an upcoming farmer, researcher, student, policymaker, or simply curious about sustainable living? We invite you to learn from the land, learn from others and contribute your own experiences."}
 </p>
 <p>
   <a href="/about/" class="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors">To get started, learn more about our founder and the journey that inspired this community learning model</a> or <a href="/blog/" class="text-primary font-semibold underline underline-offset-2 hover:text-primary/80 transition-colors">explore the story behind BOS.</a>
@@ -227,8 +282,8 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
 <section class="py-24 bg-surface-container-low px-6 lg:px-12 relative overflow-hidden">
 <div class="max-w-7xl mx-auto relative z-10">
 <div class="text-center mb-16">
-<h2 class="font-display text-h2 text-on-background mb-4">Healthy Soil. Healthy Food. Healthy People. Healthy Planet.</h2>
-<p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">This is the interconnected principle that guides our approaches. One thing to note: Humans are part of an integrated ecosystem. Everything matters.</p>
+<h2 data-content-key="philosophy_title" data-content-page="home" class="font-display text-h2 text-on-background mb-4">{blocks['philosophy_title'] || "Healthy Soil. Healthy Food. Healthy People. Healthy Planet."}</h2>
+<p data-content-key="philosophy_subtitle" data-content-page="home" class="font-body-md text-body-md text-on-surface-variant max-w-2xl mx-auto">{blocks['philosophy_subtitle'] || "This is the interconnected principle that guides our approaches. One thing to note: Humans are part of an integrated ecosystem. Everything matters."}</p>
 </div>
 
 </div>
@@ -244,12 +299,12 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     
     <!-- Section Header -->
     <div class="text-center max-w-2xl mx-auto mb-16">
-      <h2 class="font-display text-4xl md:text-5xl font-bold text-[#1B3022] leading-tight mb-4">
-        Our Programmes
+      <h2 data-content-key="programmes_title" data-content-page="home" class="font-display text-4xl md:text-5xl font-bold text-[#1B3022] leading-tight mb-4">
+        {blocks['programmes_title'] || "Our Programmes"}
       </h2>
       <div class="w-16 h-1 bg-primary/30 mx-auto rounded mb-6"></div>
-      <p class="text-stone-500 text-base leading-relaxed">
-        Discover how we generate, test, adapt, document and share knowledge.
+      <p data-content-key="programmes_subtitle" data-content-page="home" class="text-stone-500 text-base leading-relaxed">
+        {blocks['programmes_subtitle'] || "Discover how we generate, test, adapt, document and share knowledge."}
       </p>
     </div>
 
@@ -265,9 +320,9 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         </div>
         <div class="p-6 flex-grow flex flex-col justify-between">
           <div>
-            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">Champion Farmer in Action</h3>
+            <h3 data-content-key="card1_title" data-content-page="home" class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">{blocks['card1_title'] || "Champion Farmer in Action"}</h3>
             <div class="text-stone-500 text-sm leading-relaxed mb-6 space-y-2">
-              <p>Welcome to my practical classroom this farm. This is where ideas meet reality.</p>
+              <p data-content-key="card1_excerpt" data-content-page="home">{blocks['card1_excerpt'] || "Welcome to my practical classroom this farm. This is where ideas meet reality."}</p>
             </div>
           </div>
           <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
@@ -278,7 +333,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       </a>
 
       <!-- Card 2 -->
-      <a href="/blog/post-1-healthy-soil.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
+      <a href="/blog/post-1-healthy-soil" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
         <div class="relative h-48 overflow-hidden">
           <img src="/hero_slide3.png" alt="Feed the Soil" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
           <div class="absolute inset-0 bg-gradient-to-t from-[#1b1c19]/70 to-transparent"></div>
@@ -286,9 +341,9 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         </div>
         <div class="p-6 flex-grow flex flex-col justify-between">
           <div>
-            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">Feed the Soil. The Soil Feeds You.</h3>
+            <h3 data-content-key="card2_title" data-content-page="home" class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">{blocks['card2_title'] || "Feed the Soil. The Soil Feeds You."}</h3>
             <div class="text-stone-500 text-sm leading-relaxed mb-6 space-y-2">
-              <p>There is an old adage: you cannot milk a cow without feeding it.</p>
+              <p data-content-key="card2_excerpt" data-content-page="home">{blocks['card2_excerpt'] || "There is an old adage: you cannot milk a cow without feeding it."}</p>
             </div>
           </div>
           <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
@@ -307,9 +362,9 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         </div>
         <div class="p-6 flex-grow flex flex-col justify-between">
           <div>
-            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">Waste Nothing. Grow Everything.</h3>
+            <h3 data-content-key="card3_title" data-content-page="home" class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">{blocks['card3_title'] || "Waste Nothing. Grow Everything."}</h3>
             <div class="text-stone-500 text-sm leading-relaxed mb-6 space-y-2">
-              <p>What do you do with your leftover food? Your urine? Your faecal matter?</p>
+              <p data-content-key="card3_excerpt" data-content-page="home">{blocks['card3_excerpt'] || "What do you do with your leftover food? Your urine? Your faecal matter?"}</p>
             </div>
           </div>
           <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
@@ -328,9 +383,9 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         </div>
         <div class="p-6 flex-grow flex flex-col justify-between">
           <div>
-            <h3 class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">Climate-Smart Farming</h3>
+            <h3 data-content-key="card4_title" data-content-page="home" class="font-display text-xl font-bold text-secondary mb-3 leading-snug group-hover:text-primary transition-colors">{blocks['card4_title'] || "Climate-Smart Farming"}</h3>
             <div class="text-stone-500 text-sm leading-relaxed mb-6 space-y-2">
-              <p>Let’s be honest farming has become more unpredictable due to climate change. Rains are uncertain, and seasons are shifting.</p>
+              <p data-content-key="card4_excerpt" data-content-page="home">{blocks['card4_excerpt'] || "Let’s be honest farming has become more unpredictable due to climate change. Rains are uncertain, and seasons are shifting."}</p>
             </div>
           </div>
           <div class="inline-flex items-center gap-2 text-primary font-semibold hover:gap-3 transition-all text-sm group/btn mt-auto">
@@ -404,7 +459,7 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
       </a>
 
       <!-- Card 8 -->
-      <a href="/blog/post-3-urban-rooftop.html" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
+      <a href="/blog/post-3-urban-rooftop" class="group bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-2xl transition-all duration-500 border border-surface-variant/40 flex flex-col h-full block">
         <div class="relative h-48 overflow-hidden">
           <img src="/blog_rooftop.png" alt="Urban Farming and Greener Cities" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
           <div class="absolute inset-0 bg-gradient-to-t from-[#1b1c19]/70 to-transparent"></div>
@@ -444,10 +499,45 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
         <h2 class="font-display text-3xl md:text-4xl font-bold leading-tight mb-8">What the Community is Saying</h2>
         
         <!-- Avatar Selectors in a compact flex row -->
+        <div class="flex items-center justify-center lg:justify-start gap-4">
+          <button class="testimonial-btn relative p-1 rounded-full focus:outline-none transition-transform hover:scale-105 active:scale-95" data-index="0" aria-label="Sarah Namukasa testimonial">
+            <span class="avatar-ring absolute inset-0 rounded-full border-2 border-emerald-400 transition-opacity duration-300 opacity-100"></span>
+            <img src="/sarah_namukasa.png" alt="Sarah Namukasa" class="w-14 h-14 rounded-full object-cover relative z-10 transition-all duration-300" />
+          </button>
+          <button class="testimonial-btn relative p-1 rounded-full focus:outline-none transition-transform hover:scale-105 active:scale-95" data-index="1" aria-label="Dr. James Ochieng testimonial">
+            <span class="avatar-ring absolute inset-0 rounded-full border-2 border-emerald-400 transition-opacity duration-300 opacity-0"></span>
+            <img src="/james_ochieng.png" alt="Dr. James Ochieng" class="w-14 h-14 rounded-full object-cover relative z-10 grayscale transition-all duration-300" />
+          </button>
+          <button class="testimonial-btn relative p-1 rounded-full focus:outline-none transition-transform hover:scale-105 active:scale-95" data-index="2" aria-label="Amara Diallo testimonial">
+            <span class="avatar-ring absolute inset-0 rounded-full border-2 border-emerald-400 transition-opacity duration-300 opacity-0"></span>
+            <img src="/amara_diallo.png" alt="Amara Diallo" class="w-14 h-14 rounded-full object-cover relative z-10 grayscale transition-all duration-300" />
+          </button>
+        </div>
       </div>
 
-      <!-- Right Column: Empty Area -->
+      <!-- Right Column: Testimonial Card -->
       <div class="lg:col-span-7">
+        <div id="testimonial-container" class="bg-white/10 backdrop-blur-md border border-white/15 rounded-2xl p-8 md:p-10 shadow-xl transition-opacity duration-500">
+          <div class="text-emerald-400 mb-4">
+            <span class="material-symbols-outlined text-4xl">format_quote</span>
+          </div>
+          <p id="testimonial-quote" class="text-lg md:text-xl font-light italic leading-relaxed text-stone-100 mb-6 min-h-[5rem]">
+            "BOS changed the way I see my land. I've tripled my harvest using indigenous soil practices. My children now have hope."
+          </p>
+          <div class="border-t border-white/10 pt-4 flex items-center justify-between">
+            <div>
+              <h4 id="testimonial-name" class="font-display font-bold text-white text-lg">Sarah Namukasa</h4>
+              <p id="testimonial-role" class="text-emerald-400 text-sm font-medium">Community Farmer, Uganda</p>
+            </div>
+            <div class="flex gap-1 text-amber-400">
+              <span class="material-symbols-outlined text-sm">star</span>
+              <span class="material-symbols-outlined text-sm">star</span>
+              <span class="material-symbols-outlined text-sm">star</span>
+              <span class="material-symbols-outlined text-sm">star</span>
+              <span class="material-symbols-outlined text-sm">star</span>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -486,31 +576,37 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
     const rings = document.querySelectorAll('.avatar-ring');
     const images = document.querySelectorAll('.testimonial-btn img');
 
+    if (!container || !quoteEl || !nameEl || !roleEl) return;
+
     let current = 0;
     let timer;
 
     function switchTestimonial(index) {
       if (index === current) return;
 
-      container.classList.add('opacity-0');
+      if (container) container.classList.add('opacity-0');
 
       setTimeout(() => {
         current = index;
         const t = testimonials[current];
-        quoteEl.textContent = t.quote;
-        nameEl.textContent = t.name;
-        roleEl.textContent = t.role;
+        if (t) {
+          if (quoteEl) quoteEl.textContent = t.quote;
+          if (nameEl) nameEl.textContent = t.name;
+          if (roleEl) roleEl.textContent = t.role;
+        }
 
         buttons.forEach((btn, i) => {
-          rings[i].style.opacity = i === current ? '1' : '0';
-          if (i === current) {
-            images[i].classList.remove('grayscale');
-          } else {
-            images[i].classList.add('grayscale');
+          if (rings[i]) rings[i].style.opacity = i === current ? '1' : '0';
+          if (images[i]) {
+            if (i === current) {
+              images[i].classList.remove('grayscale');
+            } else {
+              images[i].classList.add('grayscale');
+            }
           }
         });
 
-        container.classList.remove('opacity-0');
+        if (container) container.classList.remove('opacity-0');
       }, 500);
     }
 
@@ -545,48 +641,57 @@ const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', '
           Stay On Top of The<br/>Latest From BOS
         </h2>
       </div>
-      <div class="flex items-end">
-        <p class="text-stone-500 text-base leading-relaxed">
-          Our blog the full spectrum of sustainable living. Join a community that is openly sharing knowledge
+      <div class="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4">
+        <p class="text-stone-500 text-base leading-relaxed max-w-lg">
+          Our blog covers the full spectrum of sustainable living. Join a community that is openly sharing knowledge and practical regenerative methods.
         </p>
+        <a href="/blog/" class="inline-flex items-center gap-2 text-primary font-bold hover:text-[#1B3022] transition-colors whitespace-nowrap text-sm group">
+          <span>View All Articles</span>
+          <span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+        </a>
       </div>
     </div>
 
     <!-- Blog Cards Grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      {latestBlogs && latestBlogs.length > 0 ? (
-        latestBlogs.map(blog => {
-          const d = new Date(blog.created_at);
-          const day = String(d.getDate()).padStart(2, '0');
-          const month = months[d.getMonth()];
-          return (
-            <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300 group flex flex-col">
-              <div class="relative overflow-hidden">
-                <img
-                  src={blog.image_url || '/blog_soil.png'}
-                  alt={blog.title}
-                  class="w-full h-56 object-cover group-hover:scale-105 transition-transform duration-500"
-                />
-                <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
-                  <span class="text-base font-extrabold leading-none">{day}</span>
-                  <span class="uppercase tracking-wider">{month}</span>
-                </div>
+      {displayBlogs.map(blog => {
+        const d = new Date(blog.created_at || Date.now());
+        const day = String(d.getDate()).padStart(2, '0');
+        const month = months[d.getMonth()] || 'Jun';
+        const cleanContent = (blog.content || '')
+          .replace(/<[^>]*>/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        const excerpt = blog.excerpt || (cleanContent.length > 130 ? cleanContent.substring(0, 130) + '...' : cleanContent);
+
+        return (
+          <article class="bg-white rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 group flex flex-col border border-stone-100/80">
+            <div class="relative overflow-hidden h-56">
+              <img
+                src={blog.image_url || '/blog_soil.png'}
+                alt={blog.title}
+                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              />
+              <div class="absolute bottom-0 right-6 translate-y-1/2 w-14 h-14 rounded-full bg-primary hover:bg-primary-container text-white flex flex-col items-center justify-center text-xs font-bold shadow-lg z-10 leading-tight">
+                <span class="text-base font-extrabold leading-none">{day}</span>
+                <span class="uppercase tracking-wider text-[10px]">{month}</span>
               </div>
-              <div class="p-6 pt-10 flex flex-col flex-grow">
-                <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
-                  {blog.title}
-                </h3>
-                <div class="text-stone-500 text-sm leading-relaxed mb-5 flex-grow line-clamp-3" set:html={blog.content}></div>
-                <a href={`/blog/${blog.slug}`} class="inline-block self-start bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-colors duration-300">
-                  Read More
-                </a>
-              </div>
-            </article>
-          );
-        })
-      ) : (
-        <p class="col-span-3 text-center text-stone-500">No blog posts found.</p>
-      )}
+            </div>
+            <div class="p-6 pt-10 flex flex-col flex-grow">
+              <h3 class="font-display text-[#1B3022] text-xl font-bold mb-3 leading-snug group-hover:text-primary transition-colors line-clamp-2">
+                <a href={`/blog/${blog.slug}`}>{blog.title}</a>
+              </h3>
+              <p class="text-stone-500 text-sm leading-relaxed mb-6 flex-grow line-clamp-3">
+                {excerpt}
+              </p>
+              <a href={`/blog/${blog.slug}`} class="inline-flex items-center gap-2 self-start bg-primary hover:bg-[#1B3022] text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-all duration-300 shadow-sm hover:shadow">
+                <span>Read More</span>
+                <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+              </a>
+            </div>
+          </article>
+        );
+      })}
     </div>
   </div>
 </section>

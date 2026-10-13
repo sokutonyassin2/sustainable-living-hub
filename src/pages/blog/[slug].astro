@@ -9,7 +9,7 @@ const { slug } = Astro.params;
 // Check if this is a native static post
 const nativeSlugs = ['post-1-healthy-soil', 'post-2-tree-billionaire', 'post-3-urban-rooftop'];
 if (nativeSlugs.includes(slug)) {
-  return Astro.redirect(`/blog/${slug}.html`);
+  return Astro.redirect(`/blog/${slug}`);
 }
 
 // Fetch the article based on slug
@@ -23,13 +23,31 @@ if (error || !blog) {
   return Astro.redirect('/404');
 }
 
+const isPreview = Astro.url.searchParams.get('preview') === 'true';
+const isScheduledFuture = blog.scheduled_at && new Date(blog.scheduled_at) > new Date();
+
+// If not published yet and not previewing, redirect to blog feed
+if (!isPreview && !blog.is_published && isScheduledFuture) {
+  return Astro.redirect('/blog/');
+}
+
 // Call RPC to increment view count on the server side
 await supabase.rpc('increment_blog_view', { blog_slug: slug });
 
-const publishDate = new Date(blog.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const postDate = blog.scheduled_at || blog.created_at;
+const publishDate = new Date(postDate).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+const category = blog.category || 'Community Post';
+const author = blog.author || 'BOS Editorial Team';
 ---
 
 <Layout title={blog.title}>
+  {isPreview && (
+    <div class="bg-amber-500 text-stone-950 font-semibold px-4 py-2.5 text-center text-xs tracking-wide flex items-center justify-center gap-2 sticky top-0 z-50 shadow-md">
+      <span class="material-symbols-outlined text-sm">visibility</span>
+      <span>Admin Preview Mode &mdash; Status: <strong class="uppercase">{blog.status || (blog.is_published ? 'Published' : 'Draft')}</strong> {blog.scheduled_at ? `(Scheduled for: ${new Date(blog.scheduled_at).toLocaleString()})` : ''}</span>
+      <a href="/admin/dashboard" class="underline ml-2 hover:text-white">Back to Dashboard</a>
+    </div>
+  )}
   <article class="bg-[#faf9f4] min-h-screen">
     <!-- Hero Header -->
     <header class="relative pt-32 pb-16 px-6 lg:px-12 bg-secondary text-white">
@@ -38,12 +56,12 @@ const publishDate = new Date(blog.created_at).toLocaleDateString('en-US', { year
         <div class="absolute inset-0 bg-black/50"></div>
       </div>
       <div class="relative z-10 max-w-4xl mx-auto text-center">
-        <span class="inline-block bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6">Community Post</span>
+        <span class="inline-block bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-6">{category}</span>
         <h1 class="font-display text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">{blog.title}</h1>
         <div class="flex items-center justify-center gap-6 text-stone-300 text-sm font-medium">
-          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">person</span> Community Member</span>
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">person</span> {author}</span>
           <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">calendar_today</span> {publishDate}</span>
-          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-primary">visibility</span> {blog.views_count + 1} views</span>
+          <span class="flex items-center gap-2"><span class="material-symbols-outlined text-[18px] text-primary">visibility</span> {(blog.views_count || 0) + 1} views</span>
         </div>
       </div>
     </header>

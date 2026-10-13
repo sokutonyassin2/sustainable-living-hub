@@ -1,4 +1,6 @@
 ---
+import InPlaceEditor from '../components/InPlaceEditor.astro';
+
 interface Props {
 	title: string;
 }
@@ -175,17 +177,25 @@ const { title } = Astro.props;
 				if (!btn || !panel) return;
 
 				function openMenu() {
-					panel.classList.remove('translate-x-full');
-					panel.classList.add('translate-x-0');
-					overlay.classList.remove('opacity-0', 'pointer-events-none');
-					overlay.classList.add('opacity-100', 'pointer-events-auto');
+					if (panel) {
+						panel.classList.remove('translate-x-full');
+						panel.classList.add('translate-x-0');
+					}
+					if (overlay) {
+						overlay.classList.remove('opacity-0', 'pointer-events-none');
+						overlay.classList.add('opacity-100', 'pointer-events-auto');
+					}
 					document.body.style.overflow = 'hidden';
 				}
 				function closeMenu() {
-					panel.classList.add('translate-x-full');
-					panel.classList.remove('translate-x-0');
-					overlay.classList.add('opacity-0', 'pointer-events-none');
-					overlay.classList.remove('opacity-100', 'pointer-events-auto');
+					if (panel) {
+						panel.classList.add('translate-x-full');
+						panel.classList.remove('translate-x-0');
+					}
+					if (overlay) {
+						overlay.classList.add('opacity-0', 'pointer-events-none');
+						overlay.classList.remove('opacity-100', 'pointer-events-auto');
+					}
 					document.body.style.overflow = '';
 				}
 
@@ -198,12 +208,14 @@ const { title } = Astro.props;
 					accBtn.addEventListener('click', function() {
 						var content = this.nextElementSibling;
 						var icon = this.querySelector('.material-symbols-outlined');
-						if (content.classList.contains('hidden')) {
-							content.classList.remove('hidden');
-							icon.style.transform = 'rotate(180deg)';
-						} else {
-							content.classList.add('hidden');
-							icon.style.transform = 'rotate(0deg)';
+						if (content && content.classList) {
+							if (content.classList.contains('hidden')) {
+								content.classList.remove('hidden');
+								if (icon) icon.style.transform = 'rotate(180deg)';
+							} else {
+								content.classList.add('hidden');
+								if (icon) icon.style.transform = 'rotate(0deg)';
+							}
 						}
 					});
 				});
@@ -289,5 +301,56 @@ const { title } = Astro.props;
 			</button>
 			</div>
 		</footer>
+
+		<script is:inline>
+			// Automatic dynamic page text overrides hydration
+			(function() {
+				function applyPageContentOverrides() {
+					try {
+						const raw = localStorage.getItem('bos_mock_content_blocks');
+						if (!raw) return;
+						const blocks = JSON.parse(raw);
+						if (!Array.isArray(blocks)) return;
+
+						const path = window.location.pathname.replace(/^\/|\/$/g, '') || 'home';
+
+						document.querySelectorAll('[data-content-key]').forEach(el => {
+							const key = el.getAttribute('data-content-key');
+							const pageAttr = el.getAttribute('data-content-page');
+							
+							const match = blocks.find(b => 
+								b.block_key === key && 
+								(!pageAttr || b.page === pageAttr || b.page === path || b.page === 'home' || b.page === 'global')
+							);
+
+							if (match && typeof match.value === 'string' && match.value.trim().length > 0) {
+								if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+									el.value = match.value;
+								} else if (el.tagName === 'IMG') {
+									el.src = match.value;
+								} else {
+									el.textContent = match.value;
+								}
+							}
+						});
+					} catch (e) {}
+				}
+
+				if (document.readyState === 'loading') {
+					document.addEventListener('DOMContentLoaded', applyPageContentOverrides);
+				} else {
+					applyPageContentOverrides();
+				}
+
+				window.addEventListener('storage', (e) => {
+					if (e.key === 'bos_mock_content_blocks') {
+						applyPageContentOverrides();
+					}
+				});
+			})();
+		</script>
+
+		<!-- In-Place Admin Content Editor -->
+		<InPlaceEditor />
 	</body>
 </html>

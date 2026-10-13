@@ -8,7 +8,7 @@ export const prerender = true;
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Dashboard - Bill of Senga</title>
+  <title>Admin Publishing Suite - Bill of Senga</title>
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries" is:inline></script>
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;600;700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
@@ -23,188 +23,835 @@ export const prerender = true;
     }
   </script>
 </head>
-<body class="bg-gray-50 min-h-screen font-body hidden flex flex-col md:flex-row" id="dashboardBody">
+<body class="bg-[#f8f9fa] min-h-screen font-body text-gray-800 hidden flex flex-col md:flex-row antialiased" id="dashboardBody">
 
-  <!-- Sidebar -->
-  <aside class="w-full md:w-64 bg-secondary text-white flex flex-col">
-    <div class="p-6 border-b border-white/10 text-center md:text-left">
-      <img src="/logo.png" alt="BOS" class="h-8 w-auto mb-4 brightness-0 invert opacity-90 mx-auto md:mx-0">
-      <h1 class="text-xl font-bold font-display">Control Panel</h1>
+  <!-- Sidebar Navigation -->
+  <aside class="w-full md:w-64 bg-secondary text-white flex flex-col flex-shrink-0 border-r border-emerald-950">
+    <div class="p-6 border-b border-white/10 flex items-center justify-between md:block">
+      <div>
+        <a href="/" class="inline-block">
+          <img src="/logo.png" alt="BOS" class="h-8 w-auto mb-2 brightness-0 invert opacity-90">
+        </a>
+        <h1 class="text-lg font-bold font-display text-white tracking-wide">Publishing Suite</h1>
+        <p class="text-emerald-400 text-xs font-medium">BOS Content Manager</p>
+      </div>
+      <a href="/" class="text-xs text-stone-400 hover:text-white flex items-center gap-1 md:hidden">
+        <span class="material-symbols-outlined text-[16px]">home</span> Site
+      </a>
     </div>
-    <nav class="flex-grow p-4 space-y-2">
-      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg bg-white/10 text-emerald-400 font-medium transition-colors" data-target="tab-text">
-        <span class="material-symbols-outlined">edit_note</span> Text Overrides
+
+    <!-- User Account Summary in Sidebar -->
+    <div class="px-5 py-4 bg-black/20 border-b border-white/5 flex items-center gap-3">
+      <div class="w-9 h-9 rounded-full bg-emerald-700/60 border border-emerald-400/30 flex items-center justify-center text-emerald-200 font-bold text-sm" id="sidebarAvatar">
+        A
+      </div>
+      <div class="overflow-hidden">
+        <p class="text-xs font-medium text-white truncate" id="sidebarUserEmail">admin@bos.org</p>
+        <div class="flex items-center gap-1.5 mt-0.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          <span class="text-[11px] text-emerald-300 font-semibold uppercase tracking-wider" id="sidebarUserRole">Admin</span>
+        </div>
+      </div>
+    </div>
+
+    <nav class="flex-grow p-4 space-y-1.5 overflow-y-auto">
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl bg-white/10 text-emerald-400 font-medium transition-all" data-target="tab-blog">
+        <span class="material-symbols-outlined text-[20px]">edit_document</span> Blog Suite
       </button>
-      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg hover:bg-white/5 text-stone-300 font-medium transition-colors" data-target="tab-hero">
-        <span class="material-symbols-outlined">panorama</span> Hero Sliders
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl hover:bg-white/5 text-stone-300 font-medium transition-all" data-target="tab-forum">
+        <span class="material-symbols-outlined text-[20px]">forum</span> Forum Control
       </button>
-      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg hover:bg-white/5 text-stone-300 font-medium transition-colors" data-target="tab-blog">
-        <span class="material-symbols-outlined">article</span> Blog Ingestion
-      </button>
-      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-lg hover:bg-white/5 text-stone-300 font-medium transition-colors" data-target="tab-forum">
-        <span class="material-symbols-outlined">forum</span> Forum Moderator
+      <button class="tab-btn w-full flex items-center gap-3 text-left px-4 py-3 rounded-xl hover:bg-white/5 text-stone-300 font-medium transition-all" data-target="tab-team">
+        <span class="material-symbols-outlined text-[20px]">manage_accounts</span> Team & Roles
       </button>
     </nav>
-    <div class="p-4 border-t border-white/10">
-      <button id="logoutBtn" class="w-full flex items-center justify-center gap-2 text-stone-400 hover:text-red-400 py-2 transition-colors">
-        <span class="material-symbols-outlined text-[18px]">logout</span> Log Out
+
+    <div class="p-4 border-t border-white/10 space-y-2">
+      <a href="/" target="_blank" class="w-full flex items-center justify-center gap-2 text-stone-300 hover:text-white py-2 px-3 rounded-lg text-xs bg-white/5 hover:bg-white/10 transition-colors">
+        <span class="material-symbols-outlined text-[16px]">open_in_new</span> Public Website
+      </a>
+      <a href="/forum" target="_blank" class="w-full flex items-center justify-center gap-2 text-emerald-300 hover:text-white py-2 px-3 rounded-lg text-xs bg-emerald-950/40 hover:bg-emerald-900/50 transition-colors">
+        <span class="material-symbols-outlined text-[16px]">forum</span> Community Forum
+      </a>
+      <button id="logoutBtn" class="w-full flex items-center justify-center gap-2 text-stone-400 hover:text-red-400 py-2 transition-colors text-xs">
+        <span class="material-symbols-outlined text-[18px]">logout</span> Sign Out
       </button>
     </div>
   </aside>
 
-  <!-- Main Content -->
-  <main class="flex-grow p-6 md:p-10 h-screen overflow-y-auto">
+  <!-- Main Content Area -->
+  <main class="flex-grow h-screen overflow-y-auto flex flex-col">
     
-    <!-- Tab 1: Text Overrides -->
-    <section id="tab-text" class="tab-content block">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 font-display">Text Overrides</h2>
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 max-w-2xl">
-        <form id="textOverrideForm" class="space-y-4">
-          <div class="grid grid-cols-2 gap-4">
-            <div>
-              <label class="block text-sm font-semibold text-gray-600 mb-1">Page</label>
-              <select id="textPage" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm">
-                <option value="home">Home</option>
-                <option value="about">About</option>
-                <option value="mission">Mission</option>
-              </select>
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-gray-600 mb-1">Block Key</label>
-              <input type="text" id="textKey" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm" placeholder="e.g. about_description">
-            </div>
+    <!-- Top Bar with Demo Account Switcher -->
+    <header class="bg-white border-b border-gray-200/80 px-6 py-3.5 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-30 shadow-xs">
+      <div class="flex items-center gap-3">
+        <span class="material-symbols-outlined text-emerald-600 text-2xl">verified_user</span>
+        <div>
+          <span class="text-xs text-gray-500 font-medium">Session & Active Role</span>
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-bold text-gray-800" id="topUserEmail">admin@senga.org</span>
+            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase tracking-wider" id="topRoleBadge">Admin</span>
           </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Value</label>
-            <textarea id="textValue" rows="5" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm"></textarea>
-          </div>
-          <button type="submit" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-[#002a54] transition-colors">Save Override</button>
-          <p id="textStatus" class="text-sm text-emerald-600 hidden mt-2">Saved successfully!</p>
-        </form>
+        </div>
       </div>
-    </section>
 
-    <!-- Tab 2: Hero Sliders -->
-    <section id="tab-hero" class="tab-content hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 font-display">Hero Sliders</h2>
-      <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 max-w-2xl">
-        <form id="heroSliderForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Select Slide</label>
-            <select id="slideSelect" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm">
-              <option value="hero_slide_1">Slide 1</option>
-              <option value="hero_slide_2">Slide 2</option>
-              <option value="hero_slide_3">Slide 3</option>
-              <option value="hero_slide_4">Slide 4</option>
-            </select>
-          </div>
-          <div>
-            <label class="block text-sm font-semibold text-gray-600 mb-1">Upload New Image</label>
-            <input type="file" id="heroFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary/10 file:text-primary hover:file:bg-primary/20 cursor-pointer">
-          </div>
-          <button type="submit" id="heroBtn" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-[#002a54] transition-colors disabled:opacity-50">Upload & Save Slide</button>
-          <p id="heroStatus" class="text-sm text-emerald-600 hidden mt-2"></p>
-        </form>
-      </div>
-    </section>
-
-    <!-- Tab 3: Blog Ingestion -->
-    <section id="tab-blog" class="tab-content hidden">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold text-gray-800 font-display">Blog Ingestion</h2>
-        <button id="newPostBtn" class="bg-emerald-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-emerald-700 transition-colors flex items-center gap-2">
-          <span class="material-symbols-outlined text-[18px]">add</span> New Post
+      <!-- Quick Demo Switcher -->
+      <div class="flex items-center gap-1.5 flex-wrap">
+        <span class="text-xs text-gray-500 mr-1 hidden sm:inline">Test Role:</span>
+        <button id="switchAdminBtn" title="Switch to Full Admin" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-emerald-600 text-emerald-800 bg-emerald-50 hover:bg-emerald-100 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">shield_person</span> Admin
+        </button>
+        <button id="switchEditorBtn" title="Switch to Blog Editor" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-blue-400 text-blue-800 bg-blue-50 hover:bg-blue-100 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">edit_note</span> Editor(Blogs)
+        </button>
+        <button id="switchModBtn" title="Switch to Forum Moderator" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-amber-500 text-amber-800 bg-amber-50 hover:bg-amber-100 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">gavel</span> Moderator
+        </button>
+        <button id="switchUserBtn" title="Switch to Normal User" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg border border-gray-300 text-gray-700 bg-gray-50 hover:bg-gray-100 transition-colors flex items-center gap-1">
+          <span class="material-symbols-outlined text-[14px]">person</span> Normal User
         </button>
       </div>
+    </header>
+
+    <!-- Member Notice Banner (visible only if logged in as normal user) -->
+    <div id="memberNotice" class="hidden bg-amber-50 border-b border-amber-200 px-6 py-3 flex items-center justify-between text-xs text-amber-900">
+      <div class="flex items-center gap-2">
+        <span class="material-symbols-outlined text-amber-600 text-[18px]">info</span>
+        <span>You are currently signed in as a <strong>Community Member</strong>. Admin publish/delete capabilities are simulated with preview access. Switch to Admin for full authorization.</span>
+      </div>
+      <button id="bannerSwitchAdminBtn" class="bg-amber-600 hover:bg-amber-700 text-white font-semibold px-3 py-1 rounded-md transition-colors">
+        Switch to Admin
+      </button>
+    </div>
+
+    <!-- Tab Container -->
+    <div class="p-6 md:p-8 flex-grow">
       
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <!-- List -->
-        <div class="lg:col-span-1 bg-white p-4 rounded-2xl shadow-sm border border-gray-100 max-h-[600px] overflow-y-auto">
-          <h3 class="font-semibold text-gray-700 mb-4 px-2">Published & Drafts</h3>
-          <div id="blogList" class="space-y-2">
-            <p class="text-sm text-gray-500 italic px-2">Loading posts...</p>
+      <!-- ================================================================ -->
+      <!-- TAB: BLOG PUBLISHING SUITE (DEFAULT) -->
+      <!-- ================================================================ -->
+      <section id="tab-blog" class="tab-content block">
+        
+        <!-- Header -->
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display">Publishing & Editorial Suite</h2>
+            <p class="text-sm text-gray-500 mt-1">Manage articles, in-post imagery, immediate deployment, and automated scheduling.</p>
+          </div>
+          <button id="newPostBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl text-sm font-semibold shadow-sm hover:shadow transition-all flex items-center gap-2">
+            <span class="material-symbols-outlined text-[18px]">add_circle</span> Create New Article
+          </button>
+        </div>
+
+        <!-- Two Column Layout: Post Directory (Left) + Cockpit Editor (Right) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- LEFT: Posts Directory -->
+          <div class="lg:col-span-4 bg-white rounded-2xl shadow-xs border border-gray-200 flex flex-col h-[740px]">
+            
+            <!-- Filter Pills -->
+            <div class="p-4 border-b border-gray-100 space-y-3">
+              <div class="flex items-center justify-between">
+                <span class="text-xs font-bold uppercase tracking-wider text-gray-500">Articles Directory</span>
+                <span id="postsTotalCount" class="text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded-full font-semibold">0 posts</span>
+              </div>
+              
+              <!-- Search bar -->
+              <div class="relative">
+                <span class="material-symbols-outlined absolute left-3 top-2.5 text-gray-400 text-[18px]">search</span>
+                <input type="text" id="blogSearchInput" placeholder="Filter articles..." class="w-full pl-9 pr-3 py-2 text-xs rounded-xl border border-gray-200 focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 outline-none">
+              </div>
+
+              <!-- Status Filters -->
+              <div class="flex items-center gap-1 text-xs">
+                <button class="status-filter-btn px-2.5 py-1 rounded-lg bg-emerald-50 text-emerald-800 font-semibold border border-emerald-200" data-status="all">All</button>
+                <button class="status-filter-btn px-2.5 py-1 rounded-lg text-gray-600 hover:bg-gray-100 font-medium" data-status="published">Published</button>
+                <button class="status-filter-btn px-2.5 py-1 rounded-lg text-gray-600 hover:bg-gray-100 font-medium" data-status="scheduled">Scheduled</button>
+                <button class="status-filter-btn px-2.5 py-1 rounded-lg text-gray-600 hover:bg-gray-100 font-medium" data-status="draft">Drafts</button>
+              </div>
+            </div>
+
+            <!-- List -->
+            <div id="blogList" class="flex-grow overflow-y-auto p-3 space-y-2 divide-y divide-gray-50">
+              <p class="text-xs text-gray-400 italic p-4 text-center">Loading articles...</p>
+            </div>
+          </div>
+
+          <!-- RIGHT: Comprehensive Editor & Publishing Cockpit -->
+          <div class="lg:col-span-8 bg-white rounded-2xl shadow-xs border border-gray-200 flex flex-col overflow-hidden">
+            
+            <!-- Editor Top Navigation / Tabs -->
+            <div class="px-6 py-4 border-b border-gray-200 bg-gray-50/70 flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-primary text-[20px]">edit_document</span>
+                <h3 id="editorTitle" class="font-bold text-gray-800 text-base">Create New Article</h3>
+              </div>
+
+              <!-- Mode Toggles: Edit vs Live Preview -->
+              <div class="flex items-center bg-gray-200/80 p-0.5 rounded-lg text-xs font-semibold">
+                <button type="button" id="editModeBtn" class="px-3 py-1.5 rounded-md bg-white text-gray-800 shadow-xs">
+                  Editor
+                </button>
+                <button type="button" id="previewModeBtn" class="px-3 py-1.5 rounded-md text-gray-600 hover:text-gray-900">
+                  Live Preview
+                </button>
+              </div>
+            </div>
+
+            <!-- Main Form -->
+            <form id="postForm" class="p-6 overflow-y-auto space-y-5 h-[680px]">
+              <input type="hidden" id="postId" />
+
+              <!-- EDIT CONTAINER -->
+              <div id="editPane" class="space-y-5">
+                
+                <!-- Title & Slug -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Article Title *</label>
+                  <input type="text" id="title" required class="w-full text-base font-semibold px-4 py-2.5 rounded-xl border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="e.g. Indigenous Agroforestry for Drought Resilience in Senga">
+                  <div class="mt-1 flex items-center gap-1 text-[11px] text-gray-400">
+                    <span>Slug: /blog/</span>
+                    <span id="slugPreview" class="text-primary font-mono font-medium">indigenous-agroforestry...</span>
+                  </div>
+                </div>
+
+                <!-- Category & Author Row -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <div class="flex items-center justify-between mb-1.5">
+                      <label class="block text-xs font-bold uppercase tracking-wider text-gray-600">Category *</label>
+                      <button type="button" id="openNewCategoryBtn" class="text-[11px] font-semibold text-emerald-700 hover:text-emerald-900 flex items-center gap-0.5 transition-colors">
+                        <span class="material-symbols-outlined text-[15px]">add_circle</span> + New Category
+                      </button>
+                    </div>
+                    <div class="space-y-2">
+                      <select id="categorySelect" class="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-gray-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none bg-white">
+                        <option value="The Story of Senga">The Story of Senga</option>
+                        <option value="Forestry & Climate">Forestry & Climate</option>
+                        <option value="Urban Farming">Urban Farming</option>
+                        <option value="Soil Science">Soil Science</option>
+                        <option value="Water Harvesting">Water Harvesting</option>
+                        <option value="Community Post">Community Post</option>
+                        <option value="Practical Guides">Practical Guides</option>
+                      </select>
+
+                      <!-- Inline Category Creator -->
+                      <div id="newCategoryBox" class="hidden p-2.5 bg-emerald-50/80 border border-emerald-200 rounded-xl space-y-2">
+                        <div class="flex items-center gap-2">
+                          <input type="text" id="newCategoryInput" placeholder="Enter new category name..." class="flex-grow text-xs px-3 py-1.5 rounded-lg border border-gray-300 focus:border-emerald-600 outline-none bg-white">
+                          <button type="button" id="saveNewCategoryBtn" class="bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 transition-colors">
+                            <span class="material-symbols-outlined text-[14px]">check</span> Add
+                          </button>
+                          <button type="button" id="cancelNewCategoryBtn" class="text-xs text-gray-500 hover:text-gray-700 px-1">
+                            Cancel
+                          </button>
+                        </div>
+                        <p id="newCategoryError" class="text-[11px] text-red-500 hidden"></p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5 flex items-center justify-between">
+                      <span>Author (Admin's Team) *</span>
+                      <span class="text-[10px] font-normal text-gray-400">Team staff only</span>
+                    </label>
+                    <select id="authorSelect" class="w-full text-xs font-medium px-3.5 py-2.5 rounded-xl border border-gray-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none bg-white">
+                      <option value="BOS Editorial Team">BOS Editorial Team</option>
+                      <option value="William Odinga Balikuddembe">William Odinga Balikuddembe (Founder/Admin)</option>
+                    </select>
+                    <input type="hidden" id="authorInput" value="BOS Editorial Team">
+                  </div>
+                </div>
+
+                <!-- Excerpt / Short Summary -->
+                <div>
+                  <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1.5">Excerpt / Meta Description</label>
+                  <textarea id="excerptInput" rows="2" class="w-full text-xs font-normal px-3.5 py-2 rounded-xl border border-gray-300 focus:border-primary focus:ring-1 focus:ring-primary outline-none" placeholder="Brief summary of the article for social sharing and feed cards..."></textarea>
+                </div>
+
+                <!-- Featured Cover Image Section -->
+                <div class="bg-gray-50/80 p-4 rounded-2xl border border-gray-200">
+                  <label class="block text-xs font-bold uppercase tracking-wider text-gray-700 mb-2 flex items-center justify-between">
+                    <span>Featured Cover Image</span>
+                    <span class="text-[11px] text-gray-400 font-normal">Shown as hero image and card thumbnail</span>
+                  </label>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 items-center">
+                    <!-- Thumbnail Preview -->
+                    <div class="sm:col-span-1">
+                      <div id="coverPreviewBox" class="w-full h-28 rounded-xl border-2 border-dashed border-gray-300 bg-gray-100 flex items-center justify-center overflow-hidden relative group">
+                        <img id="coverPreviewImg" src="/blog_soil.png" alt="Cover Preview" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                          <span class="text-white text-xs font-medium">Cover Preview</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Upload and URL inputs -->
+                    <div class="sm:col-span-2 space-y-2">
+                      <input type="file" id="coverFileInput" accept="image/*" class="w-full text-xs text-gray-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-emerald-100 file:text-emerald-800 hover:file:bg-emerald-200 cursor-pointer">
+                      
+                      <div class="flex items-center gap-2">
+                        <span class="text-[11px] text-gray-400">or URL:</span>
+                        <input type="text" id="imageUrl" value="/blog_soil.png" class="flex-grow text-xs px-3 py-1.5 rounded-lg border border-gray-300 focus:border-primary outline-none" placeholder="https://... or /image.png">
+                      </div>
+                      <p id="coverUploadStatus" class="text-[11px] text-emerald-600 hidden"></p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- WordPress-Style WYSIWYG Article Editor -->
+                <div>
+                  <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 flex items-center gap-1.5">
+                      <span class="material-symbols-outlined text-[18px] text-emerald-700">edit_note</span>
+                      Article Content (WordPress Visual Editor) *
+                    </label>
+
+                    <!-- WordPress Visual / Text Toggle Tabs -->
+                    <div class="flex items-center rounded-lg border border-gray-300 bg-gray-100 p-0.5 text-xs font-semibold">
+                      <button type="button" id="wpTabVisual" class="px-3 py-1 rounded-md bg-white text-gray-800 shadow-2xs transition-all">Visual</button>
+                      <button type="button" id="wpTabText" class="px-3 py-1 rounded-md text-gray-500 hover:text-gray-800 transition-all">Text (HTML)</button>
+                    </div>
+                  </div>
+
+                  <!-- In-Post Image Inserter Drawer -->
+                  <div id="inPostImageDrawer" class="hidden mb-3 p-4 bg-emerald-50/80 border border-emerald-200 rounded-2xl space-y-3">
+                    <div class="flex items-center justify-between">
+                      <span class="text-xs font-bold text-emerald-900 flex items-center gap-1">
+                        <span class="material-symbols-outlined text-[16px]">add_photo_alternate</span> Add Media to Story
+                      </span>
+                      <button type="button" id="closeImageDrawerBtn" class="text-gray-400 hover:text-gray-700 text-xs">✕ Cancel</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <label class="block text-[11px] font-semibold text-gray-700 mb-1">Upload Local Image</label>
+                        <input type="file" id="inPostFileInput" accept="image/*" class="w-full text-xs text-gray-500 file:mr-2 file:py-1 file:px-2.5 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-emerald-600 file:text-white hover:file:bg-emerald-700 cursor-pointer">
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-semibold text-gray-700 mb-1">or Image Web URL</label>
+                        <input type="text" id="inPostUrlInput" placeholder="https://..." class="w-full px-3 py-1.5 rounded-lg border border-gray-300 text-xs outline-none">
+                      </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                      <div>
+                        <label class="block text-[11px] font-semibold text-gray-700 mb-1">Caption</label>
+                        <input type="text" id="inPostCaptionInput" placeholder="e.g. Raised garden beds planted with indigenous leafy greens" class="w-full px-3 py-1.5 rounded-lg border border-gray-300 text-xs outline-none">
+                      </div>
+                      <div>
+                        <label class="block text-[11px] font-semibold text-gray-700 mb-1">Alt Text</label>
+                        <input type="text" id="inPostAltInput" placeholder="e.g. Agroforestry demonstration plot" class="w-full px-3 py-1.5 rounded-lg border border-gray-300 text-xs outline-none">
+                      </div>
+                    </div>
+
+                    <button type="button" id="confirmInsertImageBtn" class="bg-emerald-700 hover:bg-emerald-800 text-white font-semibold text-xs px-4 py-2 rounded-xl transition-colors">
+                      Insert Into Article
+                    </button>
+                  </div>
+
+                  <!-- WordPress Visual Toolbar -->
+                  <div id="wpVisualToolbar" class="flex flex-wrap items-center gap-1 p-2 bg-gray-100 border border-gray-300 rounded-t-2xl border-b-0">
+                    <!-- Media Button -->
+                    <button type="button" id="insertImageBtn" class="text-xs font-semibold px-2.5 py-1.5 rounded-lg bg-white hover:bg-emerald-50 text-emerald-800 shadow-2xs border border-gray-300 flex items-center gap-1 transition-colors mr-1" title="Add Media">
+                      <span class="material-symbols-outlined text-[16px]">add_photo_alternate</span> Add Media
+                    </button>
+
+                    <div class="h-5 w-px bg-gray-300 mx-1"></div>
+
+                    <!-- Heading format dropdown -->
+                    <select id="wpFormatSelect" class="text-xs py-1 px-2 rounded-lg border border-gray-300 bg-white font-medium text-gray-700 focus:outline-none focus:border-emerald-600">
+                      <option value="p">Paragraph</option>
+                      <option value="h2">Heading 2</option>
+                      <option value="h3">Heading 3</option>
+                      <option value="h4">Heading 4</option>
+                      <option value="blockquote">Quote</option>
+                      <option value="pre">Preformatted</option>
+                    </select>
+
+                    <div class="h-5 w-px bg-gray-300 mx-1"></div>
+
+                    <!-- Inline formatting buttons -->
+                    <button type="button" data-cmd="bold" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Bold (Ctrl+B)">
+                      <span class="material-symbols-outlined text-[18px]">format_bold</span>
+                    </button>
+                    <button type="button" data-cmd="italic" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Italic (Ctrl+I)">
+                      <span class="material-symbols-outlined text-[18px]">format_italic</span>
+                    </button>
+                    <button type="button" data-cmd="underline" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Underline (Ctrl+U)">
+                      <span class="material-symbols-outlined text-[18px]">format_underlined</span>
+                    </button>
+                    <button type="button" data-cmd="strikeThrough" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Strikethrough">
+                      <span class="material-symbols-outlined text-[18px]">strikethrough_s</span>
+                    </button>
+
+                    <div class="h-5 w-px bg-gray-300 mx-1"></div>
+
+                    <!-- Lists -->
+                    <button type="button" data-cmd="insertUnorderedList" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Bulleted List">
+                      <span class="material-symbols-outlined text-[18px]">format_list_bulleted</span>
+                    </button>
+                    <button type="button" data-cmd="insertOrderedList" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Numbered List">
+                      <span class="material-symbols-outlined text-[18px]">format_list_numbered</span>
+                    </button>
+                    <button type="button" data-cmd="formatBlock" data-arg="blockquote" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Blockquote">
+                      <span class="material-symbols-outlined text-[18px]">format_quote</span>
+                    </button>
+
+                    <div class="h-5 w-px bg-gray-300 mx-1"></div>
+
+                    <!-- Alignments -->
+                    <button type="button" data-cmd="justifyLeft" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Align Left">
+                      <span class="material-symbols-outlined text-[18px]">format_align_left</span>
+                    </button>
+                    <button type="button" data-cmd="justifyCenter" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Align Center">
+                      <span class="material-symbols-outlined text-[18px]">format_align_center</span>
+                    </button>
+                    <button type="button" data-cmd="justifyRight" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Align Right">
+                      <span class="material-symbols-outlined text-[18px]">format_align_right</span>
+                    </button>
+
+                    <div class="h-5 w-px bg-gray-300 mx-1"></div>
+
+                    <!-- Link & HR -->
+                    <button type="button" id="wpInsertLinkBtn" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Insert Link">
+                      <span class="material-symbols-outlined text-[18px]">link</span>
+                    </button>
+                    <button type="button" data-cmd="insertHorizontalRule" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Horizontal Line">
+                      <span class="material-symbols-outlined text-[18px]">horizontal_rule</span>
+                    </button>
+                    <button type="button" data-cmd="removeFormat" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Clear Formatting">
+                      <span class="material-symbols-outlined text-[18px]">format_clear</span>
+                    </button>
+
+                    <div class="h-5 w-px bg-gray-300 mx-1"></div>
+
+                    <!-- Undo / Redo -->
+                    <button type="button" data-cmd="undo" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Undo (Ctrl+Z)">
+                      <span class="material-symbols-outlined text-[18px]">undo</span>
+                    </button>
+                    <button type="button" data-cmd="redo" class="wp-tool-btn p-1.5 rounded-lg hover:bg-gray-200 text-gray-700 transition-colors" title="Redo (Ctrl+Y)">
+                      <span class="material-symbols-outlined text-[18px]">redo</span>
+                    </button>
+                  </div>
+
+                  <!-- Visual WYSIWYG Editable Canvas (WordPress Content Area) -->
+                  <div 
+                    id="visualEditor" 
+                    contenteditable="true" 
+                    class="w-full min-h-[340px] max-h-[580px] overflow-y-auto p-5 rounded-b-2xl border border-gray-300 focus:outline-none bg-white text-gray-800 text-sm leading-relaxed prose prose-emerald max-w-none shadow-xs"
+                  >
+                    <p>Start writing your story here...</p>
+                  </div>
+
+                  <!-- Underlying Textarea (Hidden in Visual mode, shown in Text mode) -->
+                  <textarea 
+                    id="content" 
+                    name="content" 
+                    required 
+                    rows="14" 
+                    class="hidden w-full min-h-[340px] max-h-[580px] rounded-b-2xl border border-gray-300 focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 text-xs font-mono p-4 leading-relaxed bg-stone-900 text-stone-100" 
+                    placeholder="HTML code of the article..."
+                  ></textarea>
+                </div>
+
+                <!-- Publishing & Scheduling Engine -->
+                <div class="bg-surface p-5 rounded-2xl border border-gray-200/80 space-y-4">
+                  <span class="block text-xs font-bold uppercase tracking-wider text-gray-700">
+                    Publishing Strategy & Status
+                  </span>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <!-- Option 1: Publish Now -->
+                    <label class="publish-mode-card border-2 border-emerald-500 bg-white p-3.5 rounded-xl cursor-pointer flex flex-col justify-between transition-all">
+                      <div class="flex items-center gap-2">
+                        <input type="radio" name="publishMode" value="publish_now" checked class="text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-xs font-bold text-gray-900">Publish Now</span>
+                      </div>
+                      <p class="text-[11px] text-gray-500 mt-2">Live immediately on public blog feed and homepage.</p>
+                    </label>
+
+                    <!-- Option 2: Schedule Post -->
+                    <label class="publish-mode-card border border-gray-200 bg-white p-3.5 rounded-xl cursor-pointer flex flex-col justify-between transition-all hover:border-gray-300">
+                      <div class="flex items-center gap-2">
+                        <input type="radio" name="publishMode" value="schedule" class="text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-xs font-bold text-gray-900">Schedule Release</span>
+                      </div>
+                      <p class="text-[11px] text-gray-500 mt-2">Pick date & time. Unlocks automatically when reached.</p>
+                    </label>
+
+                    <!-- Option 3: Draft -->
+                    <label class="publish-mode-card border border-gray-200 bg-white p-3.5 rounded-xl cursor-pointer flex flex-col justify-between transition-all hover:border-gray-300">
+                      <div class="flex items-center gap-2">
+                        <input type="radio" name="publishMode" value="draft" class="text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-xs font-bold text-gray-900">Save Draft</span>
+                      </div>
+                      <p class="text-[11px] text-gray-500 mt-2">Private in dashboard, invisible to public readers.</p>
+                    </label>
+                  </div>
+
+                  <!-- Schedule Date/Time Picker (Shown when Schedule is selected) -->
+                  <div id="schedulePickerContainer" class="hidden pt-2 border-t border-gray-200/60 flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                    <label for="scheduledAtInput" class="text-xs font-semibold text-gray-700 flex items-center gap-1.5">
+                      <span class="material-symbols-outlined text-[18px] text-emerald-600">schedule</span> Target Release Time:
+                    </label>
+                    <input type="datetime-local" id="scheduledAtInput" class="text-xs px-3 py-1.5 rounded-xl border border-gray-300 focus:border-emerald-600 outline-none bg-white font-medium">
+                    <span class="text-[11px] text-emerald-700 italic">Article will unlock automatically.</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- PREVIEW CONTAINER (Shown when Preview tab is active) -->
+              <div id="previewPane" class="hidden space-y-6">
+                <div class="border border-gray-200 rounded-2xl overflow-hidden bg-white">
+                  <!-- Simulated Header -->
+                  <div class="bg-secondary text-white p-8 text-center relative">
+                    <span id="previewCategoryBadge" class="inline-block bg-primary text-white text-[11px] font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Category</span>
+                    <h1 id="previewTitle" class="font-display text-2xl md:text-3xl font-bold leading-tight mb-3">Article Title Preview</h1>
+                    <div class="text-xs text-stone-300 flex items-center justify-center gap-4">
+                      <span id="previewAuthor">BOS Editorial Team</span> &bull;
+                      <span id="previewDate">Today</span> &bull;
+                      <span>5 min read</span>
+                    </div>
+                  </div>
+
+                  <!-- Simulated Content -->
+                  <div class="p-8 max-w-2xl mx-auto">
+                    <img id="previewFeaturedImg" src="/blog_soil.png" alt="Cover" class="w-full h-64 object-cover rounded-2xl mb-8 shadow-sm">
+                    <div id="previewBody" class="prose prose-sm prose-stone max-w-none text-gray-700 leading-relaxed font-body">
+                      <!-- Rendered HTML -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Form Action Footer -->
+              <div class="flex items-center justify-between pt-4 border-t border-gray-200 sticky bottom-0 bg-white py-3">
+                <div>
+                  <button type="button" id="deleteBtn" class="hidden text-red-600 hover:text-red-700 hover:bg-red-50 text-xs font-semibold px-3.5 py-2 rounded-xl transition-colors flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">delete</span> Delete Article
+                  </button>
+                </div>
+
+                <div class="flex items-center gap-3">
+                  <a id="viewLiveLink" href="#" target="_blank" class="hidden text-xs font-semibold text-primary hover:text-[#002a54] flex items-center gap-1">
+                    <span class="material-symbols-outlined text-[16px]">open_in_new</span> Preview on Site
+                  </a>
+                  <button type="submit" id="saveBtn" class="bg-primary hover:bg-[#002a54] text-white px-6 py-2.5 rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-2">
+                    <span class="material-symbols-outlined text-[16px]">send</span> Publish Article Now
+                  </button>
+                </div>
+              </div>
+              <p id="publishStatusMsg" class="text-xs font-semibold text-center hidden mt-2"></p>
+            </form>
+
           </div>
         </div>
-        
-        <!-- Editor -->
-        <div class="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-          <h3 id="editorTitle" class="font-semibold text-lg text-gray-800 mb-4">Create New Post</h3>
-          <form id="postForm" class="space-y-4">
-            <input type="hidden" id="postId" />
-            <div>
-              <label class="block text-sm font-semibold text-gray-600 mb-1">Title</label>
-              <input type="text" id="title" required class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm" placeholder="Enter blog title...">
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-gray-600 mb-1">Cover Image Upload</label>
-              <input type="file" id="blogImageFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-gray-100 file:text-gray-700 hover:file:bg-gray-200 cursor-pointer">
-              <input type="hidden" id="imageUrl" />
-              <p id="blogImgStatus" class="text-xs text-primary mt-1 hidden">Uploading...</p>
-            </div>
-            <div>
-              <label class="block text-sm font-semibold text-gray-600 mb-1">Content (HTML allowed)</label>
-              <textarea id="content" required rows="10" class="w-full rounded-lg border-gray-300 focus:border-primary focus:ring-primary text-sm font-mono" placeholder="<p>Write your blog post here...</p>"></textarea>
-            </div>
-            <div class="flex items-center gap-2 pt-2">
-              <input type="checkbox" id="published" class="rounded text-primary focus:ring-primary">
-              <label for="published" class="text-sm text-gray-700 font-medium">Publish instantly</label>
-            </div>
-            <div class="flex justify-end gap-3 pt-4 border-t border-gray-100">
-              <button type="button" id="deleteBtn" class="hidden text-red-600 hover:bg-red-50 px-4 py-2 rounded-lg text-sm font-medium transition-colors">Delete</button>
-              <button type="submit" id="saveBtn" class="bg-primary text-white px-6 py-2 rounded-lg text-sm font-semibold hover:bg-[#002a54] transition-colors">Save Post</button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </section>
 
-    <!-- Tab 4: Forum Moderator -->
-    <section id="tab-forum" class="tab-content hidden">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6 font-display">Forum Moderator</h2>
-      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-gray-50 text-gray-600 font-medium border-b border-gray-100">
-              <tr>
-                <th class="px-6 py-3">Topic Title</th>
-                <th class="px-6 py-3">Category</th>
-                <th class="px-6 py-3">Date</th>
-                <th class="px-6 py-3 text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody id="forumList" class="divide-y divide-gray-100">
-              <tr>
-                <td colspan="4" class="px-6 py-4 text-center text-gray-500 italic">Loading topics...</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </section>
+      </section>
 
+      <!-- ================================================================ -->
+      <!-- TAB: FORUM CONTROL & MODERATION -->
+      <!-- ================================================================ -->
+      <section id="tab-forum" class="tab-content hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display">Forum Control & Moderation Suite</h2>
+            <p class="text-sm text-gray-500 mt-1">Directly control community discussions: Pin announcements, lock sensitive threads, and delete inappropriate content.</p>
+          </div>
+          <a href="/forum" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-xl text-xs font-semibold shadow-xs flex items-center gap-2">
+            <span class="material-symbols-outlined text-[16px]">open_in_new</span> Visit Public Forum
+          </a>
+        </div>
+
+        <!-- Moderation Metrics -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+          <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
+            <span class="text-xs text-gray-500 font-medium">Total Discussions</span>
+            <p class="text-2xl font-bold text-gray-900 mt-1" id="forumMetricTotal">0</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
+            <span class="text-xs text-emerald-600 font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">push_pin</span> Pinned Topics
+            </span>
+            <p class="text-2xl font-bold text-emerald-700 mt-1" id="forumMetricPinned">0</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
+            <span class="text-xs text-amber-600 font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">lock</span> Locked Threads
+            </span>
+            <p class="text-2xl font-bold text-amber-700 mt-1" id="forumMetricLocked">0</p>
+          </div>
+          <div class="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
+            <span class="text-xs text-blue-600 font-medium flex items-center gap-1">
+              <span class="material-symbols-outlined text-[16px]">favorite</span> Total Reactions
+            </span>
+            <p class="text-2xl font-bold text-blue-700 mt-1" id="forumMetricReactions">0</p>
+          </div>
+        </div>
+
+        <!-- Forum Topics Table -->
+        <div class="bg-white rounded-2xl shadow-xs border border-gray-200 overflow-hidden">
+          <div class="p-4 border-b border-gray-100 flex flex-wrap items-center justify-between gap-3 bg-gray-50/50">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-bold uppercase tracking-wider text-gray-600">Active Discussions</span>
+              <span id="forumTopicsBadgeCount" class="text-xs bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full font-bold">0</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <button id="forumFilterAll" class="text-xs px-2.5 py-1 rounded-lg bg-white border border-gray-300 font-semibold text-gray-700 shadow-xs">All</button>
+              <button id="forumFilterPinned" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 font-medium text-gray-600 hover:bg-gray-200">Pinned</button>
+              <button id="forumFilterLocked" class="text-xs px-2.5 py-1 rounded-lg bg-gray-100 font-medium text-gray-600 hover:bg-gray-200">Locked</button>
+            </div>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs">
+              <thead class="bg-gray-50 text-gray-600 font-semibold border-b border-gray-200">
+                <tr>
+                  <th class="px-6 py-3.5">Topic Details</th>
+                  <th class="px-6 py-3.5">Category</th>
+                  <th class="px-6 py-3.5">Author</th>
+                  <th class="px-6 py-3.5">Engagement</th>
+                  <th class="px-6 py-3.5">Status</th>
+                  <th class="px-6 py-3.5 text-right">Moderator Actions</th>
+                </tr>
+              </thead>
+              <tbody id="forumList" class="divide-y divide-gray-100">
+                <tr>
+                  <td colspan="6" class="px-6 py-4 text-center text-gray-500 italic">Loading topics...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================ -->
+      <!-- TAB: TEAM & ROLES MANAGEMENT -->
+      <!-- ================================================================ -->
+      <section id="tab-team" class="tab-content hidden">
+        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold text-gray-900 font-display">Team & User Role Management</h2>
+            <p class="text-sm text-gray-500 mt-1">Admin suite for provisioning accounts with customized permissions: Admin, Editor(Blogs), Moderator, and Normal User.</p>
+          </div>
+        </div>
+
+        <!-- Role Overview Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          <div class="bg-emerald-50/60 border border-emerald-200/80 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-md bg-emerald-600 text-white flex items-center justify-center text-xs">
+                <span class="material-symbols-outlined text-[16px]">shield_person</span>
+              </span>
+              <h4 class="font-bold text-emerald-900 text-sm">Admin</h4>
+            </div>
+            <p class="text-xs text-emerald-800/80 leading-relaxed">Full super-admin permissions: Site content, blog publishing, team provisioning, and forum moderation.</p>
+          </div>
+
+          <div class="bg-blue-50/60 border border-blue-200/80 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-md bg-blue-600 text-white flex items-center justify-center text-xs">
+                <span class="material-symbols-outlined text-[16px]">edit_note</span>
+              </span>
+              <h4 class="font-bold text-blue-900 text-sm">Editor(Blogs)</h4>
+            </div>
+            <p class="text-xs text-blue-800/80 leading-relaxed">Focused publishing suite: Draft, publish, schedule blog articles, and manage featured image assets.</p>
+          </div>
+
+          <div class="bg-amber-50/60 border border-amber-200/80 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-md bg-amber-600 text-white flex items-center justify-center text-xs">
+                <span class="material-symbols-outlined text-[16px]">gavel</span>
+              </span>
+              <h4 class="font-bold text-amber-900 text-sm">Moderator</h4>
+            </div>
+            <p class="text-xs text-amber-800/80 leading-relaxed">Community safety suite: Pin topics, lock discussions, remove spam, and moderate member replies.</p>
+          </div>
+
+          <div class="bg-stone-50 border border-stone-200 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="w-6 h-6 rounded-md bg-stone-600 text-white flex items-center justify-center text-xs">
+                <span class="material-symbols-outlined text-[16px]">person</span>
+              </span>
+              <h4 class="font-bold text-stone-900 text-sm">Normal User</h4>
+            </div>
+            <p class="text-xs text-stone-700/80 leading-relaxed">Public member: Browse forum discussions; when logged in, create topics, reply, and react.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <!-- LEFT: Create Team Member Form -->
+          <div class="lg:col-span-4 bg-white rounded-2xl p-6 border border-gray-200 shadow-xs h-fit">
+            <div class="flex items-center gap-2 pb-4 mb-4 border-b border-gray-100">
+              <span class="material-symbols-outlined text-emerald-600">person_add</span>
+              <h3 class="font-bold text-gray-900 text-base">Provision New Account</h3>
+            </div>
+
+            <form id="createTeamUserForm" class="space-y-4">
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Full Name *</label>
+                <input type="text" id="newTeamName" required placeholder="e.g. Kasirye David" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Email Address *</label>
+                <input type="email" id="newTeamEmail" required placeholder="david@senga.org" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none">
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Assigned Role *</label>
+                <select id="newTeamRole" required class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm bg-white focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none">
+                  <option value="Admin">Admin (Full System Control)</option>
+                  <option value="Editor(Blogs)" selected>Editor(Blogs) (Blog Publishing & Media)</option>
+                  <option value="Moderator">Moderator (Forum Topics & Safety)</option>
+                  <option value="Normal User">Normal User (Community Member)</option>
+                </select>
+                <p class="text-[11px] text-gray-400 mt-1" id="roleDescHint">Can write, edit, and schedule blog articles.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold uppercase tracking-wider text-gray-600 mb-1">Temporary Password *</label>
+                <input type="password" id="newTeamPassword" required minlength="6" placeholder="At least 6 characters" class="w-full px-3.5 py-2.5 rounded-xl border border-gray-300 text-sm focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 outline-none">
+              </div>
+
+              <div id="createTeamMsg" class="hidden text-xs p-3 rounded-lg"></div>
+
+              <button type="submit" id="createTeamBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-2.5 rounded-xl text-sm transition-colors flex items-center justify-center gap-2">
+                <span class="material-symbols-outlined text-[18px]">add_moderator</span> Create Team Account
+              </button>
+            </form>
+          </div>
+
+          <!-- RIGHT: Team Members Directory -->
+          <div class="lg:col-span-8 bg-white rounded-2xl border border-gray-200 shadow-xs overflow-hidden">
+            <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50/50">
+              <div class="flex items-center gap-2">
+                <span class="material-symbols-outlined text-gray-500 text-[20px]">groups</span>
+                <span class="font-bold text-gray-800 text-sm">Team & Community Directory</span>
+                <span id="teamTotalBadge" class="text-xs bg-gray-200 text-gray-700 px-2 py-0.5 rounded-full font-bold">4 accounts</span>
+              </div>
+              <button id="refreshTeamBtn" class="text-xs text-gray-500 hover:text-gray-900 flex items-center gap-1">
+                <span class="material-symbols-outlined text-[16px]">sync</span> Refresh
+              </button>
+            </div>
+
+            <div class="overflow-x-auto">
+              <table class="w-full text-left text-xs">
+                <thead class="bg-gray-50 text-gray-600 font-semibold border-b border-gray-200">
+                  <tr>
+                    <th class="px-6 py-3.5">User / Member</th>
+                    <th class="px-6 py-3.5">Role</th>
+                    <th class="px-6 py-3.5">Status</th>
+                    <th class="px-6 py-3.5">Created Date</th>
+                    <th class="px-6 py-3.5 text-right">Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="teamMembersList" class="divide-y divide-gray-100">
+                  <tr>
+                    <td colspan="5" class="px-6 py-4 text-center text-gray-500 italic">Loading accounts...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
   </main>
 
   <script>
     import { supabase } from '../../lib/supabase.js';
 
-    // 1. Auth & Tabs
+    let currentUser = null;
+    let isAdminUser = false;
+    let allBlogsCache = [];
+    let currentFilterStatus = 'all';
+
+    let currentUserRole = 'Admin';
+
+    // 1. Auth & Session Guard
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data } = await supabase.auth.getSession();
+      const session = data?.session;
       if (!session) {
         window.location.href = '/admin/login';
-      } else {
-        document.getElementById('dashboardBody').classList.remove('hidden');
-        loadBlogs();
-        loadForumTopics();
+        return;
       }
+
+      currentUser = session.user;
+      const rawRole = currentUser?.user_metadata?.role || currentUser?.role || 'Admin';
+      
+      // Standardize role to one of the 4: 'Admin', 'Editor(Blogs)', 'Moderator', 'Normal User'
+      if (rawRole === 'admin' || rawRole === 'Admin') currentUserRole = 'Admin';
+      else if (rawRole === 'editor' || rawRole.includes('Editor')) currentUserRole = 'Editor(Blogs)';
+      else if (rawRole === 'moderator' || rawRole === 'Moderator') currentUserRole = 'Moderator';
+      else currentUserRole = 'Normal User';
+
+      isAdminUser = currentUserRole === 'Admin';
+
+      // Update UI Header
+      const email = currentUser?.email || 'admin@senga.org';
+      const sidebarEmail = document.getElementById('sidebarUserEmail');
+      const topEmail = document.getElementById('topUserEmail');
+      const sidebarRole = document.getElementById('sidebarUserRole');
+      const topRoleBadge = document.getElementById('topRoleBadge');
+      const avatar = document.getElementById('sidebarAvatar');
+      const memberNotice = document.getElementById('memberNotice');
+
+      if (sidebarEmail) sidebarEmail.textContent = email;
+      if (topEmail) topEmail.textContent = email;
+      if (avatar) avatar.textContent = email.charAt(0).toUpperCase();
+
+      if (sidebarRole) sidebarRole.textContent = currentUserRole;
+      if (topRoleBadge) {
+        topRoleBadge.textContent = currentUserRole;
+        if (currentUserRole === 'Admin') {
+          topRoleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 uppercase tracking-wider';
+        } else if (currentUserRole === 'Editor(Blogs)') {
+          topRoleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 uppercase tracking-wider';
+        } else if (currentUserRole === 'Moderator') {
+          topRoleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 uppercase tracking-wider';
+        } else {
+          topRoleBadge.className = 'text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-700 uppercase tracking-wider';
+        }
+      }
+
+      if (currentUserRole === 'Normal User') {
+        memberNotice?.classList.remove('hidden');
+      } else {
+        memberNotice?.classList.add('hidden');
+      }
+
+      document.getElementById('dashboardBody')?.classList.remove('hidden');
+      loadBlogs();
+      loadForumTopics();
+      loadTeamMembers();
     };
     checkAuth();
 
-    document.getElementById('logoutBtn').addEventListener('click', async () => {
+    // Account Switchers for quick testing
+    async function switchAccount(email, password) {
+      await supabase.auth.signInWithPassword({ email, password });
+      window.location.reload();
+    }
+
+    document.getElementById('switchAdminBtn')?.addEventListener('click', () => switchAccount('admin@senga.org', 'admin123'));
+    document.getElementById('switchEditorBtn')?.addEventListener('click', () => switchAccount('editor@senga.org', 'editor123'));
+    document.getElementById('switchModBtn')?.addEventListener('click', () => switchAccount('mod@senga.org', 'mod123'));
+    document.getElementById('switchUserBtn')?.addEventListener('click', () => switchAccount('user@senga.org', 'user123'));
+    document.getElementById('bannerSwitchAdminBtn')?.addEventListener('click', () => switchAccount('admin@senga.org', 'admin123'));
+
+    document.getElementById('logoutBtn')?.addEventListener('click', async () => {
       await supabase.auth.signOut();
       window.location.href = '/admin/login';
     });
 
+    // Tab Navigation
     const tabBtns = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
     tabBtns.forEach(btn => {
@@ -217,161 +864,656 @@ export const prerender = true;
         btn.classList.remove('text-stone-300');
 
         tabContents.forEach(content => content.classList.add('hidden'));
-        document.getElementById(btn.dataset.target).classList.remove('hidden');
+        if (btn.dataset.target) {
+          document.getElementById(btn.dataset.target)?.classList.remove('hidden');
+        }
       });
     });
 
-    // 2. Text Overrides
-    document.getElementById('textOverrideForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const page = document.getElementById('textPage').value;
-      const key = document.getElementById('textKey').value;
-      const val = document.getElementById('textValue').value;
+    // =========================================================================
+    // 2. BLOG PUBLISHING SUITE LOGIC
+    // =========================================================================
 
-      const { error } = await supabase.from('content_blocks').upsert({
-        page: page,
-        block_key: key,
-        value: val,
-        kind: 'text'
-      }, { onConflict: 'page,block_key' });
+    const titleInput = document.getElementById('title') as HTMLInputElement;
+    const slugPreview = document.getElementById('slugPreview');
+    const contentTextarea = document.getElementById('content') as HTMLTextAreaElement;
+    const visualEditor = document.getElementById('visualEditor') as HTMLDivElement;
+    const wpVisualToolbar = document.getElementById('wpVisualToolbar');
+    const wpTabVisual = document.getElementById('wpTabVisual');
+    const wpTabText = document.getElementById('wpTabText');
+    const wpFormatSelect = document.getElementById('wpFormatSelect') as HTMLSelectElement;
+    const wpInsertLinkBtn = document.getElementById('wpInsertLinkBtn');
+    let isVisualModeActive = true;
 
-      const status = document.getElementById('textStatus');
-      if (error) {
-        status.textContent = 'Error: ' + error.message;
-        status.classList.remove('text-emerald-600');
-        status.classList.add('text-red-500');
-      } else {
-        status.textContent = 'Saved successfully!';
-        status.classList.remove('text-red-500');
-        status.classList.add('text-emerald-600');
-      }
-      status.classList.remove('hidden');
-      setTimeout(() => status.classList.add('hidden'), 3000);
+    const categorySelect = document.getElementById('categorySelect') as HTMLSelectElement;
+    const openNewCategoryBtn = document.getElementById('openNewCategoryBtn');
+    const newCategoryBox = document.getElementById('newCategoryBox');
+    const newCategoryInput = document.getElementById('newCategoryInput') as HTMLInputElement;
+    const saveNewCategoryBtn = document.getElementById('saveNewCategoryBtn');
+    const cancelNewCategoryBtn = document.getElementById('cancelNewCategoryBtn');
+    const newCategoryError = document.getElementById('newCategoryError');
+
+    const authorSelect = document.getElementById('authorSelect') as HTMLSelectElement;
+    const authorInput = document.getElementById('authorInput') as HTMLInputElement;
+    const excerptInput = document.getElementById('excerptInput') as HTMLTextAreaElement;
+    const imageUrlInput = document.getElementById('imageUrl') as HTMLInputElement;
+    const coverFileInput = document.getElementById('coverFileInput') as HTMLInputElement;
+    const coverPreviewImg = document.getElementById('coverPreviewImg') as HTMLImageElement;
+    const scheduledAtInput = document.getElementById('scheduledAtInput') as HTMLInputElement;
+    const schedulePickerContainer = document.getElementById('schedulePickerContainer');
+    const saveBtn = document.getElementById('saveBtn') as HTMLButtonElement;
+    const deleteBtn = document.getElementById('deleteBtn') as HTMLButtonElement;
+    const viewLiveLink = document.getElementById('viewLiveLink') as HTMLAnchorElement;
+    const publishStatusMsg = document.getElementById('publishStatusMsg');
+
+    // Auto slug generator
+    titleInput?.addEventListener('input', () => {
+      const slug = titleInput.value.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      if (slugPreview) slugPreview.textContent = slug || 'article-slug';
     });
 
-    // 3. Hero Sliders Upload
-    document.getElementById('heroSliderForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const slide = document.getElementById('slideSelect').value;
-      const fileInput = document.getElementById('heroFile');
-      const file = fileInput.files[0];
-      const status = document.getElementById('heroStatus');
-      const btn = document.getElementById('heroBtn');
+    // =========================================================================
+    // DYNAMIC CATEGORY CREATION
+    // =========================================================================
+    function loadCustomCategories() {
+      try {
+        const stored = localStorage.getItem('bos_custom_categories');
+        if (stored) {
+          const list = JSON.parse(stored);
+          if (Array.isArray(list)) {
+            list.forEach((cat: string) => {
+              if (cat && !Array.from(categorySelect.options).some(o => o.value === cat)) {
+                const opt = document.createElement('option');
+                opt.value = cat;
+                opt.textContent = cat;
+                categorySelect.appendChild(opt);
+              }
+            });
+          }
+        }
+      } catch (e) {}
+    }
+    loadCustomCategories();
 
-      if (!file) return alert('Please select a file');
+    openNewCategoryBtn?.addEventListener('click', () => {
+      newCategoryBox?.classList.toggle('hidden');
+      if (!newCategoryBox?.classList.contains('hidden')) {
+        newCategoryInput?.focus();
+      }
+    });
 
-      btn.disabled = true;
-      status.textContent = 'Uploading...';
-      status.classList.remove('hidden');
+    cancelNewCategoryBtn?.addEventListener('click', () => {
+      newCategoryBox?.classList.add('hidden');
+      if (newCategoryInput) newCategoryInput.value = '';
+      if (newCategoryError) newCategoryError.classList.add('hidden');
+    });
 
-      const fileName = `${Date.now()}_${file.name}`;
-      const { data: uploadData, error: uploadError } = await supabase.storage.from('site-images').upload(fileName, file);
-
-      if (uploadError) {
-        status.textContent = 'Upload failed: ' + uploadError.message;
-        btn.disabled = false;
+    saveNewCategoryBtn?.addEventListener('click', () => {
+      const name = newCategoryInput?.value.trim();
+      if (!name) {
+        if (newCategoryError) {
+          newCategoryError.textContent = 'Please enter a category name.';
+          newCategoryError.classList.remove('hidden');
+        }
         return;
       }
 
-      const { data: { publicUrl } } = supabase.storage.from('site-images').getPublicUrl(fileName);
-
-      const { error: dbError } = await supabase.from('content_blocks').upsert({
-        page: 'home',
-        block_key: slide,
-        value: publicUrl,
-        kind: 'image'
-      }, { onConflict: 'page,block_key' });
-
-      if (dbError) {
-        status.textContent = 'DB Save failed: ' + dbError.message;
-      } else {
-        status.textContent = 'Slide updated successfully!';
-        fileInput.value = '';
+      // Add to select
+      if (!Array.from(categorySelect.options).some(o => o.value.toLowerCase() === name.toLowerCase())) {
+        const opt = document.createElement('option');
+        opt.value = name;
+        opt.textContent = name;
+        categorySelect.appendChild(opt);
       }
-      btn.disabled = false;
-      setTimeout(() => status.classList.add('hidden'), 4000);
+      categorySelect.value = name;
+
+      // Persist
+      try {
+        const stored = localStorage.getItem('bos_custom_categories');
+        const list = stored ? JSON.parse(stored) : [];
+        if (!list.includes(name)) {
+          list.push(name);
+          localStorage.setItem('bos_custom_categories', JSON.stringify(list));
+        }
+      } catch (e) {}
+
+      // Reset UI
+      if (newCategoryInput) newCategoryInput.value = '';
+      if (newCategoryError) newCategoryError.classList.add('hidden');
+      newCategoryBox?.classList.add('hidden');
     });
 
-    // 4. Blog Ingestion
+    // =========================================================================
+    // AUTHOR DROPDOWN POPULATION (ADMIN'S TEAM ONLY)
+    // =========================================================================
+    function populateAuthorDropdown(teamList: any[]) {
+      if (!authorSelect) return;
+      const currentVal = authorInput?.value || authorSelect.value || 'BOS Editorial Team';
+      
+      // Clear options
+      authorSelect.innerHTML = '';
+
+      // 1. General Editorial option
+      const generalOpt = document.createElement('option');
+      generalOpt.value = 'BOS Editorial Team';
+      generalOpt.textContent = 'BOS Editorial Team';
+      authorSelect.appendChild(generalOpt);
+
+      // 2. Filter only Admin's team (Admin, Editor(Blogs), Moderator). Exclude 'Normal User'.
+      const adminTeam = (teamList || []).filter(m => m.role === 'Admin' || m.role === 'Editor(Blogs)' || m.role === 'Moderator');
+
+      adminTeam.forEach(m => {
+        const opt = document.createElement('option');
+        opt.value = m.full_name;
+        opt.textContent = `${m.full_name} (${m.role})`;
+        authorSelect.appendChild(opt);
+      });
+
+      // Restore previously selected or custom author
+      if (currentVal) {
+        const exists = Array.from(authorSelect.options).some(o => o.value === currentVal);
+        if (!exists) {
+          const customOpt = document.createElement('option');
+          customOpt.value = currentVal;
+          customOpt.textContent = currentVal;
+          authorSelect.appendChild(customOpt);
+        }
+        authorSelect.value = currentVal;
+      }
+    }
+
+    authorSelect?.addEventListener('change', () => {
+      if (authorInput) authorInput.value = authorSelect.value;
+    });
+
+    // =========================================================================
+    // WORDPRESS-STYLE WYSIWYG EDITOR LOGIC
+    // =========================================================================
+
+    // Visual vs Text Tab Switching
+    function setWpEditorMode(visual: boolean) {
+      isVisualModeActive = visual;
+      if (visual) {
+        // Sync HTML from textarea into Visual editor
+        if (visualEditor && contentTextarea) {
+          visualEditor.innerHTML = contentTextarea.value || '<p><br></p>';
+        }
+        visualEditor?.classList.remove('hidden');
+        wpVisualToolbar?.classList.remove('hidden');
+        contentTextarea?.classList.add('hidden');
+
+        wpTabVisual?.classList.add('bg-white', 'text-gray-800', 'shadow-2xs');
+        wpTabVisual?.classList.remove('text-gray-500');
+        wpTabText?.classList.remove('bg-white', 'text-gray-800', 'shadow-2xs');
+        wpTabText?.classList.add('text-gray-500');
+      } else {
+        // Sync Visual editor content into Text (HTML) textarea
+        if (visualEditor && contentTextarea) {
+          contentTextarea.value = visualEditor.innerHTML;
+        }
+        visualEditor?.classList.add('hidden');
+        wpVisualToolbar?.classList.add('hidden');
+        contentTextarea?.classList.remove('hidden');
+
+        wpTabText?.classList.add('bg-white', 'text-gray-800', 'shadow-2xs');
+        wpTabText?.classList.remove('text-gray-500');
+        wpTabVisual?.classList.remove('bg-white', 'text-gray-800', 'shadow-2xs');
+        wpTabVisual?.classList.add('text-gray-500');
+      }
+    }
+
+    wpTabVisual?.addEventListener('click', () => setWpEditorMode(true));
+    wpTabText?.addEventListener('click', () => setWpEditorMode(false));
+
+    // Live two-way sync
+    visualEditor?.addEventListener('input', () => {
+      if (contentTextarea) contentTextarea.value = visualEditor.innerHTML;
+    });
+    contentTextarea?.addEventListener('input', () => {
+      if (visualEditor && !isVisualModeActive) visualEditor.innerHTML = contentTextarea.value;
+    });
+
+    // Format selection dropdown (Paragraph, H2, H3, H4, Quote, Pre)
+    wpFormatSelect?.addEventListener('change', () => {
+      const val = wpFormatSelect.value;
+      document.execCommand('formatBlock', false, `<${val}>`);
+      if (contentTextarea && visualEditor) contentTextarea.value = visualEditor.innerHTML;
+      visualEditor?.focus();
+    });
+
+    // Formatting Toolbar Buttons
+    document.querySelectorAll('.wp-tool-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const target = (e.currentTarget as HTMLElement);
+        const cmd = target.dataset.cmd;
+        const arg = target.dataset.arg || null;
+        if (!cmd) return;
+
+        document.execCommand(cmd, false, arg);
+        if (contentTextarea && visualEditor) contentTextarea.value = visualEditor.innerHTML;
+        visualEditor?.focus();
+      });
+    });
+
+    // Insert Link Button
+    wpInsertLinkBtn?.addEventListener('click', () => {
+      const url = prompt('Enter the link URL (e.g. https://senga.org/community):');
+      if (url) {
+        document.execCommand('createLink', false, url);
+        if (contentTextarea && visualEditor) contentTextarea.value = visualEditor.innerHTML;
+        visualEditor?.focus();
+      }
+    });
+
+    // In-Post Image Inserter Drawer
+    const insertImageBtn = document.getElementById('insertImageBtn');
+    const inPostImageDrawer = document.getElementById('inPostImageDrawer');
+    const closeImageDrawerBtn = document.getElementById('closeImageDrawerBtn');
+    const confirmInsertImageBtn = document.getElementById('confirmInsertImageBtn');
+    const inPostFileInput = document.getElementById('inPostFileInput') as HTMLInputElement;
+    const inPostUrlInput = document.getElementById('inPostUrlInput') as HTMLInputElement;
+    const inPostCaptionInput = document.getElementById('inPostCaptionInput') as HTMLInputElement;
+    const inPostAltInput = document.getElementById('inPostAltInput') as HTMLInputElement;
+
+    insertImageBtn?.addEventListener('click', () => {
+      inPostImageDrawer?.classList.toggle('hidden');
+    });
+    closeImageDrawerBtn?.addEventListener('click', () => {
+      inPostImageDrawer?.classList.add('hidden');
+    });
+
+    confirmInsertImageBtn?.addEventListener('click', async () => {
+      let finalImgUrl = inPostUrlInput?.value.trim();
+      const file = inPostFileInput?.files?.[0];
+
+      if (file) {
+        const filePath = `inpost_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+        const { data } = await supabase.storage.from('site-images').upload(filePath, file);
+        finalImgUrl = data?.publicUrl || supabase.storage.from('site-images').getPublicUrl(filePath).data.publicUrl;
+      }
+
+      if (!finalImgUrl) {
+        alert('Please select a file or enter an image URL.');
+        return;
+      }
+
+      const caption = inPostCaptionInput?.value.trim();
+      const alt = inPostAltInput?.value.trim() || caption || 'Article photo';
+
+      const htmlSnippet = `<figure class="my-6 block"><img src="${finalImgUrl}" alt="${alt}" class="w-full rounded-2xl shadow-md border border-stone-200" />${caption ? `<figcaption class="text-xs text-stone-500 text-center mt-2 italic">${caption}</figcaption>` : ''}</figure><p><br></p>`;
+
+      if (isVisualModeActive && visualEditor) {
+        visualEditor.focus();
+        document.execCommand('insertHTML', false, htmlSnippet);
+        if (contentTextarea) contentTextarea.value = visualEditor.innerHTML;
+      } else if (contentTextarea) {
+        insertAtCursor(contentTextarea, '\n' + htmlSnippet + '\n');
+      }
+
+      inPostImageDrawer?.classList.add('hidden');
+      if (inPostFileInput) inPostFileInput.value = '';
+      if (inPostUrlInput) inPostUrlInput.value = '';
+      if (inPostCaptionInput) inPostCaptionInput.value = '';
+      if (inPostAltInput) inPostAltInput.value = '';
+    });
+
+    // Formatting Cursor Helper for raw textarea
+    function insertAtCursor(textarea: HTMLTextAreaElement, text: string) {
+      if (!textarea) return;
+      const start = textarea.selectionStart || textarea.value.length;
+      const end = textarea.selectionEnd || textarea.value.length;
+      const before = textarea.value.substring(0, start);
+      const after = textarea.value.substring(end);
+      textarea.value = before + text + after;
+      textarea.selectionStart = textarea.selectionEnd = start + text.length;
+      textarea.focus();
+    }
+
+    // Mode Toggle: Publish Now / Schedule / Draft
+    const publishModeRadios = document.querySelectorAll('input[name="publishMode"]');
+    function updatePublishModeUI() {
+      const selected = (document.querySelector('input[name="publishMode"]:checked') as HTMLInputElement)?.value;
+      const cards = document.querySelectorAll('.publish-mode-card');
+      cards.forEach(c => {
+        c.classList.remove('border-emerald-500');
+        c.classList.add('border-gray-200');
+      });
+
+      const activeRadio = document.querySelector(`input[name="publishMode"][value="${selected}"]`);
+      activeRadio?.closest('.publish-mode-card')?.classList.add('border-emerald-500');
+      activeRadio?.closest('.publish-mode-card')?.classList.remove('border-gray-200');
+
+      if (selected === 'schedule') {
+        schedulePickerContainer?.classList.remove('hidden');
+        if (saveBtn) saveBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">schedule_send</span> Schedule Article';
+        // Set default future date if empty (tomorrow at 9:00 AM)
+        if (scheduledAtInput && !scheduledAtInput.value) {
+          const tomorrow = new Date();
+          tomorrow.setDate(tomorrow.getDate() + 1);
+          tomorrow.setHours(9, 0, 0, 0);
+          scheduledAtInput.value = tomorrow.toISOString().slice(0, 16);
+        }
+      } else if (selected === 'draft') {
+        schedulePickerContainer?.classList.add('hidden');
+        if (saveBtn) saveBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">save</span> Save as Draft';
+      } else {
+        schedulePickerContainer?.classList.add('hidden');
+        if (saveBtn) saveBtn.innerHTML = '<span class="material-symbols-outlined text-[16px]">rocket_launch</span> Publish Article Now';
+      }
+    }
+
+    publishModeRadios.forEach(radio => {
+      radio.addEventListener('change', updatePublishModeUI);
+    });
+
+    // Featured Image file upload & preview
+    coverFileInput?.addEventListener('change', async (e: any) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+
+      const status = document.getElementById('coverUploadStatus');
+      if (status) {
+        status.textContent = 'Uploading cover image...';
+        status.classList.remove('hidden');
+      }
+
+      const filePath = `cover_${Date.now()}_${file.name.replace(/[^a-zA-Z0-9.]/g, '_')}`;
+      const { data, error } = await supabase.storage.from('site-images').upload(filePath, file);
+
+      if (error) {
+        if (status) status.textContent = 'Upload error: ' + error.message;
+      } else {
+        const publicUrl = data?.publicUrl || (supabase.storage.from('site-images').getPublicUrl(filePath).data.publicUrl);
+        if (imageUrlInput) imageUrlInput.value = publicUrl;
+        if (coverPreviewImg) coverPreviewImg.src = publicUrl;
+        if (status) {
+          status.textContent = '✓ Cover uploaded successfully!';
+          setTimeout(() => status?.classList.add('hidden'), 3000);
+        }
+      }
+    });
+
+    imageUrlInput?.addEventListener('input', () => {
+      if (coverPreviewImg && imageUrlInput.value) {
+        coverPreviewImg.src = imageUrlInput.value;
+      }
+    });
+
+    // Live Preview Toggle
+    const editModeBtn = document.getElementById('editModeBtn');
+    const previewModeBtn = document.getElementById('previewModeBtn');
+    const editPane = document.getElementById('editPane');
+    const previewPane = document.getElementById('previewPane');
+
+    editModeBtn?.addEventListener('click', () => {
+      editModeBtn.classList.add('bg-white', 'text-gray-800', 'shadow-xs');
+      editModeBtn.classList.remove('text-gray-600');
+      previewModeBtn?.classList.remove('bg-white', 'text-gray-800', 'shadow-xs');
+      previewModeBtn?.classList.add('text-gray-600');
+      editPane?.classList.remove('hidden');
+      previewPane?.classList.add('hidden');
+    });
+
+    previewModeBtn?.addEventListener('click', () => {
+      previewModeBtn.classList.add('bg-white', 'text-gray-800', 'shadow-xs');
+      previewModeBtn.classList.remove('text-gray-600');
+      editModeBtn?.classList.remove('bg-white', 'text-gray-800', 'shadow-xs');
+      editModeBtn?.classList.add('text-gray-600');
+      editPane?.classList.add('hidden');
+      previewPane?.classList.remove('hidden');
+
+      // Populate preview
+      const previewTitle = document.getElementById('previewTitle');
+      const previewCategoryBadge = document.getElementById('previewCategoryBadge');
+      const previewAuthor = document.getElementById('previewAuthor');
+      const previewFeaturedImg = document.getElementById('previewFeaturedImg') as HTMLImageElement;
+      const previewBody = document.getElementById('previewBody');
+
+      if (previewTitle) previewTitle.textContent = titleInput?.value || 'Untitled Article';
+      if (previewCategoryBadge) previewCategoryBadge.textContent = categorySelect?.value || 'Community Post';
+      if (previewAuthor) previewAuthor.textContent = authorInput?.value || 'BOS Editorial Team';
+      if (previewFeaturedImg) previewFeaturedImg.src = imageUrlInput?.value || '/blog_soil.png';
+      if (previewBody) previewBody.innerHTML = contentTextarea?.value || '<p class="italic text-gray-400">Write content to see preview...</p>';
+    });
+
+    // Load and Render Articles in Directory
     const loadBlogs = async () => {
       const { data: blogs, error } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
+      allBlogsCache = blogs || [];
+      renderBlogList();
+    };
+
+    function renderBlogList() {
       const listEl = document.getElementById('blogList');
-      
-      if (error || blogs.length === 0) {
-        listEl.innerHTML = `<p class="text-sm text-gray-500 italic px-2">No posts found.</p>`;
+      const totalCountEl = document.getElementById('postsTotalCount');
+      if (!listEl) return;
+
+      const searchVal = (document.getElementById('blogSearchInput') as HTMLInputElement)?.value.toLowerCase().trim() || '';
+
+      let filtered = allBlogsCache.filter(b => {
+        // Status filter
+        if (currentFilterStatus === 'published' && !b.is_published) return false;
+        if (currentFilterStatus === 'scheduled' && b.status !== 'scheduled') return false;
+        if (currentFilterStatus === 'draft' && b.status !== 'draft') return false;
+
+        // Search filter
+        if (searchVal) {
+          const title = (b.title || '').toLowerCase();
+          const category = (b.category || '').toLowerCase();
+          if (!title.includes(searchVal) && !category.includes(searchVal)) return false;
+        }
+        return true;
+      });
+
+      if (totalCountEl) totalCountEl.textContent = `${filtered.length} articles`;
+
+      if (filtered.length === 0) {
+        listEl.innerHTML = `<div class="p-6 text-center text-xs text-gray-400 italic">No articles match the current filter.</div>`;
         return;
       }
 
-      listEl.innerHTML = blogs.map(blog => `
-        <button class="w-full text-left p-3 rounded-xl hover:bg-gray-50 transition-colors flex items-center justify-between group edit-blog-btn" data-id="${blog.id}">
-          <div class="overflow-hidden">
-            <p class="font-medium text-sm text-gray-800 truncate">${blog.title}</p>
-            <p class="text-[11px] text-gray-400 mt-0.5">${new Date(blog.created_at).toLocaleDateString()}</p>
+      listEl.innerHTML = filtered.map(blog => {
+        let statusBadge = '';
+        if (blog.is_published) {
+          statusBadge = '<span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Live</span>';
+        } else if (blog.status === 'scheduled') {
+          const dateStr = blog.scheduled_at ? new Date(blog.scheduled_at).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) : 'Future';
+          statusBadge = `<span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800"><span class="material-symbols-outlined text-[11px]">schedule</span> ${dateStr}</span>`;
+        } else {
+          statusBadge = '<span class="inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded-full bg-stone-100 text-stone-700">Draft</span>';
+        }
+
+        const dateDisplay = new Date(blog.created_at || Date.now()).toLocaleDateString();
+
+        return `
+          <div class="p-3 rounded-xl hover:bg-gray-50/80 transition-all border border-transparent hover:border-gray-200 cursor-pointer flex gap-3 items-start group edit-blog-item" data-id="${blog.id}">
+            <img src="${blog.image_url || '/blog_soil.png'}" alt="Thumb" class="w-12 h-12 rounded-lg object-cover flex-shrink-0 bg-stone-100 border border-gray-200">
+            <div class="flex-grow min-w-0">
+              <div class="flex items-center justify-between gap-1 mb-1">
+                <span class="text-[10px] font-semibold text-gray-400 uppercase truncate">${blog.category || 'Story'}</span>
+                ${statusBadge}
+              </div>
+              <h4 class="font-bold text-xs text-gray-800 truncate group-hover:text-primary transition-colors">${blog.title}</h4>
+              <p class="text-[11px] text-gray-400 mt-0.5">${dateDisplay} &bull; ${blog.views_count || 0} views</p>
+            </div>
           </div>
-          ${blog.is_published ? '<span class="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0"></span>' : '<span class="w-2 h-2 rounded-full bg-gray-300 flex-shrink-0"></span>'}
-        </button>
-      `).join('');
+        `;
+      }).join('');
 
-      document.querySelectorAll('.edit-blog-btn').forEach(btn => {
-        btn.addEventListener('click', () => openEditor(blogs.find(b => b.id === btn.dataset.id)));
+      document.querySelectorAll('.edit-blog-item').forEach(item => {
+        item.addEventListener('click', () => {
+          const blog = allBlogsCache.find(b => b.id === (item as HTMLElement).dataset.id);
+          if (blog) openEditor(blog);
+        });
       });
-    };
+    }
 
-    const openEditor = (blog = null) => {
-      const form = document.getElementById('postForm');
-      if (blog) {
-        document.getElementById('editorTitle').textContent = 'Edit Post';
-        document.getElementById('postId').value = blog.id;
-        document.getElementById('title').value = blog.title;
-        document.getElementById('imageUrl').value = blog.image_url || '';
-        document.getElementById('content').value = blog.content;
-        document.getElementById('published').checked = blog.is_published;
-        document.getElementById('saveBtn').textContent = 'Update Post';
-        document.getElementById('deleteBtn').classList.remove('hidden');
-      } else {
-        document.getElementById('editorTitle').textContent = 'Create New Post';
-        form.reset();
-        document.getElementById('postId').value = '';
-        document.getElementById('imageUrl').value = '';
-        document.getElementById('saveBtn').textContent = 'Save Post';
-        document.getElementById('deleteBtn').classList.add('hidden');
-      }
-    };
-
-    // Blog Image Upload listener
-    document.getElementById('blogImageFile').addEventListener('change', async (e) => {
-      const file = e.target.files[0];
-      if (!file) return;
-      const status = document.getElementById('blogImgStatus');
-      status.textContent = 'Uploading cover image...';
-      status.classList.remove('hidden');
-      
-      const fileName = `blog_${Date.now()}_${file.name}`;
-      const { data, error } = await supabase.storage.from('site-images').upload(fileName, file);
-      
-      if (error) {
-        status.textContent = 'Failed: ' + error.message;
-      } else {
-        const { data: { publicUrl } } = supabase.storage.from('site-images').getPublicUrl(fileName);
-        document.getElementById('imageUrl').value = publicUrl;
-        status.textContent = 'Uploaded successfully!';
-      }
+    // Status filter buttons
+    document.querySelectorAll('.status-filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.status-filter-btn').forEach(b => {
+          b.classList.remove('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+          b.classList.add('text-gray-600');
+        });
+        const target = e.currentTarget as HTMLElement;
+        target.classList.add('bg-emerald-50', 'text-emerald-800', 'border-emerald-200');
+        target.classList.remove('text-gray-600');
+        currentFilterStatus = target.dataset.status || 'all';
+        renderBlogList();
+      });
     });
 
-    document.getElementById('postForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const id = document.getElementById('postId').value;
-      const title = document.getElementById('title').value;
-      const content = document.getElementById('content').value;
-      const imageUrl = document.getElementById('imageUrl').value;
-      const published = document.getElementById('published').checked;
-      
-      let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
-      const postData = { title, slug, content, image_url: imageUrl, is_published: published };
+    document.getElementById('blogSearchInput')?.addEventListener('input', () => renderBlogList());
 
-      const saveBtn = document.getElementById('saveBtn');
+    // Open Editor with specific blog (or reset for new)
+    const openEditor = (blog: any = null) => {
+      const editorTitle = document.getElementById('editorTitle');
+      const form = document.getElementById('postForm') as HTMLFormElement;
+      
+      // Switch to Editor pane
+      editModeBtn?.click();
+
+      if (blog) {
+        if (editorTitle) editorTitle.textContent = 'Edit Article: ' + blog.title;
+        (document.getElementById('postId') as HTMLInputElement).value = blog.id;
+        if (titleInput) titleInput.value = blog.title || '';
+        if (slugPreview) slugPreview.textContent = blog.slug || '';
+        
+        // Category handling
+        const cat = blog.category || 'The Story of Senga';
+        if (categorySelect) {
+          if (!Array.from(categorySelect.options).some(o => o.value === cat)) {
+            const opt = document.createElement('option');
+            opt.value = cat;
+            opt.textContent = cat;
+            categorySelect.appendChild(opt);
+          }
+          categorySelect.value = cat;
+        }
+
+        // Author handling
+        const aut = blog.author || 'BOS Editorial Team';
+        if (authorInput) authorInput.value = aut;
+        if (authorSelect) {
+          if (!Array.from(authorSelect.options).some(o => o.value === aut)) {
+            const opt = document.createElement('option');
+            opt.value = aut;
+            opt.textContent = aut;
+            authorSelect.appendChild(opt);
+          }
+          authorSelect.value = aut;
+        }
+
+        if (excerptInput) excerptInput.value = blog.excerpt || '';
+        if (imageUrlInput) imageUrlInput.value = blog.image_url || '/blog_soil.png';
+        if (coverPreviewImg) coverPreviewImg.src = blog.image_url || '/blog_soil.png';
+        
+        // Populate WYSIWYG
+        const blogContent = blog.content || '<p><br></p>';
+        if (contentTextarea) contentTextarea.value = blogContent;
+        if (visualEditor) visualEditor.innerHTML = blogContent;
+        setWpEditorMode(true);
+
+        // Status Mode radio
+        if (blog.is_published) {
+          (document.querySelector('input[name="publishMode"][value="publish_now"]') as HTMLInputElement).checked = true;
+        } else if (blog.status === 'scheduled') {
+          (document.querySelector('input[name="publishMode"][value="schedule"]') as HTMLInputElement).checked = true;
+          if (scheduledAtInput && blog.scheduled_at) {
+            scheduledAtInput.value = new Date(blog.scheduled_at).toISOString().slice(0, 16);
+          }
+        } else {
+          (document.querySelector('input[name="publishMode"][value="draft"]') as HTMLInputElement).checked = true;
+        }
+
+        deleteBtn?.classList.remove('hidden');
+        if (viewLiveLink) {
+          viewLiveLink.classList.remove('hidden');
+          viewLiveLink.href = `/blog/${blog.slug}?preview=true`;
+        }
+      } else {
+        if (editorTitle) editorTitle.textContent = 'Create New Article';
+        form?.reset();
+        (document.getElementById('postId') as HTMLInputElement).value = '';
+        if (imageUrlInput) imageUrlInput.value = '/blog_soil.png';
+        if (coverPreviewImg) coverPreviewImg.src = '/blog_soil.png';
+        if (authorSelect) authorSelect.value = 'BOS Editorial Team';
+        if (authorInput) authorInput.value = 'BOS Editorial Team';
+        if (slugPreview) slugPreview.textContent = 'new-article-slug';
+        if (contentTextarea) contentTextarea.value = '<p>Write your article here...</p>';
+        if (visualEditor) visualEditor.innerHTML = '<p>Write your article here...</p>';
+        setWpEditorMode(true);
+        (document.querySelector('input[name="publishMode"][value="publish_now"]') as HTMLInputElement).checked = true;
+        deleteBtn?.classList.add('hidden');
+        viewLiveLink?.classList.add('hidden');
+      }
+
+      updatePublishModeUI();
+    };
+
+    document.getElementById('newPostBtn')?.addEventListener('click', () => openEditor());
+
+    // Save Article Submit Handler
+    document.getElementById('postForm')?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const id = (document.getElementById('postId') as HTMLInputElement)?.value;
+      const title = titleInput.value.trim();
+      
+      // Get content from Visual or Text depending on mode
+      let content = isVisualModeActive ? (visualEditor?.innerHTML || '') : (contentTextarea?.value || '');
+      if (!content.trim() || content === '<p><br></p>') {
+        content = contentTextarea?.value || '';
+      }
+      if (contentTextarea) contentTextarea.value = content;
+      if (visualEditor) visualEditor.innerHTML = content;
+
+      const imageUrl = imageUrlInput.value.trim() || '/blog_soil.png';
+      const category = categorySelect.value || 'The Story of Senga';
+      const author = (authorSelect?.value || authorInput?.value || 'BOS Editorial Team').trim();
+      const excerpt = excerptInput.value.trim() || content.replace(/<[^>]*>/g, ' ').slice(0, 140) + '...';
+      const publishMode = (document.querySelector('input[name="publishMode"]:checked') as HTMLInputElement)?.value;
+
+      let isPublished = false;
+      let status = 'draft';
+      let scheduledAt = null;
+
+      if (publishMode === 'publish_now') {
+        isPublished = true;
+        status = 'published';
+      } else if (publishMode === 'schedule') {
+        status = 'scheduled';
+        isPublished = false;
+        scheduledAt = scheduledAtInput?.value ? new Date(scheduledAtInput.value).toISOString() : new Date(Date.now() + 86400000).toISOString();
+      } else {
+        status = 'draft';
+        isPublished = false;
+      }
+
+      let slug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)+/g, '');
+      if (!slug) slug = `post-${Date.now()}`;
+
+      const postData: any = {
+        title,
+        slug,
+        category,
+        author,
+        excerpt,
+        content,
+        image_url: imageUrl,
+        status,
+        is_published: isPublished,
+        scheduled_at: scheduledAt,
+        updated_at: new Date().toISOString()
+      };
+
+      if (!id) {
+        postData.created_at = new Date().toISOString();
+        postData.views_count = 0;
+      }
+
       saveBtn.disabled = true;
-      saveBtn.textContent = 'Saving...';
+      saveBtn.innerHTML = '<span class="material-symbols-outlined animate-spin text-[16px]">progress_activity</span> Saving...';
 
       let result;
       if (id) {
@@ -380,57 +1522,377 @@ export const prerender = true;
         result = await supabase.from('blogs').insert([postData]);
       }
 
-      if (result.error) alert("Error saving: " + result.error.message);
-      else {
-        openEditor();
-        loadBlogs();
-      }
       saveBtn.disabled = false;
+      updatePublishModeUI();
+
+      if (result.error) {
+        alert('Save Error: ' + result.error.message);
+      } else {
+        if (publishStatusMsg) {
+          publishStatusMsg.textContent = isPublished 
+            ? '✓ Article published successfully and pushed live!' 
+            : (status === 'scheduled' ? `✓ Article scheduled for ${new Date(scheduledAt).toLocaleString()}!` : '✓ Draft saved successfully!');
+          publishStatusMsg.className = 'text-xs font-semibold text-center mt-2 text-emerald-600';
+          publishStatusMsg.classList.remove('hidden');
+          setTimeout(() => publishStatusMsg?.classList.add('hidden'), 4000);
+        }
+
+        await loadBlogs();
+        // If updating, refresh form with latest blog data
+        if (id) {
+          const updated = allBlogsCache.find(b => b.id === id);
+          if (updated) openEditor(updated);
+        } else {
+          openEditor();
+        }
+      }
     });
 
-    document.getElementById('deleteBtn').addEventListener('click', async () => {
-      if (confirm('Delete this post? This cannot be undone.')) {
-        await supabase.from('blogs').delete().eq('id', document.getElementById('postId').value);
+    // Delete Article Handler
+    deleteBtn?.addEventListener('click', async () => {
+      const id = (document.getElementById('postId') as HTMLInputElement)?.value;
+      if (!id) return;
+      if (confirm('Are you sure you want to permanently delete this article? This action cannot be undone.')) {
+        await supabase.from('blogs').delete().eq('id', id);
         openEditor();
         loadBlogs();
       }
     });
 
-    document.getElementById('newPostBtn').addEventListener('click', () => openEditor());
+    // =========================================================================
+    // 3. FORUM CONTROL & MODERATION LOGIC
+    // =========================================================================
+    let allForumTopicsCache = [];
+    let currentForumFilter = 'all';
 
-    // 5. Forum Moderator
     const loadForumTopics = async () => {
       const { data: topics, error } = await supabase.from('forum_topics').select('*').order('created_at', { ascending: false });
       const tbody = document.getElementById('forumList');
+      if (!tbody) return;
       
-      if (error || topics.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="4" class="px-6 py-4 text-center text-gray-500">No topics found.</td></tr>`;
+      allForumTopicsCache = topics || [];
+
+      // Calculate and update metrics
+      const totalCount = allForumTopicsCache.length;
+      const pinnedCount = allForumTopicsCache.filter(t => t.is_pinned).length;
+      const lockedCount = allForumTopicsCache.filter(t => t.is_locked).length;
+      const totalReactions = allForumTopicsCache.reduce((acc, t) => acc + (t.likes_count || 0) + (t.helpful_count || 0) + (t.insightful_count || 0), 0);
+
+      const metricTotal = document.getElementById('forumMetricTotal');
+      const metricPinned = document.getElementById('forumMetricPinned');
+      const metricLocked = document.getElementById('forumMetricLocked');
+      const metricReactions = document.getElementById('forumMetricReactions');
+      const badgeCount = document.getElementById('forumTopicsBadgeCount');
+
+      if (metricTotal) metricTotal.textContent = String(totalCount);
+      if (metricPinned) metricPinned.textContent = String(pinnedCount);
+      if (metricLocked) metricLocked.textContent = String(lockedCount);
+      if (metricReactions) metricReactions.textContent = String(totalReactions);
+      if (badgeCount) badgeCount.textContent = `${totalCount} topics`;
+
+      renderForumTable();
+    };
+
+    function renderForumTable() {
+      const tbody = document.getElementById('forumList');
+      if (!tbody) return;
+
+      let filtered = [...allForumTopicsCache];
+      if (currentForumFilter === 'pinned') {
+        filtered = filtered.filter(t => t.is_pinned);
+      } else if (currentForumFilter === 'locked') {
+        filtered = filtered.filter(t => t.is_locked);
+      }
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6" class="px-6 py-6 text-center text-gray-500 italic">No topics found for this filter.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = topics.map(topic => `
-        <tr class="hover:bg-gray-50 transition-colors">
-          <td class="px-6 py-4">
-            <p class="font-medium text-gray-800">${topic.title}</p>
-          </td>
-          <td class="px-6 py-4"><span class="bg-gray-100 text-gray-600 px-2 py-1 rounded text-xs">${topic.category}</span></td>
-          <td class="px-6 py-4 text-gray-500 text-xs">${new Date(topic.created_at).toLocaleDateString()}</td>
-          <td class="px-6 py-4 text-right">
-            <button class="text-red-500 hover:text-red-700 font-medium text-xs delete-topic-btn" data-id="${topic.id}">Delete</button>
-          </td>
-        </tr>
-      `).join('');
+      tbody.innerHTML = filtered.map(topic => {
+        const isPinned = !!topic.is_pinned;
+        const isLocked = !!topic.is_locked;
+        const totalReacts = (topic.likes_count || 0) + (topic.helpful_count || 0) + (topic.insightful_count || 0);
+        const authorName = topic.author_name || topic.display_name || topic.auth_users?.email || 'Community Member';
+        const authorRole = topic.author_role || (authorName.includes('Admin') || authorName.includes('William') ? 'Admin' : 'Normal User');
+
+        return `
+          <tr class="hover:bg-gray-50/70 transition-colors border-b border-gray-100 ${isPinned ? 'bg-emerald-50/30' : ''}">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2">
+                ${isPinned ? '<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800"><span class="material-symbols-outlined text-[12px]">push_pin</span> PINNED</span>' : ''}
+                ${isLocked ? '<span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800"><span class="material-symbols-outlined text-[12px]">lock</span> LOCKED</span>' : ''}
+              </div>
+              <p class="font-bold text-gray-900 text-sm mt-0.5">${topic.title}</p>
+              <p class="text-xs text-gray-500 line-clamp-1 mt-0.5">${topic.content || topic.description || ''}</p>
+            </td>
+            <td class="px-6 py-4">
+              <span class="bg-gray-100 text-gray-700 px-2 py-1 rounded-md text-[11px] font-semibold">${topic.category || 'General'}</span>
+            </td>
+            <td class="px-6 py-4">
+              <p class="text-xs font-semibold text-gray-800">${authorName}</p>
+              <span class="text-[10px] text-gray-500 uppercase">${authorRole}</span>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3 text-xs text-gray-600">
+                <span title="Total reactions" class="flex items-center gap-1 text-rose-600 font-medium">
+                  <span class="material-symbols-outlined text-[14px]">favorite</span> ${totalReacts}
+                </span>
+                <span title="Date created" class="text-gray-400 text-[11px]">
+                  ${new Date(topic.created_at).toLocaleDateString()}
+                </span>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              ${isLocked 
+                ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Locked</span>'
+                : '<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">Active</span>'
+              }
+            </td>
+            <td class="px-6 py-4 text-right">
+              <div class="flex items-center justify-end gap-1.5">
+                <a href="/forum/${topic.id}" target="_blank" title="View discussion" class="p-1.5 text-gray-500 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors">
+                  <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+                </a>
+                <button title="${isPinned ? 'Unpin topic' : 'Pin topic to top'}" class="toggle-pin-btn p-1.5 rounded-lg transition-colors ${isPinned ? 'text-emerald-700 bg-emerald-100 hover:bg-emerald-200' : 'text-gray-500 hover:text-emerald-700 hover:bg-emerald-50'}" data-id="${topic.id}" data-pinned="${isPinned}">
+                  <span class="material-symbols-outlined text-[18px]">push_pin</span>
+                </button>
+                <button title="${isLocked ? 'Unlock discussion' : 'Lock discussion'}" class="toggle-lock-btn p-1.5 rounded-lg transition-colors ${isLocked ? 'text-amber-700 bg-amber-100 hover:bg-amber-200' : 'text-gray-500 hover:text-amber-700 hover:bg-amber-50'}" data-id="${topic.id}" data-locked="${isLocked}">
+                  <span class="material-symbols-outlined text-[18px]">${isLocked ? 'lock_open' : 'lock'}</span>
+                </button>
+                <button title="Delete topic permanently" class="delete-topic-btn p-1.5 text-red-500 hover:text-red-700 hover:bg-red-50 rounded-lg transition-colors" data-id="${topic.id}">
+                  <span class="material-symbols-outlined text-[18px]">delete</span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Attach handlers
+      document.querySelectorAll('.toggle-pin-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const target = (e.target as HTMLElement).closest('.toggle-pin-btn') as HTMLElement;
+          const id = target.dataset.id;
+          const currentPinned = target.dataset.pinned === 'true';
+          await supabase.from('forum_topics').update({ is_pinned: !currentPinned }).eq('id', id);
+          loadForumTopics();
+        });
+      });
+
+      document.querySelectorAll('.toggle-lock-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const target = (e.target as HTMLElement).closest('.toggle-lock-btn') as HTMLElement;
+          const id = target.dataset.id;
+          const currentLocked = target.dataset.locked === 'true';
+          await supabase.from('forum_topics').update({ is_locked: !currentLocked }).eq('id', id);
+          loadForumTopics();
+        });
+      });
 
       document.querySelectorAll('.delete-topic-btn').forEach(btn => {
         btn.addEventListener('click', async (e) => {
-          if (confirm('Delete this topic and all its replies?')) {
-            const id = e.target.dataset.id;
+          const target = (e.target as HTMLElement).closest('.delete-topic-btn') as HTMLElement;
+          const id = target.dataset.id;
+          if (confirm('Permanently delete this discussion topic and all of its replies?')) {
             await supabase.from('forum_topics').delete().eq('id', id);
+            await supabase.from('forum_replies').delete().eq('topic_id', id);
             loadForumTopics();
           }
         });
       });
+    }
+
+    // Filter tabs
+    const forumFilterAll = document.getElementById('forumFilterAll');
+    const forumFilterPinned = document.getElementById('forumFilterPinned');
+    const forumFilterLocked = document.getElementById('forumFilterLocked');
+
+    function updateForumFilterUI(activeBtn, filter) {
+      currentForumFilter = filter;
+      [forumFilterAll, forumFilterPinned, forumFilterLocked].forEach(b => {
+        b?.classList.remove('bg-white', 'border', 'border-gray-300', 'font-semibold', 'text-gray-700', 'shadow-xs');
+        b?.classList.add('bg-gray-100', 'font-medium', 'text-gray-600');
+      });
+      activeBtn?.classList.remove('bg-gray-100', 'font-medium', 'text-gray-600');
+      activeBtn?.classList.add('bg-white', 'border', 'border-gray-300', 'font-semibold', 'text-gray-700', 'shadow-xs');
+      renderForumTable();
+    }
+
+    forumFilterAll?.addEventListener('click', () => updateForumFilterUI(forumFilterAll, 'all'));
+    forumFilterPinned?.addEventListener('click', () => updateForumFilterUI(forumFilterPinned, 'pinned'));
+    forumFilterLocked?.addEventListener('click', () => updateForumFilterUI(forumFilterLocked, 'locked'));
+
+    // =========================================================================
+    // 4. TEAM & ROLE MANAGEMENT LOGIC
+    // =========================================================================
+    let allTeamMembers: any[] = [];
+
+    const loadTeamMembers = async () => {
+      const { data: members, error } = await supabase.from('team_members').select('*').order('created_at', { ascending: false });
+      const tbody = document.getElementById('teamMembersList');
+      const badge = document.getElementById('teamTotalBadge');
+      if (!tbody) return;
+
+      allTeamMembers = members || [];
+      if (badge) badge.textContent = `${allTeamMembers.length} accounts`;
+
+      // Update author dropdown in blog publishing suite with Admin's team
+      populateAuthorDropdown(allTeamMembers);
+
+      if (allTeamMembers.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="px-6 py-6 text-center text-gray-500 italic">No team accounts found. Provision one on the left.</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = allTeamMembers.map(member => {
+        const role = member.role || 'Normal User';
+        let roleBadge = '';
+        if (role === 'Admin') {
+          roleBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800"><span class="material-symbols-outlined text-[14px]">shield_person</span> Admin</span>';
+        } else if (role === 'Editor(Blogs)') {
+          roleBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-blue-100 text-blue-800"><span class="material-symbols-outlined text-[14px]">edit_note</span> Editor(Blogs)</span>';
+        } else if (role === 'Moderator') {
+          roleBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-800"><span class="material-symbols-outlined text-[14px]">gavel</span> Moderator</span>';
+        } else {
+          roleBadge = '<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold bg-stone-100 text-stone-700"><span class="material-symbols-outlined text-[14px]">person</span> Normal User</span>';
+        }
+
+        const isSuperAdmin = member.email === 'admin@senga.org' || member.email === 'admin@bos.org';
+        const initial = (member.full_name || member.email || 'U').charAt(0).toUpperCase();
+
+        return `
+          <tr class="hover:bg-gray-50/70 transition-colors border-b border-gray-100">
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-emerald-800 text-white font-bold flex items-center justify-center text-xs">
+                  ${initial}
+                </div>
+                <div>
+                  <p class="font-bold text-gray-900 text-sm">${member.full_name || 'Team Member'}</p>
+                  <p class="text-xs text-gray-500">${member.email}</p>
+                </div>
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <div class="flex items-center gap-2">
+                ${roleBadge}
+                ${!isSuperAdmin ? `
+                  <select class="change-role-select text-[11px] border border-gray-200 rounded-md py-0.5 px-1 bg-white text-gray-600 focus:outline-none focus:border-emerald-500" data-id="${member.id}">
+                    <option value="Admin" ${role === 'Admin' ? 'selected' : ''}>Set Admin</option>
+                    <option value="Editor(Blogs)" ${role === 'Editor(Blogs)' ? 'selected' : ''}>Set Editor</option>
+                    <option value="Moderator" ${role === 'Moderator' ? 'selected' : ''}>Set Mod</option>
+                    <option value="Normal User" ${role === 'Normal User' ? 'selected' : ''}>Set User</option>
+                  </select>
+                ` : ''}
+              </div>
+            </td>
+            <td class="px-6 py-4">
+              <span class="inline-flex items-center gap-1 text-[11px] text-emerald-700 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Active
+              </span>
+            </td>
+            <td class="px-6 py-4 text-gray-400 text-xs">
+              ${new Date(member.created_at).toLocaleDateString()}
+            </td>
+            <td class="px-6 py-4 text-right">
+              ${!isSuperAdmin ? `
+                <button class="delete-team-btn text-xs text-red-600 hover:text-red-800 font-semibold hover:underline" data-id="${member.id}" data-name="${member.full_name || member.email}">
+                  Remove
+                </button>
+              ` : `
+                <span class="text-[11px] text-gray-400 italic">Primary Admin</span>
+              `}
+            </td>
+          </tr>
+        `;
+      }).join('');
+
+      // Change role event
+      document.querySelectorAll('.change-role-select').forEach(sel => {
+        sel.addEventListener('change', async (e) => {
+          const selectEl = e.target as HTMLSelectElement;
+          const id = selectEl.dataset.id;
+          const newRole = selectEl.value;
+          await supabase.from('team_members').update({ role: newRole }).eq('id', id);
+          loadTeamMembers();
+        });
+      });
+
+      // Delete member event
+      document.querySelectorAll('.delete-team-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+          const target = e.target as HTMLElement;
+          const id = target.dataset.id;
+          const name = target.dataset.name;
+          if (confirm(`Are you sure you want to remove ${name} from team accounts?`)) {
+            await supabase.from('team_members').delete().eq('id', id);
+            loadTeamMembers();
+          }
+        });
+      });
     };
+
+    // Role hint updates
+    const roleSelect = document.getElementById('newTeamRole') as HTMLSelectElement;
+    const roleDescHint = document.getElementById('roleDescHint');
+    roleSelect?.addEventListener('change', () => {
+      const val = roleSelect.value;
+      if (val === 'Admin') {
+        roleDescHint.textContent = 'Full super-admin access to site content, publishing, team, and forum.';
+      } else if (val === 'Editor(Blogs)') {
+        roleDescHint.textContent = 'Can write, edit, schedule articles and upload media images.';
+      } else if (val === 'Moderator') {
+        roleDescHint.textContent = 'Can pin, lock, and moderate discussions on the community forum.';
+      } else {
+        roleDescHint.textContent = 'Standard community member who can read, reply, and react.';
+      }
+    });
+
+    // Create Team Member Form Submit
+    const createTeamForm = document.getElementById('createTeamUserForm');
+    createTeamForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const nameInput = document.getElementById('newTeamName') as HTMLInputElement;
+      const emailInput = document.getElementById('newTeamEmail') as HTMLInputElement;
+      const roleInput = document.getElementById('newTeamRole') as HTMLSelectElement;
+      const passInput = document.getElementById('newTeamPassword') as HTMLInputElement;
+      const msgEl = document.getElementById('createTeamMsg');
+      const submitBtn = document.getElementById('createTeamBtn') as HTMLButtonElement;
+
+      const full_name = nameInput.value.trim();
+      const email = emailInput.value.trim().toLowerCase();
+      const role = roleInput.value;
+      const password = passInput.value;
+
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span> Creating account...';
+
+      // Insert into team_members table
+      const { data, error } = await supabase.from('team_members').insert({
+        email,
+        full_name,
+        role,
+        password,
+        status: 'active'
+      });
+
+      submitBtn.disabled = false;
+      submitBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">add_moderator</span> Create Team Account';
+
+      if (error) {
+        msgEl.textContent = 'Error: ' + error.message;
+        msgEl.className = 'text-xs p-3 rounded-lg bg-red-100 text-red-800 block';
+      } else {
+        msgEl.textContent = `Account created successfully! ${full_name} can now sign in as ${role}.`;
+        msgEl.className = 'text-xs p-3 rounded-lg bg-emerald-100 text-emerald-800 block';
+        createTeamForm.reset();
+        loadTeamMembers();
+        setTimeout(() => msgEl.classList.add('hidden'), 5000);
+      }
+    });
+
+    document.getElementById('refreshTeamBtn')?.addEventListener('click', () => loadTeamMembers());
   </script>
 </body>
 </html>
