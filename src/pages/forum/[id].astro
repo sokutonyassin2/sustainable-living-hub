@@ -1,8 +1,15 @@
 ---
 // src/pages/forum/[id].astro
-export const prerender = false;
 import Layout from '../../layouts/Layout.astro';
 import { supabase } from '../../lib/supabase.js';
+
+export async function getStaticPaths() {
+  const { data: topics } = await supabase.from('forum_topics').select('id');
+  if (topics && topics.length > 0) {
+    return topics.map(t => ({ params: { id: String(t.id) } }));
+  }
+  return [{ params: { id: '1' } }];
+}
 
 const { id } = Astro.params;
 

@@ -1,8 +1,14 @@
 ---
 // src/pages/blog/[slug].astro
-export const prerender = false;
 import Layout from '../../layouts/Layout.astro';
 import { supabase } from '../../lib/supabase.js';
+
+export async function getStaticPaths() {
+  const { data: blogs } = await supabase.from('blogs').select('slug');
+  const slugs = blogs && blogs.length > 0 ? blogs.map(b => b.slug).filter(Boolean) : [];
+  const allSlugs = Array.from(new Set([...slugs, 'post-1-healthy-soil', 'post-2-tree-billionaire', 'post-3-urban-rooftop']));
+  return allSlugs.map(slug => ({ params: { slug } }));
+}
 
 const { slug } = Astro.params;
 
